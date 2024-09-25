@@ -1,0 +1,27 @@
+{
+  "name": "job-trackr",
+  "private": true,
+  "workspaces": [
+    "app/fe",
+    "app/api"
+  ],
+  "packageManager": "yarn@4.5.0",
+  "scripts": {
+    "dev": "concurrently --names api --prefix-colors green,magenta \"yarn workspace api start:dev\" \"yarn workspace fe dev\"",
+    "build": "yarn workspace api build && yarn workspace fe build",
+    "test": "yarn workspace api test && yarn workspace fe test",
+    "lint": "yarn workspace api lint && yarn workspace fe lint",
+    "type-check": "yarn workspace api type-check && yarn workspace fe type-check",
+    "generate": "yarn workspace api generate",
+    "migrate": "yarn workspace api migrate"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.11.1",
+    "concurrently": "^9.0.1",
+    "eslint": "^9.11.1",
+    "eslint-plugin-react": "^7.36.1",
+    "globals": "^15.9.0",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.7.0"
+  }
+}

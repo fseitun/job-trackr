@@ -1,0 +1,23 @@
+# Build artifacts
+app/fe/dist/
+app/api/dist/
+
+# Yarn
+.yarn/*
+.pnp.*
+node_modules/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+
+# Others
+.vscode/
+TODOs.md
