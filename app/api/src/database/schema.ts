@@ -4,17 +4,34 @@ import {
   pgTable,
   serial,
   text,
-  boolean,
   timestamp,
+  boolean,
 } from "drizzle-orm/pg-core";
+
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  passwordHash: varchar("password_hash", { length: 255 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
 
 export const jobProcesses = pgTable("job_processes", {
   id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    })
+    .notNull(),
   hiringCompany: varchar("hiring_company", { length: 255 }).notNull(),
   recruitingCompany: varchar("recruiting_company", { length: 255 }).notNull(),
   position: varchar("position", { length: 255 }).notNull(),
-  recruiterName: varchar("recruiter_name", { length: 255 }).notNull().default(""),
-  recruitmentChannel: varchar("recruitment_channel", { length: 255 }).notNull().default(""),
+  recruiterName: varchar("recruiter_name", { length: 255 })
+    .notNull()
+    .default(""),
+  recruitmentChannel: varchar("recruitment_channel", { length: 255 })
+    .notNull()
+    .default(""),
   monthlySalary: integer("monthly_salary").default(0),
   vacationsDays: integer("vacations_days").default(0),
   holidaysDays: integer("holidays_days").default(0),
@@ -28,6 +45,12 @@ export const interviews = pgTable("interviews", {
   id: serial("id").primaryKey(),
   jobProcessId: integer("job_process_id")
     .references(() => jobProcesses.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    })
+    .notNull(),
+  userId: integer("user_id")
+    .references(() => users.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
     })

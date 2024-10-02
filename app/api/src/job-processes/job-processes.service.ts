@@ -1,9 +1,9 @@
-import { Injectable, Logger, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, Logger } from "@nestjs/common";
 import { DatabaseService } from "../database/database.service";
 import { CreateJobProcessesDto } from "./dto/create-job-processes.dto";
 import { UpdateJobProcessesDto } from "./dto/update-job-processes.dto";
 import { jobProcesses, interviews } from "../database/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 @Injectable()
 export class JobProcessesService {
@@ -11,7 +11,7 @@ export class JobProcessesService {
 
   constructor(private dbService: DatabaseService) {}
 
-  async create(createJobProcessesDto: CreateJobProcessesDto) {
+  async create(createJobProcessesDto: CreateJobProcessesDto, userId: number) {
     this.logger.log(
       `Creating job process with data: ${JSON.stringify(createJobProcessesDto)}`
     );
@@ -32,13 +32,17 @@ export class JobProcessesService {
 
     const [newJobProcess] = await this.dbService.db
       .insert(jobProcesses)
-      .values(jobProcessData)
+      .values({ ...jobProcessData, userId })
       .returning();
 
     return newJobProcess;
   }
 
-  async update(id: number, updateJobProcessesDto: UpdateJobProcessesDto) {
+  async update(
+    id: number,
+    updateJobProcessesDto: UpdateJobProcessesDto,
+    userId: number
+  ) {
     this.logger.log(`Updating job process with id: ${id}`);
 
     const updatedData = {
@@ -49,48 +53,72 @@ export class JobProcessesService {
       directHire: updateJobProcessesDto.directHire,
     };
 
+    const existingJobProcess = await this.dbService.db
+      .select()
+      .from(jobProcesses)
+      .where(and(eq(jobProcesses.id, id), eq(jobProcesses.userId, userId)));
+
+    if (existingJobProcess.length === 0) {
+      throw new NotFoundException(`Job process with id ${id} not found`);
+    }
+
     const [updatedJobProcess] = await this.dbService.db
       .update(jobProcesses)
       .set(updatedData)
-      .where(eq(jobProcesses.id, id))
+      .where(and(and(eq(jobProcesses.id, id), eq(jobProcesses.userId, userId))))
       .returning();
 
     if (!updatedJobProcess) {
       throw new NotFoundException(`Job process with id ${id} not found`);
     }
-
     return updatedJobProcess;
   }
 
-  async findAll() {
+  async findAll(userId: number) {
     this.logger.log("Fetching all job processes");
-    return this.dbService.db.select().from(jobProcesses);
+    return this.dbService.db
+      .select()
+      .from(jobProcesses)
+      .where(eq(jobProcesses.userId, userId));
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, userId: number) {
     this.logger.log(`Fetching job process with id: ${id} and its interviews`);
 
     const [jobProcess] = await this.dbService.db
       .select()
       .from(jobProcesses)
-      .where(eq(jobProcesses.id, id));
+      .where(and(eq(jobProcesses.id, id), eq(jobProcesses.userId, userId)));
+
     if (!jobProcess) {
       throw new NotFoundException(`Job process with id ${id} not found`);
     }
-    return jobProcess;
-  }
 
     const associatedInterviews = await this.dbService.db
       .select()
       .from(interviews)
-      .where(eq(interviews.jobProcessId, id));
+      .where(
+        and(eq(interviews.jobProcessId, id), eq(interviews.userId, userId))
+      );
 
     return { ...jobProcess, interviews: associatedInterviews };
   }
 
-  async remove(id: number) {
+  async remove(id: number, userId: number) {
     this.logger.log(`Deleting job process with id: ${id}`);
-    await this.dbService.db.delete(jobProcesses).where(eq(jobProcesses.id, id));
+
+    const existingJobProcess = await this.dbService.db
+      .select()
+      .from(jobProcesses)
+      .where(and(eq(jobProcesses.id, id), eq(jobProcesses.userId, userId)));
+
+    if (existingJobProcess.length === 0) {
+      throw new NotFoundException(`Job process with id ${id} not found`);
+    }
+
+    await this.dbService.db
+      .delete(jobProcesses)
+      .where(and(eq(jobProcesses.id, id), eq(jobProcesses.userId, userId)));
     return { deleted: true };
   }
 }

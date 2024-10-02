@@ -1,14 +1,14 @@
 import {
+  BadRequestException,
   Injectable,
   Logger,
-  BadRequestException,
   NotFoundException,
 } from "@nestjs/common";
-import { eq } from "drizzle-orm";
 import { DatabaseService } from "../database/database.service";
 import { CreateInterviewDto } from "./dto/create-interview.dto";
 import { UpdateInterviewDto } from "./dto/update-interview.dto";
-import { interviews } from "../database/schema";
+import { interviews, jobProcesses } from "../database/schema";
+import { eq, and } from "drizzle-orm";
 
 @Injectable()
 export class InterviewsService {
@@ -16,39 +16,64 @@ export class InterviewsService {
 
   constructor(private dbService: DatabaseService) {}
 
-  async create(createInterviewDto: CreateInterviewDto) {
+  async create(createInterviewDto: CreateInterviewDto, userId: number) {
     this.logger.log(
       `Creating interview with data: ${JSON.stringify(createInterviewDto)}`
     );
 
     this.logger.debug(JSON.stringify(createInterviewDto, null, 2));
 
+    const jobProcess = await this.dbService.db
+      .select()
+      .from(jobProcesses)
+      .where(
+        and(
+          eq(jobProcesses.id, createInterviewDto.jobProcessId),
+          eq(jobProcesses.userId, userId)
+        )
+      );
+
+    if (jobProcess.length === 0) {
+      throw new NotFoundException("Job process not found or not owned by user");
+    }
+
     const [newInterview] = await this.dbService.db
       .insert(interviews)
-      .values(createInterviewDto)
+      .values({ ...createInterviewDto, userId })
       .returning();
+
     return newInterview;
   }
 
-  async findAll() {
+  async findAll(userId: number) {
     this.logger.log("Fetching all interviews");
-    return await this.dbService.db.select().from(interviews);
+
+    return await this.dbService.db
+      .select()
+      .from(interviews)
+      .where(eq(interviews.userId, userId));
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, userId: number) {
     this.logger.log(`Fetching interview with id: ${id}`);
 
     const [interview] = await this.dbService.db
       .select()
       .from(interviews)
-      .where(eq(interviews.id, id));
+      .where(and(eq(interviews.id, id), eq(interviews.userId, userId)));
+
     if (!interview) {
-      throw new NotFoundException(`Job process with id ${id} not found`);
+      throw new NotFoundException(`Interview with id ${id} not found`);
     }
+
     return interview;
   }
 
-  async update(id: number, updateInterviewDto: UpdateInterviewDto) {
+  async update(
+    id: number,
+    updateInterviewDto: UpdateInterviewDto,
+    userId: number
+  ) {
     this.logger.log(`Updating interview with id: ${id}`);
 
     if (updateInterviewDto.interviewDate) {
@@ -56,19 +81,40 @@ export class InterviewsService {
         this.logger.error("Invalid interviewDate format.");
         throw new BadRequestException("Invalid interviewDate format.");
       }
-    }
+      const existingInterview = await this.dbService.db
+        .select()
+        .from(interviews)
+        .where(and(eq(interviews.id, id), eq(interviews.userId, userId)));
 
-    const [updatedInterview] = await this.dbService.db
-      .update(interviews)
-      .set(updateInterviewDto)
-      .where(eq(interviews.id, id))
-      .returning();
-    return updatedInterview;
+      if (existingInterview.length === 0) {
+        throw new NotFoundException(`Interview with id ${id} not found`);
+      }
+
+      const [updatedInterview] = await this.dbService.db
+        .update(interviews)
+        .set(updateInterviewDto)
+        .where(and(eq(interviews.id, id), eq(interviews.userId, userId)))
+        .returning();
+
+      return updatedInterview;
+    }
   }
 
-  async remove(id: number) {
+  async remove(id: number, userId: number) {
     this.logger.log(`Deleting interview with id: ${id}`);
-    await this.dbService.db.delete(interviews).where(eq(interviews.id, id));
+
+    const existingInterview = await this.dbService.db
+      .select()
+      .from(interviews)
+      .where(and(eq(interviews.id, id), eq(interviews.userId, userId)));
+
+    if (existingInterview.length === 0) {
+      throw new NotFoundException(`Interview with id ${id} not found`);
+    }
+
+    await this.dbService.db
+      .delete(interviews)
+      .where(and(eq(interviews.id, id), eq(interviews.userId, userId)));
     return { deleted: true };
   }
 }
