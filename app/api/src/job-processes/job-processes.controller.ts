@@ -14,7 +14,7 @@ import { JobProcessesService } from "./job-processes.service";
 import { CreateJobProcessesDto } from "./dto/create-job-processes.dto";
 import { UpdateJobProcessesDto } from "./dto/update-job-processes.dto";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
-import { Request } from "express";
+import { CustomRequest } from "../types/custom-request.interface";
 
 @Controller("job-processes")
 @UseGuards(JwtAuthGuard)
@@ -24,21 +24,21 @@ export class JobProcessesController {
   @Post()
   async create(
     @Body() createJobProcessDto: CreateJobProcessesDto,
-    @Req() req: Request
+    @Req() req: CustomRequest
   ) {
-    const userId = req.user["userId"];
+    const userId = req.user.userId;
     return await this.jobProcessesService.create(createJobProcessDto, userId);
   }
 
   @Get()
-  async findAll(@Req() req: Request) {
-    const userId = req.user["userId"];
+  async findAll(@Req() req: CustomRequest) {
+    const userId = req.user.userId;
     return await this.jobProcessesService.findAll(userId);
   }
 
   @Get(":id")
-  async findOne(@Param("id") id: string, @Req() req: Request) {
-    const userId = req.user["userId"];
+  async findOne(@Param("id") id: string, @Req() req: CustomRequest) {
+    const userId = req.user.userId;
     const jobProcess = await this.jobProcessesService.findOne(+id, userId);
     if (!jobProcess) {
       throw new NotFoundException(`Job process with id ${id} not found`);
@@ -50,9 +50,9 @@ export class JobProcessesController {
   async update(
     @Param("id") id: string,
     @Body() updateJobProcessesDto: UpdateJobProcessesDto,
-    @Req() req: Request
+    @Req() req: CustomRequest
   ) {
-    const userId = req.user["userId"];
+    const userId = req.user.userId;
     return await this.jobProcessesService.update(
       +id,
       updateJobProcessesDto,
@@ -61,8 +61,11 @@ export class JobProcessesController {
   }
 
   @Delete(":id")
-  async remove(@Param("id") id: string, @Req() req: Request) {
-    const userId = req.user["userId"];
+  async remove(@Param("id") id: string, @Req() req: CustomRequest) {
+    if (!req.user) {
+      throw new NotFoundException("User not found in request");
+    }
+    const userId = req.user.userId;
     return await this.jobProcessesService.remove(+id, userId);
   }
 }
