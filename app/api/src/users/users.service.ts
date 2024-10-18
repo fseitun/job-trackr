@@ -3,7 +3,7 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { DatabaseService } from "../database/database.service";
 import { users } from "../database/schema";
 import * as bcrypt from "bcrypt";
-import { eq } from "drizzle-orm"; // <-- Import eq here
+import { eq } from "drizzle-orm";
 
 @Injectable()
 export class UsersService {
@@ -15,7 +15,7 @@ export class UsersService {
     const existingUser = await this.dbService.db
       .select()
       .from(users)
-      .where(eq(users.email, email)); // Now eq is defined
+      .where(eq(users.email, email));
 
     if (existingUser.length > 0) {
       throw new ConflictException("User with this email already exists");

@@ -24,8 +24,6 @@ export class UsersController {
     return await this.usersService.create(createUserDto);
   }
 
-  // users.controller.ts
-
   @Post("login")
   async login(
     @Body() loginUserDto: LoginUserDto,
@@ -51,7 +49,7 @@ export class UsersController {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 3600000, // 1 hour
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return { message: "Login successful" };

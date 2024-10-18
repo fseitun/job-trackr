@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await api.get("/auth/validate"); // Create a validation endpoint
+        await api.get("/auth/validate");
         setIsAuthenticated(true);
       } catch {
         setIsAuthenticated(false);
@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const logout = async () => {
-    await api.post("/users/logout"); // Create a logout endpoint
+    await api.post("/users/logout");
     setIsAuthenticated(false);
   };
 
