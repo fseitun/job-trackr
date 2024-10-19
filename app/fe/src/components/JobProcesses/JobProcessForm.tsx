@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import client from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
-import { CreateJobProcess } from "../../types";
+import { CreateJobProcess, JobProcess } from "../../types";
 
 interface JobProcessFormProps {
   isEditMode?: boolean;
@@ -32,7 +32,7 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
   useEffect(() => {
     if (isEditMode && id) {
       client
-        .get(`/job-processes/${id}`)
+        .get<JobProcess>(`/job-processes/${id}`)
         .then((response) => setFormData(response))
         .catch((err) => {
           console.error("Error fetching job process details:", err);

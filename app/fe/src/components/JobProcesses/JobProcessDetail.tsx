@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { JobProcess } from "../../types";
 import InterviewList from "../Interview/InterviewList";
+import client from "../../api/client";
 
 const JobProcessDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,10 +13,8 @@ const JobProcessDetail: React.FC = () => {
   useEffect(() => {
     const fetchJobProcess = async () => {
       try {
-        const response = await axios.get<JobProcess>(
-          `/api/job-processes/${id}`
-        );
-        setJobProcess(response.data);
+        const data = await client.get<JobProcess>(`/job-processes/${id}`);
+        setJobProcess(data);
       } catch (err) {
         console.error("Error fetching job application details:", err);
         setError("Failed to load job application details.");

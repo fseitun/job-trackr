@@ -28,7 +28,7 @@ function App() {
         <Route
           path="/job-processes"
           element={
-            <ProtectedRoute isAuthenticated={true}>
+            <ProtectedRoute>
               <JobProcessList />
             </ProtectedRoute>
           }
@@ -36,7 +36,7 @@ function App() {
         <Route
           path="/job-processes/add"
           element={
-            <ProtectedRoute isAuthenticated={true}>
+            <ProtectedRoute>
               <JobProcessForm />
             </ProtectedRoute>
           }
@@ -44,7 +44,7 @@ function App() {
         <Route
           path="/job-processes/:id"
           element={
-            <ProtectedRoute isAuthenticated={true}>
+            <ProtectedRoute>
               <JobProcessDetail />
             </ProtectedRoute>
           }
@@ -52,7 +52,7 @@ function App() {
         <Route
           path="/job-processes/:id/edit"
           element={
-            <ProtectedRoute isAuthenticated={true}>
+            <ProtectedRoute>
               <JobProcessForm isEditMode />
             </ProtectedRoute>
           }
@@ -60,7 +60,7 @@ function App() {
         <Route
           path="/edit-interview/:id"
           element={
-            <ProtectedRoute isAuthenticated={true}>
+            <ProtectedRoute>
               <InterviewForm isEditMode />
             </ProtectedRoute>
           }
@@ -68,7 +68,7 @@ function App() {
         <Route
           path="/job-processes/:id/add-interview"
           element={
-            <ProtectedRoute isAuthenticated={true}>
+            <ProtectedRoute>
               <InterviewForm />
             </ProtectedRoute>
           }

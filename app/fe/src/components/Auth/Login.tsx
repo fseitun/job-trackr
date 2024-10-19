@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const Login: React.FC = () => {
   const { login } = useContext(AuthContext);
@@ -16,12 +15,8 @@ const Login: React.FC = () => {
     try {
       await login(email, password);
       navigate("/job-processes");
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || "Login failed");
-      } else {
-        setError("An unexpected error occurred");
-      }
+    } catch {
+      setError("An error occurred during login");
     }
   };
 

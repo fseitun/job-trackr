@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { authStyles as styles } from "./authStyles";
 
 const Register: React.FC = () => {
@@ -22,12 +21,8 @@ const Register: React.FC = () => {
     try {
       await register(email, password);
       navigate("/job-processes");
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err) && err.response) {
-        setError(err.response.data.message || "Registration failed");
-      } else {
-        setError("An unexpected error occurred");
-      }
+    } catch  {
+      setError("An unexpected error occurred");
     }
   };
 

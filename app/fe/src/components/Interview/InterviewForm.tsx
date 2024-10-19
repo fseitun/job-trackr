@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import client from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { Interview } from "../../types";
 
@@ -31,10 +31,9 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
 
   useEffect(() => {
     if (isEditMode && interviewId) {
-      axios
+      client
         .get<Interview[]>(`/api/interviews/${interviewId}`)
-        .then((response) => {
-          const interview = response.data;
+        .then((interview) => {
           setFormData({
             interviewerName: interview[0].interviewerName,
             interviewerRole: interview[0].interviewerRole,
@@ -62,14 +61,28 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
     e.preventDefault();
     try {
       if (isEditMode && interviewId) {
-        await axios.patch(`/api/interviews/${interviewId}`, formData);
+        const completeFormData = {
+          hiringCompany: "",
+          recruitingCompany: "",
+          position: "",
+          recruiterName: "",
+          recruitmentChannel: "",
+          monthlySalary: 0,
+          vacationsDays: 0,
+          holidaysDays: 0,
+          jobDescription: "",
+          directHire: false,
+          timeZone: "",
+          ...formData,
+        };
+        await client.patch(`/interviews/${interviewId}`, completeFormData);
         if (fetchedJobProcessId !== null) {
           navigate(`/job-processes/${fetchedJobProcessId}`);
         } else {
           throw new Error("Failed to retrieve Job Process ID.");
         }
       } else if (jobProcessId) {
-        await axios.post("/api/interviews", {
+        await client.post("/interviews", {
           jobProcessId: Number(jobProcessId),
           ...formData,
         });

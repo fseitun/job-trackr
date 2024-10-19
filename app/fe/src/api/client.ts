@@ -26,14 +26,12 @@ const logout = async (): Promise<void> => {
   await api.post("/users/logout");
 };
 
-const get = async (url: string): Promise<JobProcess> => {
-  console.log("Fetching data from:", url);
-  const response = await api.get<JobProcess>(url);
+const get = async <T>(url: string): Promise<T> => {
+  const response = await api.get<T>(url);
   return response.data;
 };
 
 const post = async (url: string, data: CreateJobProcess): Promise<void> => {
-  console.log("Posting data to:", url);
   await api.post(url, data);
 };
 
