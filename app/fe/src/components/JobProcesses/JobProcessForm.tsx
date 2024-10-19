@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import client from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
-import { CreateJobProcess, JobProcess } from "../../types";
+import { CreateJobProcess } from "../../types";
 
 interface JobProcessFormProps {
   isEditMode?: boolean;
@@ -31,10 +31,11 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
 
   useEffect(() => {
     if (isEditMode && id) {
-      axios
-        .get<JobProcess>(`/api/job-processes/${id}`)
-        .then((response) => setFormData(response.data))
+      client
+        .get(`/job-processes/${id}`)
+        .then((response) => setFormData(response))
         .catch((err) => {
+          console.error("Error fetching job process details:", err);
           setError("Failed to load job process details.");
         });
     }
@@ -56,13 +57,14 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
     e.preventDefault();
     try {
       if (isEditMode && id) {
-        await axios.patch(`/api/job-processes/${id}`, formData);
+        await client.patch(`/job-processes/${id}`, formData);
         navigate(`/job-processes/${id}`);
       } else {
-        await axios.post("/api/job-processes", formData);
+        await client.post("/job-processes", formData);
         navigate("/");
       }
     } catch (err) {
+      console.error("Error submitting the form:", err);
       setError("Failed to submit the form.");
     }
   };

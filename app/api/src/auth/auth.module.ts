@@ -1,21 +1,23 @@
-import { Global, Module } from "@nestjs/common";
-import { JwtModule } from "@nestjs/jwt";
-import { PassportModule } from "@nestjs/passport";
-import { UsersModule } from "../users/users.module";
-import { JwtStrategy } from "./jwt.strategy";
+import { Global, Module, forwardRef } from "@nestjs/common";
+import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
+import { JwtStrategy } from "./jwt.strategy";
+import { UsersModule } from "../users/users.module";
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule } from "@nestjs/jwt";
 
 @Global()
 @Module({
   imports: [
-    UsersModule,
+    forwardRef(() => UsersModule),
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || "your-secret-key",
+      secret: process.env.JWT_SECRET || "your-secret-key", // TODO: is this the correct pattern?
       signOptions: { expiresIn: "1h" },
     }),
   ],
-  providers: [JwtStrategy, AuthService],
+  controllers: [AuthController],
+  providers: [AuthService, JwtStrategy],
   exports: [JwtModule, AuthService],
 })
 export class AuthModule {}

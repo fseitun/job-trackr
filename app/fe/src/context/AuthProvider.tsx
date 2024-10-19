@@ -1,23 +1,11 @@
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { useState, ReactNode, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
-import api from "../api/api";
+import client from "../api/client";
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await api.get("/auth/validate");
-        setIsAuthenticated(true);
-      } catch {
-        setIsAuthenticated(false);
-      }
-    };
-    checkAuth();
-  }, []);
 
   const setAuthToken = (token: string) => {
     localStorage.setItem("authToken", token);
@@ -25,8 +13,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await api.post("/users/login", { email, password });
-      const token = response.data.token;
+      const token = await client.login(email, password);
       if (token) {
         setAuthToken(token);
         setIsAuthenticated(true);
@@ -39,7 +26,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const register = async (email: string, password: string) => {
     try {
-      await api.post("/users/register", { email, password });
+      await client.register(email, password);
       await login(email, password);
     } catch (error) {
       console.error("Registration failed:", error);
@@ -48,12 +35,30 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = async () => {
     try {
-      await api.post("/users/logout");
+      await client.logout();
       setIsAuthenticated(false);
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
+
+  const validateToken = async () => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      try {
+        await client.validateToken();
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error("Token validation failed:", error);
+        setIsAuthenticated(false);
+        localStorage.removeItem("authToken");
+      }
+    }
+  };
+
+  useEffect(() => {
+    validateToken();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, register, logout }}>

@@ -19,7 +19,6 @@ export class LoggingInterceptor<T = unknown> implements NestInterceptor<T, T> {
     const now = Date.now();
 
     this.logger.log(`Incoming Request: ${method} ${url}`);
-    this.logger.debug(`Request Body: ${JSON.stringify(request.body, null, 2)}`);
 
     return next.handle().pipe(
       tap(() => {

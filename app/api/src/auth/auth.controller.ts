@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Get, Post, Res, Logger } from "@nestjs/common";
+import { Controller, UseGuards, Post, Res, Logger, Get } from "@nestjs/common";
 import { JwtAuthGuard } from "./jwt-auth.guard";
 import { Response } from "express";
 
@@ -7,10 +7,10 @@ import { Response } from "express";
 export class AuthController {
   private readonly logger = new Logger(AuthController.name);
 
-  @Get("validate")
-  async validate() {
-    this.logger.log("Validating token");
-    return { message: "Authenticated" };
+  @Get("validate-token")
+  validateToken() {
+    this.logger.log("Token validated successfully");
+    return { message: "Token is valid" };
   }
 
   @Post("logout")
