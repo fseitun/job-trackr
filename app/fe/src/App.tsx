@@ -1,5 +1,7 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
+
 const JobProcessList = lazy(
   () => import("./components/JobProcesses/JobProcessList")
 );
@@ -20,7 +22,7 @@ function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route path="/" element={<Navigate to="/job-processes" />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 

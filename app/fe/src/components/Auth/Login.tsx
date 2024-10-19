@@ -27,11 +27,11 @@ const Login: React.FC = () => {
 
   return (
     <div style={styles.container}>
-      <h2>Login</h2>
+      <h2 style={styles.title}>Login</h2>
       {error && <div style={styles.error}>{error}</div>}
       <form onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.formGroup}>
-          <label>Email:</label>
+          <label style={styles.label}>Email:</label>
           <input
             type="email"
             value={email}
@@ -41,7 +41,7 @@ const Login: React.FC = () => {
           />
         </div>
         <div style={styles.formGroup}>
-          <label>Password:</label>
+          <label style={styles.label}>Password:</label>
           <input
             type="password"
             value={password}
@@ -61,24 +61,42 @@ const Login: React.FC = () => {
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
     maxWidth: "400px",
-    margin: "50px auto",
+    margin: "0 auto",
     padding: "2rem",
     border: "1px solid #ddd",
     borderRadius: "8px",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
+  title: {
+    textAlign: "center",
+    marginBottom: "1.5rem",
+    color: "#333",
   },
   form: {
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
   },
   formGroup: {
     marginBottom: "1rem",
+    width: "100%",
+  },
+  label: {
+    marginBottom: "0.5rem",
+    color: "#555",
+    display: "block",
   },
   input: {
     width: "100%",
     padding: "0.75rem",
     borderRadius: "4px",
     border: "1px solid #ccc",
+    fontSize: "1rem",
   },
   button: {
     padding: "0.75rem",
@@ -87,6 +105,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     backgroundColor: "#1a73e8",
     color: "#fff",
     cursor: "pointer",
+    fontSize: "1rem",
+    transition: "background-color 0.3s",
+    width: "100%",
   },
   error: {
     marginBottom: "1rem",

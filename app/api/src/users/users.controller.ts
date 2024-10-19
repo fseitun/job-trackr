@@ -4,6 +4,7 @@ import {
   Body,
   UnauthorizedException,
   Res,
+  Logger,
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -19,8 +20,11 @@ export class UsersController {
     private jwtService: JwtService
   ) {}
 
+  private readonly logger = new Logger(UsersController.name);
+
   @Post("register")
   async register(@Body() createUserDto: CreateUserDto) {
+    this.logger.log("Registering a new user");
     return await this.usersService.create(createUserDto);
   }
 
@@ -31,6 +35,7 @@ export class UsersController {
   ) {
     const user = await this.usersService.findByEmail(loginUserDto.email);
     if (!user) {
+      this.logger.error("User not found in request");
       throw new UnauthorizedException("Invalid credentials");
     }
 
@@ -39,11 +44,14 @@ export class UsersController {
       user.passwordHash
     );
     if (!isPasswordValid) {
+      this.logger.error("Invalid credentials");
       throw new UnauthorizedException("Invalid credentials");
     }
 
     const payload = { sub: user.id, email: user.email };
     const token = this.jwtService.sign(payload);
+
+    this.logger.log("User logged in successfully");
 
     response.cookie("access_token", token, {
       httpOnly: true,
@@ -52,6 +60,6 @@ export class UsersController {
       maxAge: 60 * 60 * 24 * 7,
     });
 
-    return { message: "Login successful" };
+    return { token };
   }
 }

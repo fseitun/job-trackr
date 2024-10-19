@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { authStyles as styles } from "./authStyles";
 
 const Register: React.FC = () => {
   const { register } = useContext(AuthContext);
@@ -32,11 +33,11 @@ const Register: React.FC = () => {
 
   return (
     <div style={styles.container}>
-      <h2>Register</h2>
+      <h2 style={styles.title}>Register</h2>
       {error && <div style={styles.error}>{error}</div>}
       <form onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.formGroup}>
-          <label>Email:</label>
+          <label style={styles.label}>Email:</label>
           <input
             type="email"
             value={email}
@@ -46,7 +47,7 @@ const Register: React.FC = () => {
           />
         </div>
         <div style={styles.formGroup}>
-          <label>Password:</label>
+          <label style={styles.label}>Password:</label>
           <input
             type="password"
             value={password}
@@ -56,7 +57,7 @@ const Register: React.FC = () => {
           />
         </div>
         <div style={styles.formGroup}>
-          <label>Confirm Password:</label>
+          <label style={styles.label}>Confirm Password:</label>
           <input
             type="password"
             value={confirmPassword}
@@ -71,43 +72,6 @@ const Register: React.FC = () => {
       </form>
     </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    maxWidth: "400px",
-    margin: "50px auto",
-    padding: "2rem",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    backgroundColor: "#f9f9f9",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  formGroup: {
-    marginBottom: "1rem",
-  },
-  input: {
-    width: "100%",
-    padding: "0.75rem",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-  },
-  button: {
-    padding: "0.75rem",
-    borderRadius: "4px",
-    border: "none",
-    backgroundColor: "#1a73e8",
-    color: "#fff",
-    cursor: "pointer",
-  },
-  error: {
-    marginBottom: "1rem",
-    color: "red",
-    textAlign: "center",
-  },
 };
 
 export default Register;

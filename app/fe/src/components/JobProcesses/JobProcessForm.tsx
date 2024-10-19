@@ -35,7 +35,6 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
         .get<JobProcess>(`/api/job-processes/${id}`)
         .then((response) => setFormData(response.data))
         .catch((err) => {
-          console.error("Error fetching job process:", err);
           setError("Failed to load job process details.");
         });
     }
@@ -64,7 +63,6 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
         navigate("/");
       }
     } catch (err) {
-      console.error("Error submitting form:", err);
       setError("Failed to submit the form.");
     }
   };

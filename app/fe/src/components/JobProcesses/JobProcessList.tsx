@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { JobProcess } from "../../types";
+import api from "../../api/api";
 
 const JobProcessList: React.FC = () => {
   const [jobProcesses, setJobProcesses] = useState<JobProcess[]>([]);
@@ -11,7 +11,7 @@ const JobProcessList: React.FC = () => {
   useEffect(() => {
     const fetchJobProcesses = async () => {
       try {
-        const response = await axios.get<JobProcess[]>("/api/job-processes");
+        const response = await api.get<JobProcess[]>("/job-processes");
         setJobProcesses(response.data);
       } catch (err) {
         console.error("Error fetching job processes:", err);

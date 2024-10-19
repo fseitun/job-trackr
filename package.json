@@ -13,12 +13,13 @@
     "lint": "yarn workspace api lint && yarn workspace fe lint",
     "type-check": "yarn workspace api type-check && yarn workspace fe type-check",
     "generate": "yarn workspace api generate",
-    "migrate": "yarn workspace api migrate"
+    "migrate": "yarn workspace api migrate",
+    "clean": "rm -rf app/api/dist app/api/logs app/api/node_modules app/fe/dist app/fe/node_modules node_modules .yarn"
   },
   "devDependencies": {
-    "@eslint/js": "^9.12.0",
+    "@eslint/js": "^9.13.0",
     "concurrently": "^9.0.1",
-    "eslint": "^9.12.0",
+    "eslint": "^9.13.0",
     "eslint-plugin-react": "^7.37.1",
     "globals": "^15.11.0",
     "typescript": "^5.6.3",

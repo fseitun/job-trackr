@@ -18,7 +18,6 @@ const JobProcessDetail: React.FC = () => {
         );
         setJobProcess(response.data);
       } catch (err) {
-        console.error("Error fetching job process:", err);
         setError("Failed to load job application details.");
       } finally {
         setLoading(false);
