@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { JobProcess } from "../../types";
 import InterviewList from "../Interview/InterviewList";
 import client from "../../api/client";
 
 const JobProcessDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [jobProcess, setJobProcess] = useState<JobProcess | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -42,6 +43,12 @@ const JobProcessDetail: React.FC = () => {
 
   return (
     <div style={styles.container}>
+      <button
+        onClick={() => navigate("/job-processes")}
+        style={styles.backButton}
+      >
+        Back
+      </button>
       <h2 style={styles.subHeader}>Interviews</h2>
       <Link to={`/job-processes/${id}/add-interview`} style={styles.addButton}>
         <button style={styles.button}>Add Interview</button>
@@ -80,6 +87,16 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "#fff",
     cursor: "pointer",
     transition: "background-color 0.3s",
+  },
+  backButton: {
+    padding: "0.5rem 1rem",
+    borderRadius: "5px",
+    border: "none",
+    backgroundColor: "#d93025",
+    color: "#fff",
+    cursor: "pointer",
+    transition: "background-color 0.3s",
+    marginBottom: "1rem",
   },
   loading: {
     textAlign: "center",
