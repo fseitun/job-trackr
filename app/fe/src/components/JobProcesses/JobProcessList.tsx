@@ -47,6 +47,7 @@ const JobProcessList: React.FC = () => {
               <th>Hiring Company</th>
               <th>Recruiting Company</th>
               <th>Position</th>
+              <th>Last Interaction</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -56,6 +57,7 @@ const JobProcessList: React.FC = () => {
                 <td>{job.hiringCompany}</td>
                 <td>{job.recruitingCompany}</td>
                 <td>{job.position}</td>
+                <td>{job.lastInteraction ? new Date(job.lastInteraction).toLocaleDateString() : "N/A"}</td>
                 <td>
                   <Link to={`/job-processes/${job.id}`}>
                     <button style={{ ...styles.button, ...styles.viewButton }}>

@@ -3,7 +3,7 @@ import { DatabaseService } from "../database/database.service";
 import { CreateJobProcessesDto } from "./dto/create-job-processes.dto";
 import { UpdateJobProcessesDto } from "./dto/update-job-processes.dto";
 import { jobProcesses, interviews } from "../database/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 
 @Injectable()
 export class JobProcessesService {
@@ -75,11 +75,39 @@ export class JobProcessesService {
   }
 
   async findAll(userId: number) {
-    this.logger.log("Fetching all job processes");
-    return this.dbService.db
-      .select()
+    this.logger.log("Fetching all job processes with last interaction date");
+    const jobProcessesWithLastInteraction = await this.dbService.db
+      .select({
+        id: jobProcesses.id,
+        hiringCompany: jobProcesses.hiringCompany,
+        recruitingCompany: jobProcesses.recruitingCompany,
+        position: jobProcesses.position,
+        recruiterName: jobProcesses.recruiterName,
+        recruitmentChannel: jobProcesses.recruitmentChannel,
+        monthlySalary: jobProcesses.monthlySalary,
+        vacationsDays: jobProcesses.vacationsDays,
+        holidaysDays: jobProcesses.holidaysDays,
+        jobDescription: jobProcesses.jobDescription,
+        directHire: jobProcesses.directHire,
+        timeZone: jobProcesses.timeZone,
+        lastInteraction: sql<Date>`MAX(${interviews.interviewDate})`,
+      })
       .from(jobProcesses)
-      .where(eq(jobProcesses.userId, userId));
+      .leftJoin(
+        interviews,
+        and(
+          eq(interviews.jobProcessId, jobProcesses.id),
+          eq(interviews.userId, userId)
+        )
+      )
+      .where(eq(jobProcesses.userId, userId))
+      .groupBy(jobProcesses.id);
+
+    this.logger.debug(
+      "Job Processes with Last Interaction:",
+      jobProcessesWithLastInteraction
+    );
+    return jobProcessesWithLastInteraction;
   }
 
   async findOne(id: number, userId: number) {

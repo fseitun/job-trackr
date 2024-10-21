@@ -5,7 +5,7 @@
     "app/fe",
     "app/api"
   ],
-  "packageManager": "yarn@4.5.0",
+  "packageManager": "yarn@4.5.1",
   "scripts": {
     "dev": "concurrently --names api,fe,db --prefix-colors green,magenta,blue \"yarn workspace api start:dev\" \"yarn workspace fe dev\" \"docker compose up\"",
     "build": "yarn workspace api build && yarn workspace fe build",

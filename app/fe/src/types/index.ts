@@ -11,6 +11,7 @@ export interface JobProcess {
   jobDescription: string;
   directHire: boolean;
   timeZone: string;
+  lastInteraction: Date;
   interviews: Interview[];
 }
 
@@ -19,7 +20,7 @@ export interface Interview {
   jobProcessId: number;
   interviewerName: string;
   interviewerRole: string;
-  interviewDate: string;
+  interviewDate: Date;
   notes?: string;
 }
 
