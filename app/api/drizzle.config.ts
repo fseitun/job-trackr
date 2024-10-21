@@ -9,7 +9,7 @@ const config: Config = {
     port: parseInt(process.env.DATABASE_PORT || "5433"),
     user: process.env.DATABASE_USER || "postgres",
     password: process.env.DATABASE_PASSWORD || "difficult-password",
-    database: process.env.DATABASE_NAME || "db_name",
+    database: process.env.DATABASE_NAME || "job_trackr",
     ssl: false,
   },
 };

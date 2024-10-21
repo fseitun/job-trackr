@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: difficult-password
-      POSTGRES_DB: db_name
+      POSTGRES_DB: job_trackr
     ports:
       - "5433:5432"
     volumes:
