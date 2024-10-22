@@ -12,6 +12,7 @@ import { LoginUserDto } from "./dto/login-user.dto";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
 import { Response } from "express";
+import { maxAge } from "../../config";
 
 @Controller("users")
 export class UsersController {
@@ -57,7 +58,7 @@ export class UsersController {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge,
     });
 
     return { token };

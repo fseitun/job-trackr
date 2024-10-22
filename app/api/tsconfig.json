@@ -9,7 +9,7 @@
     "target": "ESNext",
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",
     "baseUrl": "./",
     "skipLibCheck": true,
     "strict": true,

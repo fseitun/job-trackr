@@ -5,16 +5,14 @@ import { JwtStrategy } from "./jwt.strategy";
 import { UsersModule } from "../users/users.module";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
+import { jwtConfig } from "config";
 
 @Global()
 @Module({
   imports: [
     forwardRef(() => UsersModule),
     PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET || "your-secret-key", // TODO: is this the correct pattern?
-      signOptions: { expiresIn: "1h" },
-    }),
+    JwtModule.register(jwtConfig),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
