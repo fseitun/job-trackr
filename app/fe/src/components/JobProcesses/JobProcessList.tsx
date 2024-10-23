@@ -32,13 +32,17 @@ const JobProcessList: React.FC = () => {
     return <div style={styles.error}>{error}</div>;
   }
 
+  const sortedJobProcesses = [...jobProcesses].sort(
+    (a, b) => b.lastInteraction.getTime() - a.lastInteraction.getTime()
+  );
+
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>Job Applications</h1>
       <Link to="/job-processes/add" style={styles.addButton}>
         <button style={styles.button}>Add Job Application</button>
       </Link>
-      {jobProcesses.length === 0 ? (
+      {sortedJobProcesses.length === 0 ? (
         <p>No job applications found.</p>
       ) : (
         <table style={styles.table}>
@@ -52,12 +56,16 @@ const JobProcessList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {jobProcesses.map((job) => (
+            {sortedJobProcesses.map((job) => (
               <tr key={job.id} style={styles.row}>
                 <td>{job.hiringCompany}</td>
                 <td>{job.recruitingCompany}</td>
                 <td>{job.position}</td>
-                <td>{job.lastInteraction ? new Date(job.lastInteraction).toLocaleDateString() : "N/A"}</td>
+                <td>
+                  {job.lastInteraction
+                    ? new Date(job.lastInteraction).toLocaleDateString()
+                    : "N/A"}
+                </td>
                 <td>
                   <Link to={`/job-processes/${job.id}`}>
                     <button style={{ ...styles.button, ...styles.viewButton }}>

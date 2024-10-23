@@ -3,7 +3,10 @@ import { JobProcess, CreateJobProcess } from "../types";
 
 const fetchAll = async (): Promise<JobProcess[]> => {
   const response = await api.get<JobProcess[]>("/job-processes");
-  return response.data;
+  return response.data.map((jobProcess) => ({
+    ...jobProcess,
+    lastInteraction: new Date(jobProcess.lastInteraction),
+  }));
 };
 
 const login = async (email: string, password: string): Promise<string> => {
