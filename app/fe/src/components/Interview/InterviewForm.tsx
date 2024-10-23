@@ -32,7 +32,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
   useEffect(() => {
     if (isEditMode && interviewId) {
       client
-        .get<Interview[]>(`/api/interviews/${interviewId}`)
+        .get<Interview[]>(`/interviews/${interviewId}`)
         .then((interview) => {
           setFormData({
             interviewerName: interview[0].interviewerName,
