@@ -15,7 +15,12 @@ const JobProcessDetail: React.FC = () => {
     const fetchJobProcess = async () => {
       try {
         const data = await client.get<JobProcess>(`/job-processes/${id}`);
-        setJobProcess(data);
+        const sortedInterviews = [...data.interviews].sort(
+          (a, b) =>
+            new Date(b.interviewDate).getTime() -
+            new Date(a.interviewDate).getTime()
+        );
+        setJobProcess({ ...data, interviews: sortedInterviews });
       } catch (err) {
         console.error("Error fetching job application details:", err);
         setError("Failed to load job application details.");
