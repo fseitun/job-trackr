@@ -7,20 +7,24 @@ import client from "../../api/client";
 const JobProcessDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [jobProcess, setJobProcess] = useState<JobProcess | null>(null);
+  const [Interviews, setInterviews] = useState<JobProcess | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    const fetchJobProcess = async () => {
+    const fetchInterviews = async () => {
       try {
         const data = await client.get<JobProcess>(`/job-processes/${id}`);
+        for (const date of data.interviews) {
+          console.log(date.interviewDate);
+          console.log(new Date(date.interviewDate).getTime());
+        }
         const sortedInterviews = [...data.interviews].sort(
           (a, b) =>
             new Date(b.interviewDate).getTime() -
             new Date(a.interviewDate).getTime()
         );
-        setJobProcess({ ...data, interviews: sortedInterviews });
+        setInterviews({ ...data, interviews: sortedInterviews });
       } catch (err) {
         console.error("Error fetching job application details:", err);
         setError("Failed to load job application details.");
@@ -30,21 +34,23 @@ const JobProcessDetail: React.FC = () => {
     };
 
     if (id) {
-      fetchJobProcess();
+      fetchInterviews();
     }
   }, [id]);
 
   if (loading) {
-    return <div style={styles.loading}>Loading job application...</div>;
+    return <div style={styles.loading}>Loading interviews...</div>;
   }
 
   if (error) {
     return <div style={styles.error}>{error}</div>;
   }
 
-  if (!jobProcess) {
-    return <div style={styles.error}>Job application not found.</div>;
+  if (!Interviews) {
+    return <div style={styles.error}>Interviews not found.</div>;
   }
+
+  console.log(Interviews);
 
   return (
     <div style={styles.container}>
@@ -59,8 +65,8 @@ const JobProcessDetail: React.FC = () => {
         <button style={styles.button}>Add Interview</button>
       </Link>
       <InterviewList
-        interviews={jobProcess.interviews}
-        jobProcessId={jobProcess.id}
+        interviews={Interviews.interviews}
+        jobProcessId={Interviews.id}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import client from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
-import { Interview } from "../../types";
+import { CreateInterviewDto, UpdateInterviewDto } from "../../types";
 
 interface InterviewFormProps {
   isEditMode?: boolean;
@@ -11,17 +11,17 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
   isEditMode = false,
 }) => {
   const navigate = useNavigate();
-
   const { id } = useParams<{ id: string }>();
 
   const interviewId = isEditMode ? id : undefined;
   const jobProcessId = isEditMode ? undefined : id;
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<CreateInterviewDto>({
     interviewerName: "",
     interviewerRole: "",
-    interviewDate: new Date().toISOString().split("T")[0],
+    interviewDate: new Date().toISOString(),
     notes: "",
+    jobProcessId: Number(jobProcessId),
   });
 
   const [error, setError] = useState<string>("");
@@ -32,17 +32,16 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
   useEffect(() => {
     if (isEditMode && interviewId) {
       client
-        .get<Interview[]>(`/interviews/${interviewId}`)
+        .get<CreateInterviewDto>(`/interviews/${interviewId}`)
         .then((interview) => {
           setFormData({
-            interviewerName: interview[0].interviewerName,
-            interviewerRole: interview[0].interviewerRole,
-            interviewDate: new Date(interview[0].interviewDate)
-              .toISOString()
-              .split("T")[0],
-            notes: interview[0].notes ?? "",
+            interviewerName: interview.interviewerName,
+            interviewerRole: interview.interviewerRole,
+            interviewDate: interview.interviewDate,
+            notes: interview.notes ?? "",
+            jobProcessId: interview.jobProcessId,
           });
-          setFetchedJobProcessId(interview[0].jobProcessId);
+          setFetchedJobProcessId(interview.jobProcessId);
         })
         .catch((err) => {
           console.error("Error fetching interview:", err);
@@ -54,37 +53,24 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCreate = async (formData: CreateInterviewDto) => {
     try {
-      if (isEditMode && interviewId) {
-        const completeFormData = {
-          hiringCompany: "",
-          recruitingCompany: "",
-          position: "",
-          recruiterName: "",
-          recruitmentChannel: "",
-          monthlySalary: 0,
-          vacationsDays: 0,
-          holidaysDays: 0,
-          jobDescription: "",
-          directHire: false,
-          timeZone: "",
-          ...formData,
-        };
-        await client.patch(`/interviews/${interviewId}`, completeFormData);
-        if (fetchedJobProcessId !== null) {
-          navigate(`/job-processes/${fetchedJobProcessId}`);
-        } else {
-          throw new Error("Failed to retrieve Job Process ID.");
-        }
-      } else if (jobProcessId) {
-        await client.post("/interviews", {
+      const payload = {
+        ...formData,
+        interviewDate: formData.interviewDate,
+      };
+
+      if (jobProcessId) {
+        await client.post<CreateInterviewDto>("/interviews", {
+          ...payload,
           jobProcessId: Number(jobProcessId),
-          ...formData,
         });
         navigate(`/job-processes/${jobProcessId}`);
       } else {
@@ -93,6 +79,41 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
     } catch (err) {
       console.error("Error submitting interview form:", err);
       setError("Failed to submit the form.");
+    }
+  };
+
+  const handleEdit = async (formData: UpdateInterviewDto) => {
+    try {
+      const payload = {
+        ...formData,
+        interviewDate: formData.interviewDate,
+      };
+
+      if (interviewId) {
+        await client.patch<UpdateInterviewDto>(
+          `/interviews/${interviewId}`,
+          payload
+        );
+        if (fetchedJobProcessId !== null) {
+          navigate(`/job-processes/${fetchedJobProcessId}`);
+        } else {
+          throw new Error("Failed to retrieve Job Process ID.");
+        }
+      } else {
+        throw new Error("Invalid interview ID.");
+      }
+    } catch (err) {
+      console.error("Error submitting interview form:", err);
+      setError("Failed to submit the form.");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isEditMode) {
+      await handleEdit(formData);
+    } else {
+      await handleCreate(formData);
     }
   };
 
@@ -207,10 +228,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     minHeight: "100px",
     fontSize: "1rem",
     resize: "vertical",
-  },
-  checkbox: {
-    transform: "scale(1.5)",
-    marginLeft: "0.5rem",
   },
   buttonGroup: {
     display: "flex",

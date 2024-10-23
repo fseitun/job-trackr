@@ -11,17 +11,31 @@ export interface JobProcess {
   jobDescription: string;
   directHire: boolean;
   timeZone: string;
-  lastInteraction: Date;
+  lastInteraction: string;
   interviews: Interview[];
+}
+
+export type CreateJobProcess = Omit<JobProcess, "id" | "interviews">;
+
+export interface CreateInterviewDto {
+  interviewerName: string;
+  interviewerRole: string;
+  interviewDate: string;
+  notes?: string;
+  jobProcessId: number;
+}
+
+export interface UpdateInterviewDto {
+  interviewerName?: string;
+  interviewerRole?: string;
+  interviewDate?: string;
+  notes?: string;
 }
 
 export interface Interview {
   id: number;
-  jobProcessId: number;
   interviewerName: string;
   interviewerRole: string;
-  interviewDate: Date;
+  interviewDate: string;
   notes?: string;
 }
-
-export type CreateJobProcess = Omit<JobProcess, "id" | "interviews">;

@@ -28,7 +28,7 @@ const InterviewList: React.FC<InterviewListProps> = ({ interviews }) => {
           <tr key={interview.id} style={styles.row}>
             <td>{interview.interviewerName}</td>
             <td>{interview.interviewerRole}</td>
-            <td>{interview.interviewDate.split("T")[0]}</td>
+            <td>{new Date(interview.interviewDate).toLocaleDateString()}</td>
             <td>{interview.notes || "N/A"}</td>
             <td>
               <Link to={`/edit-interview/${interview.id}`}>

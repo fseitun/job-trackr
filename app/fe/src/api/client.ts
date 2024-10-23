@@ -1,11 +1,11 @@
 import api from "./api";
-import { JobProcess, CreateJobProcess } from "../types";
+import { JobProcess } from "../types";
 
 const fetchAll = async (): Promise<JobProcess[]> => {
   const response = await api.get<JobProcess[]>("/job-processes");
   return response.data.map((jobProcess) => ({
     ...jobProcess,
-    lastInteraction: new Date(jobProcess.lastInteraction),
+    lastInteraction: jobProcess.lastInteraction,
   }));
 };
 
@@ -34,11 +34,11 @@ const get = async <T>(url: string): Promise<T> => {
   return response.data;
 };
 
-const post = async (url: string, data: CreateJobProcess): Promise<void> => {
+const post = async <T>(url: string, data: T): Promise<void> => {
   await api.post(url, data);
 };
 
-const patch = async (url: string, data: CreateJobProcess): Promise<void> => {
+const patch = async <T>(url: string, data: T): Promise<void> => {
   await api.patch(url, data);
 };
 

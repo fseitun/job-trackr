@@ -25,7 +25,7 @@ const JobProcessList: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div style={styles.loading}>Loading job applications...</div>;
+    return <div style={styles.loading}>Loading job processes...</div>;
   }
 
   if (error) {
@@ -33,9 +33,11 @@ const JobProcessList: React.FC = () => {
   }
 
   const sortedJobProcesses = [...jobProcesses].sort(
-    (a, b) => b.lastInteraction.getTime() - a.lastInteraction.getTime()
+    (a, b) =>
+      new Date(b.lastInteraction).getTime() -
+      new Date(a.lastInteraction).getTime()
   );
-
+  console.log(sortedJobProcesses);
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>Job Applications</h1>
@@ -61,11 +63,7 @@ const JobProcessList: React.FC = () => {
                 <td>{job.hiringCompany}</td>
                 <td>{job.recruitingCompany}</td>
                 <td>{job.position}</td>
-                <td>
-                  {job.lastInteraction
-                    ? new Date(job.lastInteraction).toLocaleDateString()
-                    : "N/A"}
-                </td>
+                <td>{job.lastInteraction ? job.lastInteraction : "N/A"}</td>
                 <td>
                   <Link to={`/job-processes/${job.id}`}>
                     <button style={{ ...styles.button, ...styles.viewButton }}>

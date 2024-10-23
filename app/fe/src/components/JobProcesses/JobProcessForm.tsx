@@ -25,6 +25,7 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
     jobDescription: "",
     directHire: false,
     timeZone: "",
+    lastInteraction: new Date().toISOString(),
   });
 
   const [error, setError] = useState<string>("");
