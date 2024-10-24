@@ -7,24 +7,21 @@ import client from "../../api/client";
 const JobProcessDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [Interviews, setInterviews] = useState<JobProcess | null>(null);
+  const [jobProcess, setJobProcess] = useState<JobProcess | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    const fetchInterviews = async () => {
+    const fetchJobProcess = async () => {
       try {
         const data = await client.get<JobProcess>(`/job-processes/${id}`);
-        for (const date of data.interviews) {
-          console.log(date.interviewDate);
-          console.log(new Date(date.interviewDate).getTime());
-        }
-        const sortedInterviews = [...data.interviews].sort(
+        const interviews = data.interviews;
+        const sortedInterviews = [...interviews].sort(
           (a, b) =>
             new Date(b.interviewDate).getTime() -
             new Date(a.interviewDate).getTime()
         );
-        setInterviews({ ...data, interviews: sortedInterviews });
+        setJobProcess({ ...data, interviews: sortedInterviews });
       } catch (err) {
         console.error("Error fetching job application details:", err);
         setError("Failed to load job application details.");
@@ -34,23 +31,21 @@ const JobProcessDetail: React.FC = () => {
     };
 
     if (id) {
-      fetchInterviews();
+      fetchJobProcess();
     }
   }, [id]);
 
   if (loading) {
-    return <div style={styles.loading}>Loading interviews...</div>;
+    return <div style={styles.loading}>Loading job process...</div>;
   }
 
   if (error) {
     return <div style={styles.error}>{error}</div>;
   }
 
-  if (!Interviews) {
-    return <div style={styles.error}>Interviews not found.</div>;
+  if (!jobProcess) {
+    return <div style={styles.error}>Job process not found.</div>;
   }
-
-  console.log(Interviews);
 
   return (
     <div style={styles.container}>
@@ -65,8 +60,8 @@ const JobProcessDetail: React.FC = () => {
         <button style={styles.button}>Add Interview</button>
       </Link>
       <InterviewList
-        interviews={Interviews.interviews}
-        jobProcessId={Interviews.id}
+        interviews={jobProcess.interviews}
+        jobProcessId={jobProcess.id}
       />
     </div>
   );

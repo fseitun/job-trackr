@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import client from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
-import { CreateJobProcess, JobProcess } from "../../types";
+import { UpdateJobProcessDto, JobProcess } from "../../types";
 
 interface JobProcessFormProps {
   isEditMode?: boolean;
@@ -13,15 +13,15 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  const [formData, setFormData] = useState<CreateJobProcess>({
+  const [formData, setFormData] = useState<UpdateJobProcessDto>({
     hiringCompany: "",
     recruitingCompany: "",
     position: "",
     recruiterName: "",
     recruitmentChannel: "",
     monthlySalary: 0,
-    vacationsDays: 0,
-    holidaysDays: 0,
+    vacationDays: 0,
+    holidayDays: 0,
     jobDescription: "",
     directHire: false,
     timeZone: "",
@@ -58,10 +58,18 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
     e.preventDefault();
     try {
       if (isEditMode && id) {
-        await client.patch(`/job-processes/${id}`, formData);
+        await client.patch<UpdateJobProcessDto>(
+          `/job-processes/${id}`,
+          formData,
+          Number(id)
+        );
         navigate(`/job-processes/${id}`);
       } else {
-        await client.post("/job-processes", formData);
+        await client.post<UpdateJobProcessDto>(
+          "/job-processes",
+          formData,
+          Number(id)
+        );
         navigate("/");
       }
     } catch (err) {
@@ -147,7 +155,7 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
           <input
             type="number"
             name="vacationsDays"
-            value={formData.vacationsDays}
+            value={formData.vacationDays}
             onChange={handleChange}
             style={styles.input}
           />
@@ -157,7 +165,7 @@ const JobProcessForm: React.FC<JobProcessFormProps> = ({
           <input
             type="number"
             name="holidaysDays"
-            value={formData.holidaysDays}
+            value={formData.holidayDays}
             onChange={handleChange}
             style={styles.input}
           />

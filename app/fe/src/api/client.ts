@@ -1,12 +1,8 @@
 import api from "./api";
-import { JobProcess } from "../types";
 
-const fetchAll = async (): Promise<JobProcess[]> => {
-  const response = await api.get<JobProcess[]>("/job-processes");
-  return response.data.map((jobProcess) => ({
-    ...jobProcess,
-    lastInteraction: jobProcess.lastInteraction,
-  }));
+const fetchAll = async <T>(url: string): Promise<T[]> => {
+  const response = await api.get<T[]>(url);
+  return response.data;
 };
 
 const login = async (email: string, password: string): Promise<string> => {
@@ -34,12 +30,12 @@ const get = async <T>(url: string): Promise<T> => {
   return response.data;
 };
 
-const post = async <T>(url: string, data: T): Promise<void> => {
-  await api.post(url, data);
+const post = async <T>(url: string, data: T, id: number): Promise<void> => {
+  await api.post(url, { data, id }); // TODO: fix this on backend
 };
 
-const patch = async <T>(url: string, data: T): Promise<void> => {
-  await api.patch(url, data);
+const patch = async <T>(url: string, data: T, id: number): Promise<void> => {
+  await api.patch(url, { data, id }); // TODO: fix this on backend
 };
 
 const client = {

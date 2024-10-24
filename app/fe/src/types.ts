@@ -6,31 +6,19 @@ export interface JobProcess {
   recruiterName: string;
   recruitmentChannel: string;
   monthlySalary: number;
-  vacationsDays: number;
-  holidaysDays: number;
+  vacationDays: number;
+  holidayDays: number;
   jobDescription: string;
   directHire: boolean;
   timeZone: string;
   lastInteraction: string;
   interviews: Interview[];
 }
-
-export type CreateJobProcess = Omit<JobProcess, "id" | "interviews">;
-
-export interface CreateInterviewDto {
-  interviewerName: string;
-  interviewerRole: string;
-  interviewDate: string;
-  notes?: string;
-  jobProcessId: number;
-}
-
-export interface UpdateInterviewDto {
-  interviewerName?: string;
-  interviewerRole?: string;
-  interviewDate?: string;
-  notes?: string;
-}
+export type CreateJobProcessDto = Omit<
+  JobProcess,
+  "id" | "interviews" | "lastInteraction"
+>;
+export type UpdateJobProcessDto = Partial<JobProcess>;
 
 export interface Interview {
   id: number;
@@ -39,3 +27,5 @@ export interface Interview {
   interviewDate: string;
   notes?: string;
 }
+export type CreateInterviewDto = Omit<Interview, "id">;
+export type UpdateInterviewDto = Partial<Interview>;

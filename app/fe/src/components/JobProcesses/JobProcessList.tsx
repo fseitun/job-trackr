@@ -11,7 +11,9 @@ const JobProcessList: React.FC = () => {
   useEffect(() => {
     const fetchJobProcesses = async () => {
       try {
-        const jobProcesses = await client.fetchAll();
+        const jobProcesses = await client.fetchAll<JobProcess>(
+          "/job-processes"
+        );
         setJobProcesses(jobProcesses);
       } catch (err) {
         console.error("Error fetching job processes:", err);

@@ -13,48 +13,40 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  const interviewId = isEditMode ? id : undefined;
-  const jobProcessId = isEditMode ? undefined : id;
-
-  const [formData, setFormData] = useState<CreateInterviewDto>({
-    interviewerName: "",
-    interviewerRole: "",
-    interviewDate: new Date().toISOString(),
-    notes: "",
-    jobProcessId: Number(jobProcessId),
-  });
+  const [interviewFormData, setInterviewFormData] =
+    useState<CreateInterviewDto>({
+      interviewerName: "",
+      interviewerRole: "",
+      interviewDate: new Date().toISOString(),
+      notes: "",
+    });
 
   const [error, setError] = useState<string>("");
-  const [fetchedJobProcessId, setFetchedJobProcessId] = useState<number | null>(
-    null
-  );
 
   useEffect(() => {
-    if (isEditMode && interviewId) {
+    if (isEditMode && id) {
       client
-        .get<CreateInterviewDto>(`/interviews/${interviewId}`)
+        .get<CreateInterviewDto>(`/interviews/${id}`)
         .then((interview) => {
-          setFormData({
+          setInterviewFormData({
             interviewerName: interview.interviewerName,
             interviewerRole: interview.interviewerRole,
             interviewDate: interview.interviewDate,
             notes: interview.notes ?? "",
-            jobProcessId: interview.jobProcessId,
           });
-          setFetchedJobProcessId(interview.jobProcessId);
         })
         .catch((err) => {
           console.error("Error fetching interview:", err);
           setError("Failed to load interview details.");
         });
     }
-  }, [isEditMode, interviewId]);
+  }, [isEditMode, id]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setInterviewFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -67,12 +59,13 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
         interviewDate: formData.interviewDate,
       };
 
-      if (jobProcessId) {
-        await client.post<CreateInterviewDto>("/interviews", {
-          ...payload,
-          jobProcessId: Number(jobProcessId),
-        });
-        navigate(`/job-processes/${jobProcessId}`);
+      if (id) {
+        await client.post<CreateInterviewDto>(
+          "/interviews",
+          payload,
+          Number(id)
+        );
+        navigate(`/job-processes/${id}`);
       } else {
         throw new Error("Invalid job process ID.");
       }
@@ -84,18 +77,14 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
 
   const handleEdit = async (formData: UpdateInterviewDto) => {
     try {
-      const payload = {
-        ...formData,
-        interviewDate: formData.interviewDate,
-      };
-
-      if (interviewId) {
+      if (id) {
         await client.patch<UpdateInterviewDto>(
-          `/interviews/${interviewId}`,
-          payload
+          `/interviews/${id}`,
+          formData,
+          Number(id)
         );
-        if (fetchedJobProcessId !== null) {
-          navigate(`/job-processes/${fetchedJobProcessId}`);
+        if (id !== null) {
+          navigate(`/job-processes/${id}`);
         } else {
           throw new Error("Failed to retrieve Job Process ID.");
         }
@@ -111,9 +100,9 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isEditMode) {
-      await handleEdit(formData);
+      await handleEdit(interviewFormData);
     } else {
-      await handleCreate(formData);
+      await handleCreate(interviewFormData);
     }
   };
 
@@ -129,7 +118,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
           <input
             type="text"
             name="interviewerName"
-            value={formData.interviewerName}
+            value={interviewFormData.interviewerName}
             onChange={handleChange}
             required
             style={styles.input}
@@ -140,7 +129,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
           <input
             type="text"
             name="interviewerRole"
-            value={formData.interviewerRole}
+            value={interviewFormData.interviewerRole}
             onChange={handleChange}
             required
             style={styles.input}
@@ -151,7 +140,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
           <input
             type="date"
             name="interviewDate"
-            value={formData.interviewDate}
+            value={interviewFormData.interviewDate}
             onChange={handleChange}
             required
             style={styles.input}
@@ -161,7 +150,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
           <label style={styles.label}>Notes:</label>
           <textarea
             name="notes"
-            value={formData.notes}
+            value={interviewFormData.notes}
             onChange={handleChange}
             style={styles.textarea}
           />
