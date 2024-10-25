@@ -11,11 +11,11 @@ import {
   NotFoundException,
   Logger,
 } from "@nestjs/common";
-import { JobProcessesService } from "./job-processes.service";
-import { CreateJobProcessesDto } from "./dto/create-job-processes.dto";
-import { UpdateJobProcessesDto } from "./dto/update-job-processes.dto";
-import { JwtAuthGuard } from "../auth/jwt-auth.guard";
-import { CustomRequest } from "../types/custom-request.interface";
+import { JobProcessesService } from "./job-processes.service.js";
+import { CreateJobProcessesDto } from "./dto/create-job-processes.dto.js";
+import { UpdateJobProcessesDto } from "./dto/update-job-processes.dto.js";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard.js";
+import { CustomRequest } from "../types/custom-request.interface.js";
 
 @Controller("job-processes")
 @UseGuards(JwtAuthGuard)

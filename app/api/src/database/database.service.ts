@@ -1,12 +1,13 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
+import pg, { type Pool as PoolType } from "pg";
 import { ConfigService } from "@nestjs/config";
 import { type NodePgDatabase } from "drizzle-orm/node-postgres";
 
+const { Pool } = pg;
 @Injectable()
 export class DatabaseService implements OnModuleInit, OnModuleDestroy {
-  public pool!: Pool;
+  public pool!: PoolType;
   public db!: NodePgDatabase;
 
   constructor(private configService: ConfigService) {}

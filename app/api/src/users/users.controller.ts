@@ -6,13 +6,13 @@ import {
   Res,
   Logger,
 } from "@nestjs/common";
-import { UsersService } from "./users.service";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { LoginUserDto } from "./dto/login-user.dto";
+import { UsersService } from "./users.service.js";
+import { CreateUserDto } from "./dto/create-user.dto.js";
+import { LoginUserDto } from "./dto/login-user.dto.js";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
 import { Response } from "express";
-import { maxAge } from "../../config";
+import { maxAge } from "../../config.js";
 
 @Controller("users")
 export class UsersController {

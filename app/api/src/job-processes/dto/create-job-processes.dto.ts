@@ -34,11 +34,11 @@ export class CreateJobProcessesDto {
 
   @IsOptional()
   @IsNumber()
-  vacationsDays?: number;
+  vacationDays?: number;
 
   @IsOptional()
   @IsNumber()
-  holidaysDays?: number;
+  holidayDays?: number;
 
   @IsOptional()
   @IsString()

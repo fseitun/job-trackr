@@ -24,13 +24,17 @@ export class LoggingInterceptor<T = unknown> implements NestInterceptor<T, T> {
       tap(() => {
         const { statusCode } = response;
         this.logger.log(
-          `Outgoing Response: ${method} ${url} ${statusCode} - ${Date.now() - now}ms`
+          `Outgoing Response: ${method} ${url} ${statusCode} - ${
+            Date.now() - now
+          }ms`
         );
       }),
       catchError((error) => {
         const { statusCode } = response;
         this.logger.error(
-          `Error Response: ${method} ${url} ${statusCode} - ${Date.now() - now}ms`,
+          `Error Response: ${method} ${url} ${statusCode} - ${
+            Date.now() - now
+          }ms`,
           error.stack
         );
         return throwError(() => error);

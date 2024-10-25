@@ -10,11 +10,11 @@ import {
   Req,
   Logger,
 } from "@nestjs/common";
-import { InterviewsService } from "./interviews.service";
-import { CreateInterviewDto } from "./dto/create-interview.dto";
-import { UpdateInterviewDto } from "./dto/update-interview.dto";
-import { JwtAuthGuard } from "../auth/jwt-auth.guard";
-import { CustomRequest } from "../types/custom-request.interface";
+import { InterviewsService } from "./interviews.service.js";
+import { CreateInterviewDto } from "./dto/create-interview.dto.js";
+import { UpdateInterviewDto } from "./dto/update-interview.dto.js";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard.js";
+import { CustomRequest } from "../types/custom-request.interface.js";
 
 @Controller("interviews")
 @UseGuards(JwtAuthGuard)

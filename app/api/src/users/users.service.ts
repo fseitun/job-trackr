@@ -1,7 +1,7 @@
 import { Injectable, ConflictException } from "@nestjs/common";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { DatabaseService } from "../database/database.service";
-import { users } from "../database/schema";
+import { CreateUserDto } from "./dto/create-user.dto.js";
+import { DatabaseService } from "../database/database.service.js";
+import { users } from "../database/schema.js";
 import * as bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
 

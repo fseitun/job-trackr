@@ -8,8 +8,11 @@ const JobProcessList = lazy(
 const JobProcessDetail = lazy(
   () => import("./components/JobProcesses/JobProcessDetail")
 );
-const JobProcessForm = lazy(
-  () => import("./components/JobProcesses/JobProcessForm")
+const CreateJobProcessForm = lazy(
+  () => import("./components/JobProcesses/CreateJobProcessForm")
+);
+const UpdateJobProcessForm = lazy(
+  () => import("./components/JobProcesses/UpdateJobProcessForm")
 );
 const InterviewForm = lazy(
   () => import("./components/Interview/InterviewForm")
@@ -37,7 +40,7 @@ function App() {
           path="/job-processes/add"
           element={
             <ProtectedRoute>
-              <JobProcessForm />
+              <CreateJobProcessForm />
             </ProtectedRoute>
           }
         />
@@ -53,7 +56,7 @@ function App() {
           path="/job-processes/:id/edit"
           element={
             <ProtectedRoute>
-              <JobProcessForm isEditMode />
+              <UpdateJobProcessForm />
             </ProtectedRoute>
           }
         />

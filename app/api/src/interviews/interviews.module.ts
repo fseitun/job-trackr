@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
-import { InterviewsService } from "./interviews.service";
-import { InterviewsController } from "./interviews.controller";
-import { DatabaseModule } from "../database/database.module";
+import { InterviewsService } from "./interviews.service.js";
+import { InterviewsController } from "./interviews.controller.js";
+import { DatabaseModule } from "../database/database.module.js";
 
 @Module({
   imports: [DatabaseModule],

@@ -39,7 +39,6 @@ const JobProcessList: React.FC = () => {
       new Date(b.lastInteraction).getTime() -
       new Date(a.lastInteraction).getTime()
   );
-  console.log(sortedJobProcesses);
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>Job Applications</h1>

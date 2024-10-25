@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
-import { UsersModule } from "./users/users.module";
-import { InterviewsModule } from "./interviews/interviews.module";
-import { JobProcessesModule } from "./job-processes/job-processes.module";
-import { DatabaseModule } from "./database/database.module";
-import { AuthModule } from "./auth/auth.module";
+import { UsersModule } from "./users/users.module.js";
+import { InterviewsModule } from "./interviews/interviews.module.js";
+import { JobProcessesModule } from "./job-processes/job-processes.module.js";
+import { DatabaseModule } from "./database/database.module.js";
+import { AuthModule } from "./auth/auth.module.js";
 
 @Module({
   imports: [

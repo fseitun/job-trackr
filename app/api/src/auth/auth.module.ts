@@ -1,11 +1,11 @@
 import { Global, Module, forwardRef } from "@nestjs/common";
-import { AuthController } from "./auth.controller";
-import { AuthService } from "./auth.service";
-import { JwtStrategy } from "./jwt.strategy";
-import { UsersModule } from "../users/users.module";
+import { AuthController } from "./auth.controller.js";
+import { AuthService } from "./auth.service.js";
+import { JwtStrategy } from "./jwt.strategy.js";
+import { UsersModule } from "../users/users.module.js";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { jwtConfig } from "config";
+import { jwtConfig } from "../../config.js";
 
 @Global()
 @Module({

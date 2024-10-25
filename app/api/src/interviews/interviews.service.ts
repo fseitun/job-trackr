@@ -4,10 +4,10 @@ import {
   Logger,
   NotFoundException,
 } from "@nestjs/common";
-import { DatabaseService } from "../database/database.service";
-import { CreateInterviewDto } from "./dto/create-interview.dto";
-import { UpdateInterviewDto } from "./dto/update-interview.dto";
-import { interviews, jobProcesses } from "../database/schema";
+import { DatabaseService } from "../database/database.service.js";
+import { CreateInterviewDto } from "./dto/create-interview.dto.js";
+import { UpdateInterviewDto } from "./dto/update-interview.dto.js";
+import { interviews, jobProcesses } from "../database/schema.js";
 import { eq, and } from "drizzle-orm";
 
 @Injectable()

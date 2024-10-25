@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException, Logger } from "@nestjs/common";
-import { DatabaseService } from "../database/database.service";
-import { CreateJobProcessesDto } from "./dto/create-job-processes.dto";
-import { UpdateJobProcessesDto } from "./dto/update-job-processes.dto";
-import { jobProcesses, interviews } from "../database/schema";
+import { DatabaseService } from "../database/database.service.js";
+import { CreateJobProcessesDto } from "./dto/create-job-processes.dto.js";
+import { UpdateJobProcessesDto } from "./dto/update-job-processes.dto.js";
+import { jobProcesses, interviews } from "../database/schema.js";
 import { eq, and, sql } from "drizzle-orm";
 
 @Injectable()
@@ -23,8 +23,8 @@ export class JobProcessesService {
       recruiterName: createJobProcessesDto.recruiterName,
       recruitmentChannel: createJobProcessesDto.recruitmentChannel,
       monthlySalary: createJobProcessesDto.monthlySalary ?? 0,
-      vacationsDays: createJobProcessesDto.vacationsDays ?? 0,
-      holidaysDays: createJobProcessesDto.holidaysDays ?? 0,
+      vacationDays: createJobProcessesDto.vacationDays ?? 0,
+      holidayDays: createJobProcessesDto.holidayDays ?? 0,
       jobDescription: createJobProcessesDto.jobDescription ?? "",
       directHire: createJobProcessesDto.directHire ?? false,
       timeZone: createJobProcessesDto.timeZone ?? "",
@@ -48,8 +48,8 @@ export class JobProcessesService {
     const updatedData = {
       ...updateJobProcessesDto,
       monthlySalary: updateJobProcessesDto.monthlySalary,
-      vacationsDays: updateJobProcessesDto.vacationsDays,
-      holidaysDays: updateJobProcessesDto.holidaysDays,
+      vacationsDays: updateJobProcessesDto.vacationDays,
+      holidaysDays: updateJobProcessesDto.holidayDays,
       directHire: updateJobProcessesDto.directHire,
     };
 

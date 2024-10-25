@@ -30,8 +30,11 @@ const get = async <T>(url: string): Promise<T> => {
   return response.data;
 };
 
-const post = async <T>(url: string, data: T, id: number): Promise<void> => {
-  await api.post(url, { data, id }); // TODO: fix this on backend
+const post = async <T>(url: string, data: T): Promise<void> => {
+  // console.log("posting");
+  // console.log(url);
+  // console.log(data);
+  await api.post(url, data); // TODO: fix this on backend
 };
 
 const patch = async <T>(url: string, data: T, id: number): Promise<void> => {

@@ -22,6 +22,7 @@ export type UpdateJobProcessDto = Partial<JobProcess>;
 
 export interface Interview {
   id: number;
+  jobProcessId: number;
   interviewerName: string;
   interviewerRole: string;
   interviewDate: string;

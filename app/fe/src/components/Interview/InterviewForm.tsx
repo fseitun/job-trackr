@@ -15,6 +15,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
 
   const [interviewFormData, setInterviewFormData] =
     useState<CreateInterviewDto>({
+      jobProcessId: Number(id),
       interviewerName: "",
       interviewerRole: "",
       interviewDate: new Date().toISOString(),
@@ -29,6 +30,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
         .get<CreateInterviewDto>(`/interviews/${id}`)
         .then((interview) => {
           setInterviewFormData({
+            jobProcessId: interview.jobProcessId,
             interviewerName: interview.interviewerName,
             interviewerRole: interview.interviewerRole,
             interviewDate: interview.interviewDate,
@@ -54,17 +56,8 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
 
   const handleCreate = async (formData: CreateInterviewDto) => {
     try {
-      const payload = {
-        ...formData,
-        interviewDate: formData.interviewDate,
-      };
-
       if (id) {
-        await client.post<CreateInterviewDto>(
-          "/interviews",
-          payload,
-          Number(id)
-        );
+        await client.post<CreateInterviewDto>("/interviews", formData);
         navigate(`/job-processes/${id}`);
       } else {
         throw new Error("Invalid job process ID.");

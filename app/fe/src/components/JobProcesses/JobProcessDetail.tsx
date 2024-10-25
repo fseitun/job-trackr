@@ -59,6 +59,11 @@ const JobProcessDetail: React.FC = () => {
       <Link to={`/job-processes/${id}/add-interview`} style={styles.addButton}>
         <button style={styles.button}>Add Interview</button>
       </Link>
+      <Link to={`/job-processes/${id}/edit`} style={styles.editButton}>
+        <button style={{ ...styles.button, ...styles.editBtn }}>
+          Edit Job Application
+        </button>
+      </Link>
       <InterviewList
         interviews={jobProcess.interviews}
         jobProcessId={jobProcess.id}
@@ -114,6 +119,16 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "2rem",
     color: "red",
     fontSize: "1.2rem",
+  },
+  editButton: {
+    display: "flex",
+    justifyContent: "flex-end",
+    marginBottom: "1rem",
+    marginTop: "1rem",
+  },
+  editBtn: {
+    backgroundColor: "#fbbc05",
+    color: "#ffffff",
   },
 };
 
