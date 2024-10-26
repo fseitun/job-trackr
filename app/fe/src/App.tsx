@@ -1,6 +1,8 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
+import CreateInterviewForm from "./components/Interview/CreateInterviewForm";
+import UpdateInterviewForm from "./components/Interview/UpdateInterviewForm";
 
 const JobProcessList = lazy(
   () => import("./components/JobProcesses/JobProcessList")
@@ -13,9 +15,6 @@ const CreateJobProcessForm = lazy(
 );
 const UpdateJobProcessForm = lazy(
   () => import("./components/JobProcesses/UpdateJobProcessForm")
-);
-const InterviewForm = lazy(
-  () => import("./components/Interview/InterviewForm")
 );
 const Login = lazy(() => import("./components/Auth/Login"));
 const Register = lazy(() => import("./components/Auth/Register"));
@@ -64,7 +63,7 @@ function App() {
           path="/edit-interview/:id"
           element={
             <ProtectedRoute>
-              <InterviewForm isEditMode />
+              <UpdateInterviewForm />
             </ProtectedRoute>
           }
         />
@@ -72,7 +71,7 @@ function App() {
           path="/job-processes/:id/add-interview"
           element={
             <ProtectedRoute>
-              <InterviewForm />
+              <CreateInterviewForm />
             </ProtectedRoute>
           }
         />

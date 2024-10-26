@@ -1,3 +1,2 @@
-extract all stylings to the nearest directory
-check dev script and launch docker only if needed
-refactor InterviewForm to CreateInterviewForm and UpdateInterviewForm + InterviewFormFields
+- Refactor styles to CSS modules or css-in-js?
+- Prevent FE tz from modifying the shown date format

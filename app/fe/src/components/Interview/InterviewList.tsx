@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Interview } from "../../types";
+import {
+  tableStyle,
+  rowStyle,
+  buttonStyle,
+  editButtonStyle,
+} from "./InterviewList.styles";
 
 interface InterviewListProps {
   interviews: Interview[];
@@ -13,7 +19,7 @@ const InterviewList: React.FC<InterviewListProps> = ({ interviews }) => {
   }
 
   return (
-    <table style={styles.table}>
+    <table style={tableStyle}>
       <thead>
         <tr>
           <th>Interviewer Name</th>
@@ -25,14 +31,14 @@ const InterviewList: React.FC<InterviewListProps> = ({ interviews }) => {
       </thead>
       <tbody>
         {interviews.map((interview) => (
-          <tr key={interview.id} style={styles.row}>
+          <tr key={interview.id} style={rowStyle}>
             <td>{interview.interviewerName}</td>
             <td>{interview.interviewerRole}</td>
             <td>{new Date(interview.interviewDate).toLocaleDateString()}</td>
             <td>{interview.notes || "N/A"}</td>
             <td>
               <Link to={`/edit-interview/${interview.id}`}>
-                <button style={{ ...styles.button, ...styles.editButton }}>
+                <button style={{ ...buttonStyle, ...editButtonStyle }}>
                   Edit
                 </button>
               </Link>
@@ -42,28 +48,6 @@ const InterviewList: React.FC<InterviewListProps> = ({ interviews }) => {
       </tbody>
     </table>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-  },
-  row: {
-    borderBottom: "1px solid #ddd",
-  },
-  button: {
-    padding: "0.5rem 1rem",
-    borderRadius: "5px",
-    border: "none",
-    backgroundColor: "#1a73e8",
-    color: "#fff",
-    cursor: "pointer",
-    transition: "background-color 0.3s",
-  },
-  editButton: {
-    backgroundColor: "#34a853",
-  },
 };
 
 export default InterviewList;
