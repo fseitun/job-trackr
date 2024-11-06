@@ -1,5 +1,5 @@
 {
-  "id": "571b0461-aa14-441d-88ac-6f885076829c",
+  "id": "eb128706-9e25-40fa-9eaa-03a7a7e22ba0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -16,6 +16,12 @@
         },
         "job_process_id": {
           "name": "job_process_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -60,10 +66,24 @@
           ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
+        },
+        "interviews_user_id_users_id_fk": {
+          "name": "interviews_user_id_users_id_fk",
+          "tableFrom": "interviews",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {}
     },
     "public.job_processes": {
       "name": "job_processes",
@@ -73,6 +93,12 @@
           "name": "id",
           "type": "serial",
           "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
           "notNull": true
         },
         "hiring_company": {
@@ -114,15 +140,15 @@
           "notNull": false,
           "default": 0
         },
-        "vacations_days": {
-          "name": "vacations_days",
+        "vacation_days": {
+          "name": "vacation_days",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "default": 0
         },
-        "holidays_days": {
-          "name": "holidays_days",
+        "holiday_days": {
+          "name": "holiday_days",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -151,14 +177,74 @@
         }
       },
       "indexes": {},
+      "foreignKeys": {
+        "job_processes_user_id_users_id_fk": {
+          "name": "job_processes_user_id_users_id_fk",
+          "tableFrom": "job_processes",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "checkConstraints": {}
     }
   },
   "enums": {},
   "schemas": {},
   "sequences": {},
+  "views": {},
   "_meta": {
     "columns": {},
     "schemas": {},

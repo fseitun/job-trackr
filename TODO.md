@@ -1,2 +1,7 @@
 - Refactor styles to CSS modules or css-in-js?
 - Prevent FE tz from modifying the shown date format
+- Setup React Query
+- Add createdAt and updatedAt in both Interviews and JobProcesses and updatedAt to Users
+- Add vitests
+- Add integration tests
+- Add cypress tests
