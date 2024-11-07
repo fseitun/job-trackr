@@ -1,11 +1,13 @@
 import React, { useState, ReactNode, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 import client from "../api/client";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [userId, setUserId] = useState<number>(-1);
 
   const setAuthToken = (token: string) => {
     localStorage.setItem("authToken", token);
@@ -16,6 +18,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const token = await client.login(email, password);
       if (token) {
         setAuthToken(token);
+        const decoded: { sub: number } = jwtDecode(token);
+        setUserId(decoded.sub);
         setIsAuthenticated(true);
       }
     } catch (error) {
@@ -61,7 +65,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, register, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, userId, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

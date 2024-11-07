@@ -31,9 +31,6 @@ const get = async <T>(url: string): Promise<T> => {
 };
 
 const post = async <T>(url: string, data: T): Promise<void> => {
-  // console.log("posting");
-  // console.log(url);
-  // console.log(data);
   await api.post(url, data); // TODO: fix this on backend
 };
 
