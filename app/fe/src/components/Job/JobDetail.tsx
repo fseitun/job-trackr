@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { JobProcess } from "../../types";
+import { Job } from "../../types";
 import InterviewList from "../Interview/InterviewList";
 import client from "../../api/client";
 
-const JobProcessDetail: React.FC = () => {
+const JobDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [jobProcess, setJobProcess] = useState<JobProcess | null>(null);
+  const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    const fetchJobProcess = async () => {
+    const fetchJob = async () => {
       try {
-        const data = await client.get<JobProcess>(`/job-processes/${id}`);
+        const data = await client.get<Job>(`/job/${id}`);
         const interviews = data.interviews;
         const sortedInterviews = [...interviews].sort(
           (a, b) =>
             new Date(b.interviewDate).getTime() -
             new Date(a.interviewDate).getTime()
         );
-        setJobProcess({ ...data, interviews: sortedInterviews });
+        setJob({ ...data, interviews: sortedInterviews });
       } catch (err) {
         console.error("Error fetching job application details:", err);
         setError("Failed to load job application details.");
@@ -31,42 +31,42 @@ const JobProcessDetail: React.FC = () => {
     };
 
     if (id) {
-      fetchJobProcess();
+      fetchJob();
     }
   }, [id]);
 
   if (loading) {
-    return <div style={styles.loading}>Loading job process...</div>;
+    return <div style={styles.loading}>Loading job...</div>;
   }
 
   if (error) {
     return <div style={styles.error}>{error}</div>;
   }
 
-  if (!jobProcess) {
-    return <div style={styles.error}>Job process not found.</div>;
+  if (!job) {
+    return <div style={styles.error}>Job not found.</div>;
   }
 
   return (
     <div style={styles.container}>
       <button
-        onClick={() => navigate("/job-processes")}
+        onClick={() => navigate("/job")}
         style={styles.backButton}
       >
         Back
       </button>
       <h2 style={styles.subHeader}>Interviews</h2>
-      <Link to={`/job-processes/${id}/add-interview`} style={styles.addButton}>
+      <Link to={`/job/${id}/add-interview`} style={styles.addButton}>
         <button style={styles.button}>Add Interview</button>
       </Link>
-      <Link to={`/job-processes/${id}/edit`} style={styles.editButton}>
+      <Link to={`/job/${id}/edit`} style={styles.editButton}>
         <button style={{ ...styles.button, ...styles.editBtn }}>
           Edit Job Application
         </button>
       </Link>
       <InterviewList
-        interviews={jobProcess.interviews}
-        jobProcessId={jobProcess.id}
+        interviews={job.interviews}
+        jobId={job.id}
       />
     </div>
   );
@@ -132,4 +132,4 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default JobProcessDetail;
+export default JobDetail;

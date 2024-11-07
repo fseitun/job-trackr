@@ -6,7 +6,7 @@ import {
   IsBoolean,
 } from "class-validator";
 
-export class CreateJobProcessesDto {
+export class CreateJobsDto {
   @IsString()
   hiringCompany!: string;
 

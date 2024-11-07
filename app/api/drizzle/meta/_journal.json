@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1730920006801,
-      "tag": "0000_mean_fallen_one",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1730938317511,
-      "tag": "0001_ordinary_the_anarchist",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1731003144438,
-      "tag": "0002_peaceful_nomad",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1731003945082,
-      "tag": "0003_misty_polaris",
+      "when": 1731008100229,
+      "tag": "0000_nappy_mach_iv",
       "breakpoints": true
     }
   ]

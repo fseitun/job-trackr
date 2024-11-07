@@ -1,5 +1,5 @@
 {
-  "id": "eb128706-9e25-40fa-9eaa-03a7a7e22ba0",
+  "id": "f73e68c0-b520-429c-9ed0-f759719fdf27",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -14,26 +14,26 @@
           "primaryKey": true,
           "notNull": true
         },
-        "job_process_id": {
-          "name": "job_process_id",
+        "job_id": {
+          "name": "job_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
+        "userId": {
+          "name": "userId",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "interviewer_name": {
-          "name": "interviewer_name",
+        "interviewerName": {
+          "name": "interviewerName",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
-        "interviewer_role": {
-          "name": "interviewer_role",
+        "interviewerRole": {
+          "name": "interviewerRole",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
@@ -50,16 +50,30 @@
           "type": "varchar(500)",
           "primaryKey": false,
           "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "interviews_job_process_id_job_processes_id_fk": {
-          "name": "interviews_job_process_id_job_processes_id_fk",
+        "interviews_job_id_jobs_id_fk": {
+          "name": "interviews_job_id_jobs_id_fk",
           "tableFrom": "interviews",
-          "tableTo": "job_processes",
+          "tableTo": "jobs",
           "columnsFrom": [
-            "job_process_id"
+            "job_id"
           ],
           "columnsTo": [
             "id"
@@ -67,12 +81,12 @@
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
-        "interviews_user_id_users_id_fk": {
-          "name": "interviews_user_id_users_id_fk",
+        "interviews_userId_users_id_fk": {
+          "name": "interviews_userId_users_id_fk",
           "tableFrom": "interviews",
           "tableTo": "users",
           "columnsFrom": [
-            "user_id"
+            "userId"
           ],
           "columnsTo": [
             "id"
@@ -83,10 +97,12 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
-    "public.job_processes": {
-      "name": "job_processes",
+    "public.jobs": {
+      "name": "jobs",
       "schema": "",
       "columns": {
         "id": {
@@ -101,8 +117,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "hiring_company": {
-          "name": "hiring_company",
+        "hiringCompany": {
+          "name": "hiringCompany",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
@@ -161,8 +177,8 @@
           "notNull": false,
           "default": "''"
         },
-        "direct_hire": {
-          "name": "direct_hire",
+        "directHire": {
+          "name": "directHire",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
@@ -174,13 +190,27 @@
           "primaryKey": false,
           "notNull": false,
           "default": "''"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "job_processes_user_id_users_id_fk": {
-          "name": "job_processes_user_id_users_id_fk",
-          "tableFrom": "job_processes",
+        "jobs_user_id_users_id_fk": {
+          "name": "jobs_user_id_users_id_fk",
+          "tableFrom": "jobs",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -194,7 +224,9 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.users": {
       "name": "users",
@@ -224,6 +256,13 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -238,13 +277,127 @@
           ]
         }
       },
-      "checkConstraints": {}
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {},
   "schemas": {},
   "sequences": {},
-  "views": {},
+  "roles": {},
+  "policies": {},
+  "views": {
+    "public.jobsWithLastInteraction": {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hiringCompany": {
+          "name": "hiringCompany",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "recruiting_company": {
+          "name": "recruiting_company",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "recruiter_name": {
+          "name": "recruiter_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "recruitment_channel": {
+          "name": "recruitment_channel",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "monthly_salary": {
+          "name": "monthly_salary",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "vacation_days": {
+          "name": "vacation_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "holiday_days": {
+          "name": "holiday_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "job_description": {
+          "name": "job_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "directHire": {
+          "name": "directHire",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "time_zone": {
+          "name": "time_zone",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "definition": "select \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiringCompany\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"directHire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\", max(\"interviews\".\"interview_date\") as \"last_interaction\" from \"jobs\" left join \"interviews\" on \"jobs\".\"id\" = \"interviews\".\"job_id\" group by \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiringCompany\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"directHire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\"",
+      "name": "jobsWithLastInteraction",
+      "schema": "public",
+      "isExisting": false,
+      "materialized": false
+    }
+  },
   "_meta": {
     "columns": {},
     "schemas": {},

@@ -1,4 +1,4 @@
-export interface JobProcess {
+export interface Job {
   id: number;
   hiringCompany: string;
   recruitingCompany: string;
@@ -14,15 +14,12 @@ export interface JobProcess {
   lastInteraction: string;
   interviews: Interview[];
 }
-export type CreateJobProcessDto = Omit<
-  JobProcess,
-  "id" | "interviews" | "lastInteraction"
->;
-export type UpdateJobProcessDto = Partial<JobProcess>;
+export type CreateJobDto = Omit<Job, "id" | "interviews" | "lastInteraction">;
+export type UpdateJobDto = Partial<Job>;
 
 export interface Interview {
   id: number;
-  jobProcessId: number;
+  jobId: number;
   interviewerName: string;
   interviewerRole: string;
   interviewDate: string;

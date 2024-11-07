@@ -20,7 +20,7 @@ export const users = pgTable("users", {
 export type UserSelectType = typeof users.$inferSelect;
 export type UserInsertType = typeof users.$inferInsert;
 
-export const jobProcesses = pgTable("job_processes", {
+export const jobs = pgTable("jobs", {
   id: serial("id").primaryKey(),
   userId: integer("user_id")
     .references(() => users.id, {
@@ -49,13 +49,10 @@ export const jobProcesses = pgTable("job_processes", {
 });
 //
 
-export type JobProcessSelectType = typeof jobProcesses.$inferSelect;
-export type JobProcessInsertType = typeof jobProcesses.$inferInsert;
-
 export const interviews = pgTable("interviews", {
   id: serial("id").primaryKey(),
-  jobProcessId: integer("job_process_id")
-    .references(() => jobProcesses.id, {
+  jobId: integer("job_id")
+    .references(() => jobs.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
     })
@@ -73,20 +70,19 @@ export const interviews = pgTable("interviews", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
-export type InterviewSelectType = typeof interviews.$inferSelect;
-export type InterviewInsertType = typeof interviews.$inferInsert;
 
-const jobProcessColumns = getTableColumns(jobProcesses);
+const jobColumns = getTableColumns(jobs);
 
-export const jobs = pgView("jobsWithLastInteraction").as((qb) =>
-  qb
-    .select({
-      ...jobProcessColumns,
-      lastInteraction: sql<Date>`max(${interviews.interviewDate})`.as(
-        "last_interaction"
-      ),
-    })
-    .from(jobProcesses)
-    .leftJoin(interviews, eq(jobProcesses.id, interviews.jobProcessId))
-    .groupBy(...Object.values(jobProcessColumns))
+export const jobsWithLastInteraction = pgView("jobsWithLastInteraction").as(
+  (qb) =>
+    qb
+      .select({
+        ...jobColumns,
+        lastInteraction: sql<Date>`max(${interviews.interviewDate})`.as(
+          "last_interaction"
+        ),
+      })
+      .from(jobs)
+      .leftJoin(interviews, eq(jobs.id, interviews.jobId))
+      .groupBy(...Object.values(jobColumns))
 );

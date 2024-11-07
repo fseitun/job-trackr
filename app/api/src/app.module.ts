@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { UsersModule } from "./users/users.module.js";
 import { InterviewsModule } from "./interviews/interviews.module.js";
-import { JobProcessesModule } from "./job-processes/job-processes.module.js";
+import { JobsModule } from "./job/job.module.js";
 import { DatabaseModule } from "./database/database.module.js";
 import { AuthModule } from "./auth/auth.module.js";
 
@@ -20,7 +20,7 @@ import { AuthModule } from "./auth/auth.module.js";
     }),
     DatabaseModule,
     InterviewsModule,
-    JobProcessesModule,
+    JobsModule,
   ],
 })
 export class AppModule {}

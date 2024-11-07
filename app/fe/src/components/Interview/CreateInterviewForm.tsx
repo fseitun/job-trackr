@@ -19,7 +19,7 @@ const CreateInterviewForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const [formData, setFormData] = useState<CreateInterviewDto>({
-    jobProcessId: Number(id),
+    jobId: Number(id),
     interviewerName: "",
     interviewerRole: "",
     interviewDate: new Date().toISOString(),
@@ -46,9 +46,9 @@ const CreateInterviewForm: React.FC = () => {
     try {
       if (id) {
         await client.post<CreateInterviewDto>("/interviews", formData);
-        navigate(`/job-processes/${id}`);
+        navigate(`/job/${id}`);
       } else {
-        throw new Error("Invalid job process ID.");
+        throw new Error("Invalid job ID.");
       }
     } catch (err) {
       console.error("Error submitting interview form:", err);

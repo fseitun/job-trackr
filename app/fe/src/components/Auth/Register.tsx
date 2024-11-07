@@ -20,8 +20,8 @@ const Register: React.FC = () => {
     }
     try {
       await register(email, password);
-      navigate("/job-processes");
-    } catch  {
+      navigate("/job");
+    } catch {
       setError("An unexpected error occurred");
     }
   };

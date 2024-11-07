@@ -14,7 +14,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       await login(email, password);
-      navigate("/job-processes");
+      navigate("/job");
     } catch {
       setError("An error occurred during login");
     }

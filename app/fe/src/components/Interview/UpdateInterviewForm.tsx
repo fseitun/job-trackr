@@ -20,7 +20,7 @@ const UpdateInterviewForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const [formData, setFormData] = useState<UpdateInterviewDto>({
-    jobProcessId: 0,
+    jobId: 0,
     interviewerName: "",
     interviewerRole: "",
     interviewDate: new Date().toISOString(),
@@ -37,7 +37,7 @@ const UpdateInterviewForm: React.FC = () => {
         .get<CreateInterviewDto>(`/interviews/${id}`)
         .then((interview) => {
           setFormData({
-            jobProcessId: interview.jobProcessId,
+            jobId: interview.jobId,
             interviewerName: interview.interviewerName,
             interviewerRole: interview.interviewerRole,
             interviewDate: interview.interviewDate,
@@ -75,7 +75,7 @@ const UpdateInterviewForm: React.FC = () => {
           formData,
           Number(id)
         );
-        navigate(`/job-processes/${formData.jobProcessId}`);
+        navigate(`/job/${formData.jobId}`);
       } else {
         setError("Invalid interview ID.");
       }

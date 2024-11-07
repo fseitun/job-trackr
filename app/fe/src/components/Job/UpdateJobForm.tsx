@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import client from "../../api/client";
-import { useNavigate } from "react-router-dom";
-import { CreateJobProcessDto } from "../../types";
-import JobProcessFormFields from "./JobProcessFormFields";
+import { useNavigate, useParams } from "react-router-dom";
+import { UpdateJobDto, Job } from "../../types";
+import JobFormFields from "./JobFormFields";
 
-const CreateJobProcessForm: React.FC = () => {
+const UpdateJobForm: React.FC = () => {
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
 
-  const [formData, setFormData] = useState<CreateJobProcessDto>({
+  const [formData, setFormData] = useState<UpdateJobDto>({
     hiringCompany: "",
     recruitingCompany: "",
     position: "",
@@ -20,9 +21,38 @@ const CreateJobProcessForm: React.FC = () => {
     directHire: false,
     timeZone: "",
   });
-
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (id) {
+      client
+        .get<Job>(`/job/${id}`)
+        .then((response) => {
+          setFormData({
+            hiringCompany: response.hiringCompany,
+            recruitingCompany: response.recruitingCompany,
+            position: response.position,
+            recruiterName: response.recruiterName,
+            recruitmentChannel: response.recruitmentChannel,
+            monthlySalary: response.monthlySalary,
+            vacationDays: response.vacationDays,
+            holidayDays: response.holidayDays,
+            jobDescription: response.jobDescription,
+            directHire: response.directHire,
+            timeZone: response.timeZone,
+          });
+        })
+        .catch((err) => {
+          console.error("Error fetching job details:", err);
+          setError("Failed to load job details.");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [id]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -41,8 +71,16 @@ const CreateJobProcessForm: React.FC = () => {
     setIsSubmitting(true);
     setError("");
     try {
-      await client.post<CreateJobProcessDto>("/job-processes", formData);
-      navigate("/job-processes");
+      if (id) {
+        await client.patch<UpdateJobDto>(
+          `/job/${id}`,
+          formData,
+          Number(id)
+        );
+        navigate(`/job/${id}`);
+      } else {
+        setError("Invalid job ID.");
+      }
     } catch (err) {
       console.error("Error submitting the form:", err);
       setError("Failed to submit the form.");
@@ -51,19 +89,23 @@ const CreateJobProcessForm: React.FC = () => {
     }
   };
 
+  if (isLoading) {
+    return <div style={styles.loading}>Loading job details...</div>;
+  }
+
   return (
     <div style={styles.container}>
-      <h2 style={styles.header}>Add Job Application</h2>
+      <h2 style={styles.header}>Edit Job Application</h2>
       {error && <div style={styles.error}>{error}</div>}
       <form onSubmit={handleSubmit} style={styles.form}>
-        <JobProcessFormFields formData={formData} handleChange={handleChange} />
+        <JobFormFields formData={formData} handleChange={handleChange} />
         <div style={styles.buttonGroup}>
           <button
             type="submit"
             style={styles.saveButton}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Adding..." : "Add"}
+            {isSubmitting ? "Updating..." : "Update"}
           </button>
           <button
             type="button"
@@ -131,6 +173,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1rem",
     marginBottom: "1rem",
   },
+  loading: {
+    textAlign: "center",
+    padding: "2rem",
+    fontSize: "1.2rem",
+  },
 };
 
-export default CreateJobProcessForm;
+export default UpdateJobForm;

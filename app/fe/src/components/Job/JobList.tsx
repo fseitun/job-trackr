@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { JobProcess } from "../../types";
+import { Job } from "../../types";
 import client from "../../api/client";
 
-const JobProcessList: React.FC = () => {
-  const [jobProcesses, setJobProcesses] = useState<JobProcess[]>([]);
+const JobList: React.FC = () => {
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    const fetchJobProcesses = async () => {
+    const fetchJobs = async () => {
       try {
-        const jobProcesses = await client.fetchAll<JobProcess>(
-          "/job-processes"
+        const jobs = await client.fetchAll<Job>(
+          "/job"
         );
-        setJobProcesses(jobProcesses);
+        setJobs(jobs);
       } catch (err) {
-        console.error("Error fetching job processes:", err);
-        setError("Failed to load job applications.");
+        console.error("Error fetching jobs:", err);
+        setError("Failed to load jobs.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchJobProcesses();
+    fetchJobs();
   }, []);
 
   if (loading) {
-    return <div style={styles.loading}>Loading job processes...</div>;
+    return <div style={styles.loading}>Loading job...</div>;
   }
 
   if (error) {
     return <div style={styles.error}>{error}</div>;
   }
 
-  const sortedJobProcesses = [...jobProcesses].sort(
+  const sortedJobs = [...jobs].sort(
     (a, b) =>
       new Date(b.lastInteraction).getTime() -
       new Date(a.lastInteraction).getTime()
@@ -42,10 +42,10 @@ const JobProcessList: React.FC = () => {
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>Job Applications</h1>
-      <Link to="/job-processes/add" style={styles.addButton}>
+      <Link to="/job/add" style={styles.addButton}>
         <button style={styles.button}>Add Job Application</button>
       </Link>
-      {sortedJobProcesses.length === 0 ? (
+      {sortedJobs.length === 0 ? (
         <p>No job applications found.</p>
       ) : (
         <table style={styles.table}>
@@ -59,14 +59,14 @@ const JobProcessList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedJobProcesses.map((job) => (
+            {sortedJobs.map((job) => (
               <tr key={job.id} style={styles.row}>
                 <td>{job.hiringCompany}</td>
                 <td>{job.recruitingCompany}</td>
                 <td>{job.position}</td>
                 <td>{job.lastInteraction ? job.lastInteraction : "N/A"}</td>
                 <td>
-                  <Link to={`/job-processes/${job.id}`}>
+                  <Link to={`/job/${job.id}`}>
                     <button style={{ ...styles.button, ...styles.viewButton }}>
                       View Details
                     </button>
@@ -136,4 +136,4 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default JobProcessList;
+export default JobList;

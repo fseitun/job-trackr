@@ -7,7 +7,7 @@ import {
 import { DatabaseService } from "../database/database.service.js";
 import { CreateInterviewDto } from "./dto/create-interview.dto.js";
 import { UpdateInterviewDto } from "./dto/update-interview.dto.js";
-import { interviews, jobProcesses } from "../database/schema.js";
+import { interviews, jobs } from "../database/schema.js";
 import { eq, and } from "drizzle-orm";
 
 @Injectable()
@@ -23,18 +23,15 @@ export class InterviewsService {
 
     this.logger.debug(JSON.stringify(createInterviewDto, null, 2));
 
-    const jobProcess = await this.dbService.db
+    const job = await this.dbService.db
       .select()
-      .from(jobProcesses)
+      .from(jobs)
       .where(
-        and(
-          eq(jobProcesses.id, createInterviewDto.jobProcessId),
-          eq(jobProcesses.userId, userId)
-        )
+        and(eq(jobs.id, createInterviewDto.jobId), eq(jobs.userId, userId))
       );
 
-    if (jobProcess.length === 0) {
-      throw new NotFoundException("Job process not found or not owned by user");
+    if (job.length === 0) {
+      throw new NotFoundException("Job not found or not owned by user");
     }
 
     const [newInterview] = await this.dbService.db

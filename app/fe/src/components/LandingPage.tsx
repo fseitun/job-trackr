@@ -7,7 +7,7 @@ const LandingPage: React.FC = () => {
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
     if (authToken) {
-      navigate("/job-processes");
+      navigate("/job");
     }
   }, [navigate]);
 

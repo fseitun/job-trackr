@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import client from "../../api/client";
-import { useNavigate, useParams } from "react-router-dom";
-import { UpdateJobProcessDto, JobProcess } from "../../types";
-import JobProcessFormFields from "./JobProcessFormFields";
+import { useNavigate } from "react-router-dom";
+import { CreateJobDto } from "../../types";
+import JobFormFields from "./JobFormFields";
 
-const UpdateJobProcessForm: React.FC = () => {
+const CreateJobForm: React.FC = () => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
 
-  const [formData, setFormData] = useState<UpdateJobProcessDto>({
+  const [formData, setFormData] = useState<CreateJobDto>({
     hiringCompany: "",
     recruitingCompany: "",
     position: "",
@@ -21,38 +20,9 @@ const UpdateJobProcessForm: React.FC = () => {
     directHire: false,
     timeZone: "",
   });
+
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (id) {
-      client
-        .get<JobProcess>(`/job-processes/${id}`)
-        .then((response) => {
-          setFormData({
-            hiringCompany: response.hiringCompany,
-            recruitingCompany: response.recruitingCompany,
-            position: response.position,
-            recruiterName: response.recruiterName,
-            recruitmentChannel: response.recruitmentChannel,
-            monthlySalary: response.monthlySalary,
-            vacationDays: response.vacationDays,
-            holidayDays: response.holidayDays,
-            jobDescription: response.jobDescription,
-            directHire: response.directHire,
-            timeZone: response.timeZone,
-          });
-        })
-        .catch((err) => {
-          console.error("Error fetching job process details:", err);
-          setError("Failed to load job process details.");
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [id]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -71,16 +41,8 @@ const UpdateJobProcessForm: React.FC = () => {
     setIsSubmitting(true);
     setError("");
     try {
-      if (id) {
-        await client.patch<UpdateJobProcessDto>(
-          `/job-processes/${id}`,
-          formData,
-          Number(id)
-        );
-        navigate(`/job-processes/${id}`);
-      } else {
-        setError("Invalid job process ID.");
-      }
+      await client.post<CreateJobDto>("/job", formData);
+      navigate("/job");
     } catch (err) {
       console.error("Error submitting the form:", err);
       setError("Failed to submit the form.");
@@ -89,23 +51,19 @@ const UpdateJobProcessForm: React.FC = () => {
     }
   };
 
-  if (isLoading) {
-    return <div style={styles.loading}>Loading job process details...</div>;
-  }
-
   return (
     <div style={styles.container}>
-      <h2 style={styles.header}>Edit Job Application</h2>
+      <h2 style={styles.header}>Add Job Application</h2>
       {error && <div style={styles.error}>{error}</div>}
       <form onSubmit={handleSubmit} style={styles.form}>
-        <JobProcessFormFields formData={formData} handleChange={handleChange} />
+        <JobFormFields formData={formData} handleChange={handleChange} />
         <div style={styles.buttonGroup}>
           <button
             type="submit"
             style={styles.saveButton}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Updating..." : "Update"}
+            {isSubmitting ? "Adding..." : "Add"}
           </button>
           <button
             type="button"
@@ -173,11 +131,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1rem",
     marginBottom: "1rem",
   },
-  loading: {
-    textAlign: "center",
-    padding: "2rem",
-    fontSize: "1.2rem",
-  },
 };
 
-export default UpdateJobProcessForm;
+export default CreateJobForm;

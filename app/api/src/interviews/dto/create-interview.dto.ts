@@ -3,7 +3,7 @@ import { IsOptional, IsString, IsNumber, IsDate } from "class-validator";
 
 export class CreateInterviewDto {
   @IsNumber()
-  jobProcessId!: number;
+  jobId!: number;
 
   @IsString()
   interviewerName!: string;

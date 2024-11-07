@@ -4,17 +4,17 @@ import LandingPage from "./components/LandingPage";
 import CreateInterviewForm from "./components/Interview/CreateInterviewForm";
 import UpdateInterviewForm from "./components/Interview/UpdateInterviewForm";
 
-const JobProcessList = lazy(
-  () => import("./components/JobProcesses/JobProcessList")
+const JobList = lazy(
+  () => import("./components/Job/JobList")
 );
-const JobProcessDetail = lazy(
-  () => import("./components/JobProcesses/JobProcessDetail")
+const JobDetail = lazy(
+  () => import("./components/Job/JobDetail")
 );
-const CreateJobProcessForm = lazy(
-  () => import("./components/JobProcesses/CreateJobProcessForm")
+const CreateJobForm = lazy(
+  () => import("./components/Job/CreateJobForm")
 );
-const UpdateJobProcessForm = lazy(
-  () => import("./components/JobProcesses/UpdateJobProcessForm")
+const UpdateJobForm = lazy(
+  () => import("./components/Job/UpdateJobForm")
 );
 const Login = lazy(() => import("./components/Auth/Login"));
 const Register = lazy(() => import("./components/Auth/Register"));
@@ -28,34 +28,34 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
-          path="/job-processes"
+          path="/job"
           element={
             <ProtectedRoute>
-              <JobProcessList />
+              <JobList />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/job-processes/add"
+          path="/job/add"
           element={
             <ProtectedRoute>
-              <CreateJobProcessForm />
+              <CreateJobForm />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/job-processes/:id"
+          path="/job/:id"
           element={
             <ProtectedRoute>
-              <JobProcessDetail />
+              <JobDetail />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/job-processes/:id/edit"
+          path="/job/:id/edit"
           element={
             <ProtectedRoute>
-              <UpdateJobProcessForm />
+              <UpdateJobForm />
             </ProtectedRoute>
           }
         />
@@ -68,7 +68,7 @@ function App() {
           }
         />
         <Route
-          path="/job-processes/:id/add-interview"
+          path="/job/:id/add-interview"
           element={
             <ProtectedRoute>
               <CreateInterviewForm />

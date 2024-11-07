@@ -10,7 +10,7 @@ import {
 
 interface InterviewListProps {
   interviews: Interview[];
-  jobProcessId: number;
+  jobId: number;
 }
 
 const InterviewList: React.FC<InterviewListProps> = ({ interviews }) => {

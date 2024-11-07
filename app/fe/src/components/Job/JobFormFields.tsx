@@ -1,14 +1,14 @@
 import React from "react";
-import { UpdateJobProcessDto, CreateJobProcessDto } from "../../types";
+import { UpdateJobDto, CreateJobDto } from "../../types";
 
-interface JobProcessFormFieldsProps {
-  formData: CreateJobProcessDto | UpdateJobProcessDto;
+interface JobFormFieldsProps {
+  formData: CreateJobDto | UpdateJobDto;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
 }
 
-const JobProcessFormFields: React.FC<JobProcessFormFieldsProps> = ({
+const JobFormFields: React.FC<JobFormFieldsProps> = ({
   formData,
   handleChange,
 }) => {
@@ -166,4 +166,4 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default JobProcessFormFields;
+export default JobFormFields;
