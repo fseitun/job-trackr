@@ -1,3 +1,4 @@
+import { eq, getTableColumns, sql } from "drizzle-orm";
 import {
   integer,
   varchar,
@@ -6,6 +7,7 @@ import {
   text,
   timestamp,
   boolean,
+  pgView,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -56,3 +58,18 @@ export const interviews = pgTable("interviews", {
   interviewDate: timestamp().notNull().defaultNow(),
   notes: varchar({ length: 500 }),
 });
+
+const jobProcessColumns = getTableColumns(jobProcesses);
+
+export const jobs = pgView("jobsWithLastInteraction").as((qb) =>
+  qb
+    .select({
+      ...jobProcessColumns,
+      lastInteraction: sql<Date>`max(${interviews.interviewDate})`.as(
+        "last_interaction"
+      ),
+    })
+    .from(jobProcesses)
+    .leftJoin(interviews, eq(jobProcesses.id, interviews.jobProcessId))
+    .groupBy(...Object.values(jobProcessColumns))
+);
