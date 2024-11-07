@@ -46,12 +46,11 @@ export const jobs = pgTable("jobs", {
   holidayDays: integer("holiday_days").default(0),
   jobDescription: text("job_description").default(""),
   // techStack: jsonb("tech_stack").default([]), TODO: rethink better way to store tech stack, it will be in the JD.
-  directHire: boolean().default(false),
+  directHire: boolean("direct_hire").default(false),
   timeZone: varchar("time_zone", { length: 255 }).default(""),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
-//
 
 export const interviews = pgTable("interviews", {
   id: uuid("id")

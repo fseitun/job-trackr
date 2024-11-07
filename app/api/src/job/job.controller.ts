@@ -41,7 +41,7 @@ export class JobsController {
   @Get(":id")
   async findOne(@Param("id") id: string, @Req() req: CustomRequest) {
     const userId = req.user.userId;
-    const job = await this.jobsService.findOne(+id, userId);
+    const job = await this.jobsService.findOne(id, userId);
     if (!job) {
       throw new NotFoundException(`job with id ${id} not found`);
     }
@@ -56,7 +56,7 @@ export class JobsController {
   ) {
     const userId = req.user.userId;
     this.logger.log(`Updating job with id ${id} for user ${userId}`);
-    return await this.jobsService.update(+id, updateJobDto, userId);
+    return await this.jobsService.update(id, updateJobDto, userId);
   }
 
   @Delete(":id")
@@ -67,6 +67,6 @@ export class JobsController {
     }
     const userId = req.user.userId;
     this.logger.log(`Removing job with id ${id} for user ${userId}`);
-    return await this.jobsService.remove(+id, userId);
+    return await this.jobsService.remove(id, userId);
   }
 }

@@ -16,7 +16,7 @@ export class InterviewsService {
 
   constructor(private dbService: DatabaseService) {}
 
-  async create(createInterviewDto: CreateInterviewDto, userId: number) {
+  async create(createInterviewDto: CreateInterviewDto, userId: string) {
     this.logger.log(
       `Creating interview with data: ${JSON.stringify(createInterviewDto)}`
     );
@@ -36,28 +36,29 @@ export class InterviewsService {
 
     const [newInterview] = await this.dbService.db
       .insert(interviews)
-      .values({ ...createInterviewDto, userId })
+      .values(createInterviewDto)
       .returning();
 
     return newInterview;
   }
 
-  async findAll(userId: number) {
-    this.logger.log("Fetching all interviews");
+  async findAll(userId: string) {
+    this.logger.log("Fetching all interviews for current user");
 
     return await this.dbService.db
       .select()
       .from(interviews)
-      .where(eq(interviews.userId, userId));
+      .leftJoin(jobs, eq(interviews.jobId, jobs.id))
+      .where(eq(jobs.userId, userId));
   }
 
-  async findOne(id: number, userId: number) {
+  async findOne(id: string) {
     this.logger.log(`Fetching interview with id: ${id}`);
 
     const [interview] = await this.dbService.db
       .select()
       .from(interviews)
-      .where(and(eq(interviews.id, id), eq(interviews.userId, userId)));
+      .where(eq(interviews.id, id));
 
     if (!interview) {
       throw new NotFoundException(`Interview with id ${id} not found`);
@@ -66,11 +67,7 @@ export class InterviewsService {
     return interview;
   }
 
-  async update(
-    id: number,
-    updateInterviewDto: UpdateInterviewDto,
-    userId: number
-  ) {
+  async update(id: string, updateInterviewDto: UpdateInterviewDto) {
     this.logger.log(`Updating interview with id: ${id}`);
 
     if (updateInterviewDto.interviewDate) {
@@ -81,7 +78,7 @@ export class InterviewsService {
       const existingInterview = await this.dbService.db
         .select()
         .from(interviews)
-        .where(and(eq(interviews.id, id), eq(interviews.userId, userId)));
+        .where(eq(interviews.id, id));
 
       if (existingInterview.length === 0) {
         throw new NotFoundException(`Interview with id ${id} not found`);
@@ -90,28 +87,26 @@ export class InterviewsService {
       const [updatedInterview] = await this.dbService.db
         .update(interviews)
         .set(updateInterviewDto)
-        .where(and(eq(interviews.id, id), eq(interviews.userId, userId)))
+        .where(eq(interviews.id, id))
         .returning();
 
       return updatedInterview;
     }
   }
 
-  async remove(id: number, userId: number) {
+  async remove(id: string) {
     this.logger.log(`Deleting interview with id: ${id}`);
 
     const existingInterview = await this.dbService.db
       .select()
       .from(interviews)
-      .where(and(eq(interviews.id, id), eq(interviews.userId, userId)));
+      .where(eq(interviews.id, id));
 
     if (existingInterview.length === 0) {
       throw new NotFoundException(`Interview with id ${id} not found`);
     }
 
-    await this.dbService.db
-      .delete(interviews)
-      .where(and(eq(interviews.id, id), eq(interviews.userId, userId)));
+    await this.dbService.db.delete(interviews).where(eq(interviews.id, id));
     return { deleted: true };
   }
 }

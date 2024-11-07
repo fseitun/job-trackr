@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS "jobs" (
 	"vacation_days" integer DEFAULT 0,
 	"holiday_days" integer DEFAULT 0,
 	"job_description" text DEFAULT '',
-	"directHire" boolean DEFAULT false,
+	"direct_hire" boolean DEFAULT false,
 	"time_zone" varchar(255) DEFAULT '',
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL
@@ -48,4 +48,4 @@ EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
-CREATE VIEW "public"."jobs_with_last_interaction" AS (select "jobs"."id", "jobs"."user_id", "jobs"."hiring_company", "jobs"."recruiting_company", "jobs"."position", "jobs"."recruiter_name", "jobs"."recruitment_channel", "jobs"."monthly_salary", "jobs"."vacation_days", "jobs"."holiday_days", "jobs"."job_description", "jobs"."directHire", "jobs"."time_zone", "jobs"."updated_at", "jobs"."created_at", max("interviews"."interview_date") as "last_interaction" from "jobs" left join "interviews" on "jobs"."id" = "interviews"."job_id" group by "jobs"."id", "jobs"."user_id", "jobs"."hiring_company", "jobs"."recruiting_company", "jobs"."position", "jobs"."recruiter_name", "jobs"."recruitment_channel", "jobs"."monthly_salary", "jobs"."vacation_days", "jobs"."holiday_days", "jobs"."job_description", "jobs"."directHire", "jobs"."time_zone", "jobs"."updated_at", "jobs"."created_at");
+CREATE VIEW "public"."jobs_with_last_interaction" AS (select "jobs"."id", "jobs"."user_id", "jobs"."hiring_company", "jobs"."recruiting_company", "jobs"."position", "jobs"."recruiter_name", "jobs"."recruitment_channel", "jobs"."monthly_salary", "jobs"."vacation_days", "jobs"."holiday_days", "jobs"."job_description", "jobs"."direct_hire", "jobs"."time_zone", "jobs"."updated_at", "jobs"."created_at", max("interviews"."interview_date") as "last_interaction" from "jobs" left join "interviews" on "jobs"."id" = "interviews"."job_id" group by "jobs"."id", "jobs"."user_id", "jobs"."hiring_company", "jobs"."recruiting_company", "jobs"."position", "jobs"."recruiter_name", "jobs"."recruitment_channel", "jobs"."monthly_salary", "jobs"."vacation_days", "jobs"."holiday_days", "jobs"."job_description", "jobs"."direct_hire", "jobs"."time_zone", "jobs"."updated_at", "jobs"."created_at");

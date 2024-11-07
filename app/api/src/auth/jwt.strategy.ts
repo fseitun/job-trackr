@@ -5,7 +5,7 @@ import { UsersService } from "../users/users.service.js";
 import { UserPayload } from "../types/user.interface.js";
 
 interface JwtPayload {
-  sub: number;
+  sub: string;
 }
 
 @Injectable()

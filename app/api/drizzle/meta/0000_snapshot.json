@@ -1,5 +1,5 @@
 {
-  "id": "593a0825-1610-4284-9da0-18584daeb08b",
+  "id": "766e4275-62a8-4a99-aeea-827ad20cdacc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -160,8 +160,8 @@
           "notNull": false,
           "default": "''"
         },
-        "directHire": {
-          "name": "directHire",
+        "direct_hire": {
+          "name": "direct_hire",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
@@ -347,8 +347,8 @@
           "notNull": false,
           "default": "''"
         },
-        "directHire": {
-          "name": "directHire",
+        "direct_hire": {
+          "name": "direct_hire",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
@@ -376,7 +376,7 @@
           "default": "now()"
         }
       },
-      "definition": "select \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiring_company\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"directHire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\", max(\"interviews\".\"interview_date\") as \"last_interaction\" from \"jobs\" left join \"interviews\" on \"jobs\".\"id\" = \"interviews\".\"job_id\" group by \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiring_company\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"directHire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\"",
+      "definition": "select \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiring_company\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"direct_hire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\", max(\"interviews\".\"interview_date\") as \"last_interaction\" from \"jobs\" left join \"interviews\" on \"jobs\".\"id\" = \"interviews\".\"job_id\" group by \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiring_company\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"direct_hire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\"",
       "name": "jobs_with_last_interaction",
       "schema": "public",
       "isExisting": false,

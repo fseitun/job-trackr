@@ -44,7 +44,7 @@ export class UsersService {
     return user.length > 0 ? user[0] : null;
   }
 
-  async findById(id: number) {
+  async findById(id: string) {
     const user = await this.dbService.db
       .select()
       .from(users)

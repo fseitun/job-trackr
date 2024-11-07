@@ -1,9 +1,9 @@
 import { Type } from "class-transformer";
-import { IsOptional, IsString, IsNumber, IsDate } from "class-validator";
+import { IsOptional, IsString, IsDate } from "class-validator";
 
 export class CreateInterviewDto {
-  @IsNumber()
-  jobId!: number;
+  @IsString()
+  jobId!: string;
 
   @IsString()
   interviewerName!: string;

@@ -28,7 +28,7 @@ export class InterviewsController {
     @Req() req: CustomRequest
   ) {
     const userId = req.user.userId;
-    this.logger.log(`Creating interview for user ${userId}`);
+    this.logger.log(`Creating interview`);
     return await this.interviewsService.create(createInterviewDto, userId);
   }
 
@@ -40,27 +40,23 @@ export class InterviewsController {
   }
 
   @Get(":id")
-  async findOne(@Param("id") id: string, @Req() req: CustomRequest) {
-    const userId = req.user.userId;
-    this.logger.log(`Finding interview with id ${id} for user ${userId}`);
-    return await this.interviewsService.findOne(+id, userId);
+  async findOne(@Param("id") id: string) {
+    this.logger.log(`Finding interview with id ${id}`);
+    return await this.interviewsService.findOne(id);
   }
 
   @Patch(":id")
   async update(
     @Param("id") id: string,
-    @Body() updateInterviewDto: UpdateInterviewDto,
-    @Req() req: CustomRequest
+    @Body() updateInterviewDto: UpdateInterviewDto
   ) {
-    const userId = req.user.userId;
-    this.logger.log(`Updating interview with id ${id} for user ${userId}`);
-    return await this.interviewsService.update(+id, updateInterviewDto, userId);
+    this.logger.log(`Updating interview with id ${id}`);
+    return await this.interviewsService.update(id, updateInterviewDto);
   }
 
   @Delete(":id")
-  async remove(@Param("id") id: string, @Req() req: CustomRequest) {
-    const userId = req.user.userId;
-    this.logger.log(`Removing interview with id ${id} for user ${userId}`);
-    return await this.interviewsService.remove(+id, userId);
+  async remove(@Param("id") id: string) {
+    this.logger.log(`Removing interview with id ${id}`);
+    return await this.interviewsService.remove(id);
   }
 }

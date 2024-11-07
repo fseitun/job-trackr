@@ -11,7 +11,7 @@ export class JobsService {
 
   constructor(private dbService: DatabaseService) {}
 
-  async create(createJobsDto: CreateJobsDto, userId: number) {
+  async create(createJobsDto: CreateJobsDto, userId: string) {
     this.logger.log(`Creating job with data: ${JSON.stringify(createJobsDto)}`);
 
     const jobData = {
@@ -36,7 +36,7 @@ export class JobsService {
     return newJob;
   }
 
-  async update(id: number, updateJobDto: UpdateJobDto, userId: number) {
+  async update(id: string, updateJobDto: UpdateJobDto, userId: string) {
     this.logger.log(`Updating job with id: ${id}`);
 
     const updatedData = {
@@ -68,7 +68,7 @@ export class JobsService {
     return updatedJob;
   }
 
-  async findAll(userId: number) {
+  async findAll(userId: string) {
     this.logger.log("Fetching all jobs with last interaction date");
     const jobsWithLastInteraction = await this.dbService.db
       .select({
@@ -87,10 +87,7 @@ export class JobsService {
         lastInteraction: sql<Date>`MAX(${interviews.interviewDate})`,
       })
       .from(jobs)
-      .leftJoin(
-        interviews,
-        and(eq(interviews.jobId, jobs.id), eq(interviews.userId, userId))
-      )
+      .leftJoin(interviews, and(eq(interviews.jobId, jobs.id)))
       .where(eq(jobs.userId, userId))
       .groupBy(jobs.id);
 
@@ -98,7 +95,7 @@ export class JobsService {
     return jobsWithLastInteraction;
   }
 
-  async findOne(id: number, userId: number) {
+  async findOne(id: string, userId: string) {
     this.logger.log(`Fetching job with id: ${id} and its interviews`);
 
     const [job] = await this.dbService.db
@@ -113,12 +110,12 @@ export class JobsService {
     const associatedInterviews = await this.dbService.db
       .select()
       .from(interviews)
-      .where(and(eq(interviews.jobId, id), eq(interviews.userId, userId)));
+      .where(eq(interviews.jobId, id));
 
     return { ...job, interviews: associatedInterviews };
   }
 
-  async remove(id: number, userId: number) {
+  async remove(id: string, userId: string) {
     this.logger.log(`Deleting job with id: ${id}`);
 
     const existingJob = await this.dbService.db
