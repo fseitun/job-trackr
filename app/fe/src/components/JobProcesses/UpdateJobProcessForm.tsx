@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import client from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
-import { UpdateJobProcessDto, JobProcess } from "../../types";
+import {
+  JobProcessSelectType,
+  JobProcessInsertType,
+} from "../../../../api/src/database/schema.js";
 import JobProcessFormFields from "./JobProcessFormFields";
+import { AuthContext } from "../../context/AuthContext.js";
 
 const UpdateJobProcessForm: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const { userId } = useContext(AuthContext);
 
-  const [formData, setFormData] = useState<UpdateJobProcessDto>({
+  const [formData, setFormData] = useState<JobProcessInsertType>({
+    userId,
     hiringCompany: "",
     recruitingCompany: "",
     position: "",
@@ -28,7 +34,7 @@ const UpdateJobProcessForm: React.FC = () => {
   useEffect(() => {
     if (id) {
       client
-        .get<JobProcess>(`/job-processes/${id}`)
+        .get<JobProcessSelectType>(`/job-processes/${id}`)
         .then((response) => {
           setFormData({
             hiringCompany: response.hiringCompany,
@@ -72,7 +78,7 @@ const UpdateJobProcessForm: React.FC = () => {
     setError("");
     try {
       if (id) {
-        await client.patch<UpdateJobProcessDto>(
+        await client.patch<JobProcessInsertType>(
           `/job-processes/${id}`,
           formData,
           Number(id)

@@ -12,8 +12,8 @@ import {
   Logger,
 } from "@nestjs/common";
 import { JobProcessesService } from "./job-processes.service.js";
-import { CreateJobProcessesDto } from "./dto/create-job-processes.dto.js";
-import { UpdateJobProcessesDto } from "./dto/update-job-processes.dto.js";
+import { JobProcessInsertType } from "../database/schema.js";
+import { JobProcessSelectType } from "../database/schema.js";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard.js";
 import { CustomRequest } from "../types/custom-request.interface.js";
 
@@ -26,7 +26,7 @@ export class JobProcessesController {
 
   @Post()
   async create(
-    @Body() createJobProcessDto: CreateJobProcessesDto,
+    @Body() createJobProcessDto: JobProcessInsertType,
     @Req() req: CustomRequest
   ) {
     const userId = req.user.userId;
@@ -54,7 +54,7 @@ export class JobProcessesController {
   @Patch(":id")
   async update(
     @Param("id") id: string,
-    @Body() updateJobProcessesDto: UpdateJobProcessesDto,
+    @Body() updateJobProcessesDto: JobProcessSelectType,
     @Req() req: CustomRequest
   ) {
     const userId = req.user.userId;

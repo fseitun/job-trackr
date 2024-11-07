@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { JobProcess } from "../../types";
+// import { JobProcess } from "../../types";
+import { JobWithInterviewsSelectType } from "../../../../api/src/database/schema";
 import InterviewList from "../Interview/InterviewList";
 import client from "../../api/client";
 
 const JobProcessDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [jobProcess, setJobProcess] = useState<JobProcess | null>(null);
+  const [jobProcess, setJobProcess] = useState<
+    JobWithInterviewsSelectType | null
+  >(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchJobProcess = async () => {
       try {
-        const data = await client.get<JobProcess>(`/job-processes/${id}`);
+        const data = await client.get<JobWithInterviewsSelectType>(
+          `/job-processes/${id}`
+        );
         const interviews = data.interviews;
         const sortedInterviews = [...interviews].sort(
           (a, b) =>

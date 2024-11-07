@@ -14,11 +14,6 @@ export interface JobProcess {
   lastInteraction: string;
   interviews: Interview[];
 }
-export type CreateJobProcessDto = Omit<
-  JobProcess,
-  "id" | "interviews" | "lastInteraction"
->;
-export type UpdateJobProcessDto = Partial<JobProcess>;
 
 export interface Interview {
   id: number;
@@ -28,5 +23,3 @@ export interface Interview {
   interviewDate: string;
   notes?: string;
 }
-export type CreateInterviewDto = Omit<Interview, "id">;
-export type UpdateInterviewDto = Partial<Interview>;

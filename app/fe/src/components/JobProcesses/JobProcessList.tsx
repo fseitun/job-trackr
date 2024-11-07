@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { JobProcess } from "../../types";
 import client from "../../api/client";
+import { JobProcessSelectType } from "../../../../api/src/database/schema"
 
 const JobProcessList: React.FC = () => {
-  const [jobProcesses, setJobProcesses] = useState<JobProcess[]>([]);
+  const [jobProcesses, setJobProcesses] = useState<JobProcessSelectType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchJobProcesses = async () => {
       try {
-        const jobProcesses = await client.fetchAll<JobProcess>(
+        const jobProcesses = await client.fetchAll<JobProcessSelectType>(
           "/job-processes"
         );
         setJobProcesses(jobProcesses);
@@ -35,9 +35,7 @@ const JobProcessList: React.FC = () => {
   }
 
   const sortedJobProcesses = [...jobProcesses].sort(
-    (a, b) =>
-      new Date(b.lastInteraction).getTime() -
-      new Date(a.lastInteraction).getTime()
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
   );
   return (
     <div style={styles.container}>
@@ -64,7 +62,7 @@ const JobProcessList: React.FC = () => {
                 <td>{job.hiringCompany}</td>
                 <td>{job.recruitingCompany}</td>
                 <td>{job.position}</td>
-                <td>{job.lastInteraction ? job.lastInteraction : "N/A"}</td>
+                <td>{job.updatedAt ? new Date(job.updatedAt).toLocaleString() : "N/A"}</td>
                 <td>
                   <Link to={`/job-processes/${job.id}`}>
                     <button style={{ ...styles.button, ...styles.viewButton }}>

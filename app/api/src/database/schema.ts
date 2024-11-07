@@ -90,3 +90,8 @@ export const jobs = pgView("jobsWithLastInteraction").as((qb) =>
     .leftJoin(interviews, eq(jobProcesses.id, interviews.jobProcessId))
     .groupBy(...Object.values(jobProcessColumns))
 );
+
+export type JobWithInterviewsSelectType = JobProcessSelectType & {
+  lastInteraction: string;
+  interviews: InterviewSelectType[];
+};

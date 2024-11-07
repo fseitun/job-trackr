@@ -1,9 +1,12 @@
 import { Injectable, NotFoundException, Logger } from "@nestjs/common";
 import { DatabaseService } from "../database/database.service.js";
-import { CreateJobProcessesDto } from "./dto/create-job-processes.dto.js";
-import { UpdateJobProcessesDto } from "./dto/update-job-processes.dto.js";
-import { jobProcesses, interviews } from "../database/schema.js";
-import { eq, and, sql } from "drizzle-orm";
+import {
+  jobProcesses,
+  JobProcessSelectType,
+  JobProcessInsertType,
+  interviews,
+} from "../database/schema.js";
+import { eq, and } from "drizzle-orm";
 
 @Injectable()
 export class JobProcessesService {
@@ -11,7 +14,7 @@ export class JobProcessesService {
 
   constructor(private dbService: DatabaseService) {}
 
-  async create(createJobProcessesDto: CreateJobProcessesDto, userId: number) {
+  async create(createJobProcessesDto: JobProcessInsertType, userId: number) {
     this.logger.log(
       `Creating job process with data: ${JSON.stringify(createJobProcessesDto)}`
     );
@@ -40,7 +43,7 @@ export class JobProcessesService {
 
   async update(
     id: number,
-    updateJobProcessesDto: UpdateJobProcessesDto,
+    updateJobProcessesDto: JobProcessSelectType,
     userId: number
   ) {
     this.logger.log(`Updating job process with id: ${id}`);
@@ -85,12 +88,11 @@ export class JobProcessesService {
         recruiterName: jobProcesses.recruiterName,
         recruitmentChannel: jobProcesses.recruitmentChannel,
         monthlySalary: jobProcesses.monthlySalary,
-        vacationsDays: jobProcesses.vacationsDays,
-        holidaysDays: jobProcesses.holidaysDays,
+        vacationDays: jobProcesses.vacationDays,
+        holidayDays: jobProcesses.holidayDays,
         jobDescription: jobProcesses.jobDescription,
         directHire: jobProcesses.directHire,
         timeZone: jobProcesses.timeZone,
-        lastInteraction: sql<Date>`MAX(${interviews.interviewDate})`,
       })
       .from(jobProcesses)
       .leftJoin(

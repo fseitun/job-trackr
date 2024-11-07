@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import client from "../../api/client";
 import { useNavigate } from "react-router-dom";
-import { CreateJobProcessDto } from "../../types";
+import { JobProcessInsertType } from "../../../../api/src/database/schema";
 import JobProcessFormFields from "./JobProcessFormFields";
 
 const CreateJobProcessForm: React.FC = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState<CreateJobProcessDto>({
+  const [formData, setFormData] = useState<JobProcessInsertType>({
+    userId: 0,
     hiringCompany: "",
     recruitingCompany: "",
     position: "",
@@ -41,7 +42,7 @@ const CreateJobProcessForm: React.FC = () => {
     setIsSubmitting(true);
     setError("");
     try {
-      await client.post<CreateJobProcessDto>("/job-processes", formData);
+      await client.post<JobProcessInsertType>("/job-processes", formData);
       navigate("/job-processes");
     } catch (err) {
       console.error("Error submitting the form:", err);
