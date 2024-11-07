@@ -4,7 +4,11 @@ const config: Config = {
   schema: "./src/database/schema.ts",
   out: "./drizzle",
   dialect: "postgresql",
-  casing: "snake_case",
+  // casing: "snake_case",
+  // migrations: {
+  //   schema: "",
+  //   table: "",
+  // },
   dbCredentials: {
     host: process.env.DATABASE_HOST || "localhost",
     port: parseInt(process.env.DATABASE_PORT || "5433"),
