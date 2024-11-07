@@ -1,5 +1,5 @@
 {
-  "id": "f73e68c0-b520-429c-9ed0-f759719fdf27",
+  "id": "593a0825-1610-4284-9da0-18584daeb08b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,30 +10,25 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "job_id": {
           "name": "job_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "userId": {
-          "name": "userId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "interviewerName": {
-          "name": "interviewerName",
+        "interviewer_name": {
+          "name": "interviewer_name",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
-        "interviewerRole": {
-          "name": "interviewerRole",
+        "interviewer_role": {
+          "name": "interviewer_role",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
@@ -80,19 +75,6 @@
           ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
-        },
-        "interviews_userId_users_id_fk": {
-          "name": "interviews_userId_users_id_fk",
-          "tableFrom": "interviews",
-          "tableTo": "users",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},
@@ -107,18 +89,19 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "hiringCompany": {
-          "name": "hiringCompany",
+        "hiring_company": {
+          "name": "hiring_company",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
@@ -234,9 +217,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "email": {
           "name": "email",
@@ -288,22 +272,23 @@
   "roles": {},
   "policies": {},
   "views": {
-    "public.jobsWithLastInteraction": {
+    "public.jobs_with_last_interaction": {
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "hiringCompany": {
-          "name": "hiringCompany",
+        "hiring_company": {
+          "name": "hiring_company",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
@@ -391,8 +376,8 @@
           "default": "now()"
         }
       },
-      "definition": "select \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiringCompany\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"directHire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\", max(\"interviews\".\"interview_date\") as \"last_interaction\" from \"jobs\" left join \"interviews\" on \"jobs\".\"id\" = \"interviews\".\"job_id\" group by \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiringCompany\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"directHire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\"",
-      "name": "jobsWithLastInteraction",
+      "definition": "select \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiring_company\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"directHire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\", max(\"interviews\".\"interview_date\") as \"last_interaction\" from \"jobs\" left join \"interviews\" on \"jobs\".\"id\" = \"interviews\".\"job_id\" group by \"jobs\".\"id\", \"jobs\".\"user_id\", \"jobs\".\"hiring_company\", \"jobs\".\"recruiting_company\", \"jobs\".\"position\", \"jobs\".\"recruiter_name\", \"jobs\".\"recruitment_channel\", \"jobs\".\"monthly_salary\", \"jobs\".\"vacation_days\", \"jobs\".\"holiday_days\", \"jobs\".\"job_description\", \"jobs\".\"directHire\", \"jobs\".\"time_zone\", \"jobs\".\"updated_at\", \"jobs\".\"created_at\"",
+      "name": "jobs_with_last_interaction",
       "schema": "public",
       "isExisting": false,
       "materialized": false

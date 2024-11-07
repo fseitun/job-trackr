@@ -3,15 +3,17 @@ import {
   integer,
   varchar,
   pgTable,
-  serial,
   text,
   timestamp,
   boolean,
   pgView,
+  uuid,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   email: varchar("email", { length: 255 }).notNull().unique(),
   passwordHash: varchar("password_hash", { length: 255 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -21,14 +23,16 @@ export type UserSelectType = typeof users.$inferSelect;
 export type UserInsertType = typeof users.$inferInsert;
 
 export const jobs = pgTable("jobs", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id")
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  userId: uuid("user_id")
     .references(() => users.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
     })
     .notNull(),
-  hiringCompany: varchar({ length: 255 }).notNull(),
+  hiringCompany: varchar("hiring_company", { length: 255 }).notNull(),
   recruitingCompany: varchar("recruiting_company", { length: 255 }).notNull(),
   position: varchar("position", { length: 255 }).notNull(),
   recruiterName: varchar("recruiter_name", { length: 255 })
@@ -50,21 +54,17 @@ export const jobs = pgTable("jobs", {
 //
 
 export const interviews = pgTable("interviews", {
-  id: serial("id").primaryKey(),
-  jobId: integer("job_id")
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  jobId: uuid("job_id")
     .references(() => jobs.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
     })
     .notNull(),
-  userId: integer()
-    .references(() => users.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    })
-    .notNull(),
-  interviewerName: varchar({ length: 255 }).notNull(),
-  interviewerRole: varchar({ length: 255 }).notNull(),
+  interviewerName: varchar("interviewer_name", { length: 255 }).notNull(),
+  interviewerRole: varchar("interviewer_role", { length: 255 }).notNull(),
   interviewDate: timestamp("interview_date").notNull().defaultNow(),
   notes: varchar("notes", { length: 500 }),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -73,7 +73,7 @@ export const interviews = pgTable("interviews", {
 
 const jobColumns = getTableColumns(jobs);
 
-export const jobsWithLastInteraction = pgView("jobsWithLastInteraction").as(
+export const jobsWithLastInteraction = pgView("jobs_with_last_interaction").as(
   (qb) =>
     qb
       .select({

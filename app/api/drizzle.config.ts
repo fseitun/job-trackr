@@ -5,10 +5,10 @@ const config: Config = {
   out: "./drizzle",
   dialect: "postgresql",
   // casing: "snake_case",
-  // migrations: {
-  //   schema: "",
-  //   table: "",
-  // },
+  migrations: {
+    schema: "public",
+    table: "migrations",
+  },
   dbCredentials: {
     host: process.env.DATABASE_HOST || "localhost",
     port: parseInt(process.env.DATABASE_PORT || "5433"),

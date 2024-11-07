@@ -4,7 +4,6 @@
 - Style for non-mobile
 - Prevent FE tz from modifying the shown date format
 - Setup React Query
-- Move prisma table in drizzle.config.ts
 - Evaluate casing.snake_case in drizzle config
 - Change all default exports to named exports
 - Add createdAt and updatedAt in both Interviews and JobProcesses and updatedAt to Users
