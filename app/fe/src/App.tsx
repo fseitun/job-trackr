@@ -1,8 +1,8 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import LandingPage from "./components/LandingPage";
-import CreateInterviewForm from "./components/Interview/CreateInterviewForm";
-import UpdateInterviewForm from "./components/Interview/UpdateInterviewForm";
+import { LandingPage } from "./components/LandingPage";
+import { CreateInterviewForm } from "./components/Interview/CreateInterviewForm";
+import { UpdateInterviewForm } from "./components/Interview/UpdateInterviewForm";
 
 const JobList = lazy(
   () => import("./components/Job/JobList")
@@ -20,7 +20,7 @@ const Login = lazy(() => import("./components/Auth/Login"));
 const Register = lazy(() => import("./components/Auth/Register"));
 const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
 
-function App() {
+export function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
@@ -80,4 +80,3 @@ function App() {
   );
 }
 
-export default App;

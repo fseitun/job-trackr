@@ -18,8 +18,8 @@ export type CreateJobDto = Omit<Job, "id" | "interviews" | "lastInteraction">;
 export type UpdateJobDto = Partial<Job>;
 
 export interface Interview {
-  id: number;
-  jobId: number;
+  id: string;
+  jobId: string;
   interviewerName: string;
   interviewerRole: string;
   interviewDate: string;

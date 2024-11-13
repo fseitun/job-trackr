@@ -1,6 +1,6 @@
 import axios, { isAxiosError } from "axios";
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: "http://localhost:3000/api",
 });
 
@@ -28,5 +28,3 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-export default api;

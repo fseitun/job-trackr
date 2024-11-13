@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import client from "../../api/client";
+import { useState } from "react";
+import { client } from "../../api/client";
 import { useNavigate } from "react-router-dom";
 import { CreateJobDto } from "../../types";
-import JobFormFields from "./JobFormFields";
+import { JobFormFields } from "./JobFormFields";
 
-const CreateJobForm: React.FC = () => {
+export default function CreateJobForm() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<CreateJobDto>({
@@ -36,7 +36,7 @@ const CreateJobForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
@@ -49,7 +49,7 @@ const CreateJobForm: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }
 
   return (
     <div style={styles.container}>
@@ -77,7 +77,7 @@ const CreateJobForm: React.FC = () => {
       </form>
     </div>
   );
-};
+}
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -132,5 +132,3 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginBottom: "1rem",
   },
 };
-
-export default CreateJobForm;

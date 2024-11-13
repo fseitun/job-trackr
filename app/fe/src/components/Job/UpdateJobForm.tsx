@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import client from "../../api/client";
+import { useState, useEffect } from "react";
+import { client } from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { UpdateJobDto, Job } from "../../types";
-import JobFormFields from "./JobFormFields";
+import { JobFormFields } from "./JobFormFields";
 
-const UpdateJobForm: React.FC = () => {
+export default function UpdateJobForm() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -29,7 +29,7 @@ const UpdateJobForm: React.FC = () => {
     if (id) {
       client
         .get<Job>(`/job/${id}`)
-        .then((response) => {
+        .then((response: Job) => {
           setFormData({
             hiringCompany: response.hiringCompany,
             recruitingCompany: response.recruitingCompany,
@@ -44,7 +44,7 @@ const UpdateJobForm: React.FC = () => {
             timeZone: response.timeZone,
           });
         })
-        .catch((err) => {
+        .catch((err: Error) => {
           console.error("Error fetching job details:", err);
           setError("Failed to load job details.");
         })
@@ -72,11 +72,7 @@ const UpdateJobForm: React.FC = () => {
     setError("");
     try {
       if (id) {
-        await client.patch<UpdateJobDto>(
-          `/job/${id}`,
-          formData,
-          Number(id)
-        );
+        await client.patch<UpdateJobDto>(`/job/${id}`, formData, Number(id));
         navigate(`/job/${id}`);
       } else {
         setError("Invalid job ID.");
@@ -119,7 +115,7 @@ const UpdateJobForm: React.FC = () => {
       </form>
     </div>
   );
-};
+}
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -179,5 +175,3 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1.2rem",
   },
 };
-
-export default UpdateJobForm;

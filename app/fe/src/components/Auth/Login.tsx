@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const Login: React.FC = () => {
+export default function Login() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ const Login: React.FC = () => {
       </form>
     </div>
   );
-};
+}
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -110,5 +110,3 @@ const styles: { [key: string]: React.CSSProperties } = {
     textAlign: "center",
   },
 };
-
-export default Login;

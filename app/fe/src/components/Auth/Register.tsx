@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { authStyles as styles } from "./authStyles";
 
-const Register: React.FC = () => {
+export default function Register() {
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -12,19 +12,16 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-    try {
-      await register(email, password);
-      navigate("/job");
-    } catch {
-      setError("An unexpected error occurred");
-    }
-  };
+    register(email, password)
+      .then(() => navigate("/job"))
+      .catch(() => setError("An unexpected error occurred"));
+  }
 
   return (
     <div style={styles.container}>
@@ -67,6 +64,4 @@ const Register: React.FC = () => {
       </form>
     </div>
   );
-};
-
-export default Register;
+}

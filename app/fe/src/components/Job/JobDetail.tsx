@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Job } from "../../types";
-import InterviewList from "../Interview/InterviewList";
-import client from "../../api/client";
+import { InterviewList } from "../Interview/InterviewList";
+import { client } from "../../api/client";
 
-const JobDetail: React.FC = () => {
+export default function JobDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [job, setJob] = useState<Job | null>(null);
@@ -49,10 +49,7 @@ const JobDetail: React.FC = () => {
 
   return (
     <div style={styles.container}>
-      <button
-        onClick={() => navigate("/job")}
-        style={styles.backButton}
-      >
+      <button onClick={() => navigate("/job")} style={styles.backButton}>
         Back
       </button>
       <h2 style={styles.subHeader}>Interviews</h2>
@@ -64,13 +61,10 @@ const JobDetail: React.FC = () => {
           Edit Job Application
         </button>
       </Link>
-      <InterviewList
-        interviews={job.interviews}
-        jobId={job.id}
-      />
+      <InterviewList interviews={job.interviews} jobId={job.id} />
     </div>
   );
-};
+}
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -131,5 +125,3 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "#ffffff",
   },
 };
-
-export default JobDetail;

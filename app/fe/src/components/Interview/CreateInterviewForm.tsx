@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import client from "../../api/client";
+import { useState } from "react";
+import { client } from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { CreateInterviewDto } from "../../types";
-import InterviewFormFields from "./InterviewFormFields";
+import { InterviewFormFields } from "./InterviewFormFields";
 import {
   containerStyle,
   headerStyle,
@@ -14,12 +14,12 @@ import {
   errorStyle,
 } from "./CreateInterviewForm.styles";
 
-const CreateInterviewForm: React.FC = () => {
+export function CreateInterviewForm() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
   const [formData, setFormData] = useState<CreateInterviewDto>({
-    jobId: Number(id),
+    jobId: id ?? "",
     interviewerName: "",
     interviewerRole: "",
     interviewDate: new Date().toISOString(),
@@ -84,6 +84,4 @@ const CreateInterviewForm: React.FC = () => {
       </form>
     </div>
   );
-};
-
-export default CreateInterviewForm;
+}

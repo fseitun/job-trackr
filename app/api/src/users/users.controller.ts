@@ -24,24 +24,24 @@ export class UsersController {
   private readonly logger = new Logger(UsersController.name);
 
   @Post("register")
-  async register(@Body() createUserDto: CreateUserDto) {
+  async register(@Body() userData: CreateUserDto) {
     this.logger.log("Registering a new user");
-    return await this.usersService.create(createUserDto);
+    return await this.usersService.create(userData);
   }
 
   @Post("login")
   async login(
-    @Body() loginUserDto: LoginUserDto,
+    @Body() userData: LoginUserDto,
     @Res({ passthrough: true }) response: Response
   ) {
-    const user = await this.usersService.findByEmail(loginUserDto.email);
+    const user = await this.usersService.findByEmail(userData.email);
     if (!user) {
       this.logger.error("User not found in request");
       throw new UnauthorizedException("Invalid credentials");
     }
 
     const isPasswordValid = await bcrypt.compare(
-      loginUserDto.password,
+      userData.password,
       user.passwordHash
     );
     if (!isPasswordValid) {

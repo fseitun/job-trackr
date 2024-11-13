@@ -1,4 +1,3 @@
-import React from "react";
 import { UpdateJobDto, CreateJobDto } from "../../types";
 
 interface JobFormFieldsProps {
@@ -8,10 +7,7 @@ interface JobFormFieldsProps {
   ) => void;
 }
 
-const JobFormFields: React.FC<JobFormFieldsProps> = ({
-  formData,
-  handleChange,
-}) => {
+export function JobFormFields({ formData, handleChange }: JobFormFieldsProps) {
   return (
     <>
       <div style={styles.formGroup}>
@@ -132,7 +128,7 @@ const JobFormFields: React.FC<JobFormFieldsProps> = ({
       </div>
     </>
   );
-};
+}
 
 const styles: { [key: string]: React.CSSProperties } = {
   formGroup: {
@@ -165,5 +161,3 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginLeft: "0.5rem",
   },
 };
-
-export default JobFormFields;

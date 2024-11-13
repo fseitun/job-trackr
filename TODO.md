@@ -10,3 +10,4 @@
 - Add vitests
 - Add integration tests
 - Add cypress tests
+- Turn on no-explicit-any in eslint

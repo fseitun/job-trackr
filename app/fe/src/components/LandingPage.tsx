@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const LandingPage: React.FC = () => {
+export function LandingPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const LandingPage: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -72,5 +72,3 @@ const styles: { [key: string]: React.CSSProperties } = {
     transition: "background-color 0.3s",
   },
 };
-
-export default LandingPage;

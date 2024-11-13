@@ -1,4 +1,3 @@
-import React from "react";
 import { CreateInterviewDto, UpdateInterviewDto } from "../../types";
 import {
   formGroupStyle,
@@ -14,10 +13,10 @@ interface InterviewFormFieldsProps {
   ) => void;
 }
 
-const InterviewFormFields: React.FC<InterviewFormFieldsProps> = ({
+export function InterviewFormFields({
   formData,
   handleChange,
-}) => {
+}: InterviewFormFieldsProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toISOString().split("T")[0];
@@ -69,6 +68,4 @@ const InterviewFormFields: React.FC<InterviewFormFieldsProps> = ({
       </div>
     </>
   );
-};
-
-export default InterviewFormFields;
+}

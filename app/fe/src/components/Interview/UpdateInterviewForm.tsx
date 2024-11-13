@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import client from "../../api/client";
+import { useState, useEffect } from "react";
+import { client } from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { UpdateInterviewDto, CreateInterviewDto } from "../../types";
-import InterviewFormFields from "./InterviewFormFields";
+import { InterviewFormFields } from "./InterviewFormFields";
 import {
   containerStyle,
   headerStyle,
@@ -15,7 +15,7 @@ import {
   loadingStyle,
 } from "./UpdateInterviewForm.styles";
 
-const UpdateInterviewForm: React.FC = () => {
+export function UpdateInterviewForm() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -117,6 +117,4 @@ const UpdateInterviewForm: React.FC = () => {
       </form>
     </div>
   );
-};
-
-export default UpdateInterviewForm;
+}

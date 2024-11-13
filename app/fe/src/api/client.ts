@@ -1,4 +1,4 @@
-import api from "./api";
+import { api } from "./api";
 
 const fetchAll = async <T>(url: string): Promise<T[]> => {
   const response = await api.get<T[]>(url);
@@ -38,7 +38,7 @@ const patch = async <T>(url: string, data: T, id: number): Promise<void> => {
   await api.patch(url, { data, id }); // TODO: fix this on backend
 };
 
-const client = {
+export const client = {
   fetchAll,
   get,
   post,
@@ -48,5 +48,3 @@ const client = {
   logout,
   validateToken,
 };
-
-export default client;

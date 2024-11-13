@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Job } from "../../types";
-import client from "../../api/client";
+import { client } from "../../api/client";
 
-const JobList: React.FC = () => {
+export default function JobList() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -11,9 +11,7 @@ const JobList: React.FC = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const jobs = await client.fetchAll<Job>(
-          "/job"
-        );
+        const jobs = await client.fetchAll<Job>("/job");
         setJobs(jobs);
       } catch (err) {
         console.error("Error fetching jobs:", err);
@@ -79,7 +77,7 @@ const JobList: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -135,5 +133,3 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "1.2rem",
   },
 };
-
-export default JobList;

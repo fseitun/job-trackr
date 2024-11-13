@@ -2,6 +2,7 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module.js";
 import { ValidationPipe } from "@nestjs/common";
 import { LoggingInterceptor } from "./common/interceptors/logging.interceptor.js";
+import { BadRequestException } from "@nestjs/common";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -18,6 +19,14 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
+      enableDebugMessages: true,
+      exceptionFactory: (errors) => {
+        const detailedErrors = errors.map((error) => ({
+          property: error.property,
+          constraints: error.constraints,
+        }));
+        return new BadRequestException(detailedErrors);
+      },
     })
   );
 

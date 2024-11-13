@@ -1,11 +1,9 @@
-import React, { useState, ReactNode, useEffect } from "react";
+import { useState, ReactNode, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
-import client from "../api/client";
+import { client } from "../api/client";
 import { jwtDecode } from "jwt-decode";
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userId, setUserId] = useState<number>(-1);
 

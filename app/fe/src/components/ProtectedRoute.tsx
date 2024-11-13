@@ -1,11 +1,10 @@
-import React from "react";
 import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const token = localStorage.getItem("authToken");
 
   if (!token) {
@@ -13,6 +12,4 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
   return <>{children}</>;
-};
-
-export default ProtectedRoute;
+}

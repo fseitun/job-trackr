@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Interview } from "../../types";
 import {
@@ -13,7 +12,7 @@ interface InterviewListProps {
   jobId: number;
 }
 
-const InterviewList: React.FC<InterviewListProps> = ({ interviews }) => {
+export function InterviewList({ interviews }: InterviewListProps) {
   if (interviews.length === 0) {
     return <p>No interviews scheduled for this job application.</p>;
   }
@@ -50,4 +49,4 @@ const InterviewList: React.FC<InterviewListProps> = ({ interviews }) => {
   );
 };
 
-export default InterviewList;
+

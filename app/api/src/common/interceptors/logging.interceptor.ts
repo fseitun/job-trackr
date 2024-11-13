@@ -5,39 +5,36 @@ import {
   CallHandler,
   Logger,
 } from "@nestjs/common";
-import { Observable, throwError } from "rxjs";
-import { tap, catchError } from "rxjs/operators";
+import { Observable, tap, catchError } from "rxjs";
+import { HttpException } from "@nestjs/common";
 
 @Injectable()
-export class LoggingInterceptor<T = unknown> implements NestInterceptor<T, T> {
+export class LoggingInterceptor implements NestInterceptor {
   private readonly logger = new Logger(LoggingInterceptor.name);
 
-  intercept(context: ExecutionContext, next: CallHandler<T>): Observable<T> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
-    const response = context.switchToHttp().getResponse();
-    const { method, url } = request;
+    const { method, url, body } = request;
+
+    this.logger.log(`Incoming Request: ${method} ${url} ${JSON.stringify(body)}`);
+
     const now = Date.now();
-
-    this.logger.log(`Incoming Request: ${method} ${url}`);
-
     return next.handle().pipe(
-      tap(() => {
-        const { statusCode } = response;
+      tap((data) =>
         this.logger.log(
-          `Outgoing Response: ${method} ${url} ${statusCode} - ${
+          `Response: ${method} ${url} ${JSON.stringify(data)} - ${
             Date.now() - now
           }ms`
-        );
-      }),
-      catchError((error) => {
-        const { statusCode } = response;
+        )
+      ),
+      catchError((err: HttpException) => {
         this.logger.error(
-          `Error Response: ${method} ${url} ${statusCode} - ${
+          `Error Response: ${method} ${url} ${err.getStatus()} - ${
             Date.now() - now
           }ms`,
-          error.stack
+          err.stack
         );
-        return throwError(() => error);
+        throw err;
       })
     );
   }
