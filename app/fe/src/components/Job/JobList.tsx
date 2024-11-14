@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Job } from "../../types";
 import { client } from "../../api/client";
+import { formatDate } from "../../../../utils";
 
 export default function JobList() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -62,7 +63,7 @@ export default function JobList() {
                 <td>{job.hiringCompany}</td>
                 <td>{job.recruitingCompany}</td>
                 <td>{job.position}</td>
-                <td>{job.lastInteraction ? job.lastInteraction : "N/A"}</td>
+                <td>{job.lastInteraction ? formatDate(job.lastInteraction) : "N/A"}</td>
                 <td>
                   <Link to={`/job/${job.id}`}>
                     <button style={{ ...styles.button, ...styles.viewButton }}>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Interview } from "../../types";
+import { formatDate } from "../../../../utils";
 import {
   tableStyle,
   rowStyle,
@@ -33,7 +34,7 @@ export function InterviewList({ interviews }: InterviewListProps) {
           <tr key={interview.id} style={rowStyle}>
             <td>{interview.interviewerName}</td>
             <td>{interview.interviewerRole}</td>
-            <td>{new Date(interview.interviewDate).toLocaleDateString()}</td>
+            <td>{formatDate(interview.interviewDate)}</td>
             <td>{interview.notes || "N/A"}</td>
             <td>
               <Link to={`/edit-interview/${interview.id}`}>

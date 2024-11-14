@@ -1,4 +1,5 @@
 import { CreateInterviewDto, UpdateInterviewDto } from "../../types";
+import { formatDate } from "../../../../utils";
 import {
   formGroupStyle,
   labelStyle,
@@ -17,10 +18,6 @@ export function InterviewFormFields({
   formData,
   handleChange,
 }: InterviewFormFieldsProps) {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0];
-  };
 
   return (
     <>

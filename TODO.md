@@ -2,7 +2,6 @@
 - Rename InterviewProcesses to Interview everywhere
 - Refactor styles to CSS modules or css-in-js?
 - Style for non-mobile
-- Prevent FE tz from modifying the shown date format
 - Setup React Query
 - Evaluate casing.snake_case in drizzle config
 - Change all default exports to named exports
