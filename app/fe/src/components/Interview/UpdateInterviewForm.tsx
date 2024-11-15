@@ -14,18 +14,20 @@ import {
   errorStyle,
   loadingStyle,
 } from "./UpdateInterviewForm.styles";
+import { useHandleDateChange } from "../hooks/useHandleDateChange";
 
 export function UpdateInterviewForm() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  const [formData, setFormData] = useState<UpdateInterviewDto>({
-    jobId: "",
-    interviewerName: "",
-    interviewerRole: "",
-    interviewDate: new Date().toISOString().split("T")[0],
-    notes: "",
-  });
+  const { formData, setFormData, handleDateChange } =
+    useHandleDateChange<UpdateInterviewDto>({
+      jobId: "",
+      interviewerName: "",
+      interviewerRole: "",
+      interviewDate: new Date().toISOString().split("T")[0],
+      notes: "",
+    });
 
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -55,7 +57,7 @@ export function UpdateInterviewForm() {
           setIsLoading(false);
         });
     }
-  }, [id]);
+  }, [id, setFormData]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -67,31 +69,13 @@ export function UpdateInterviewForm() {
     }));
   };
 
-  const handleDateChange = (date: Date | null) => {
-    if (date) {
-      const formattedDate = date.toISOString().split("T")[0];
-      setFormData((prev) => ({
-        ...prev,
-        interviewDate: formattedDate,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        interviewDate: "",
-      }));
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
     try {
       if (id) {
-        await client.patch<UpdateInterviewDto>(
-          `/interviews/${id}`,
-          formData
-        );
+        await client.patch<UpdateInterviewDto>(`/interviews/${id}`, formData);
         navigate(`/job/${formData.jobId}`);
       } else {
         setError("Invalid interview ID.");

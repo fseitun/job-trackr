@@ -3,6 +3,7 @@ import { client } from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { CreateInterviewDto } from "../../types";
 import { InterviewFormFields } from "./InterviewFormFields";
+import { useHandleDateChange } from "../hooks/useHandleDateChange";
 import {
   containerStyle,
   headerStyle,
@@ -18,7 +19,7 @@ export function CreateInterviewForm() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  const [formData, setFormData] = useState<CreateInterviewDto>({
+  const { formData, setFormData, handleDateChange } = useHandleDateChange<CreateInterviewDto>({
     jobId: id ?? "",
     interviewerName: "",
     interviewerRole: "",
@@ -63,7 +64,11 @@ export function CreateInterviewForm() {
       <h2 style={headerStyle}>Add Interview</h2>
       {error && <div style={errorStyle}>{error}</div>}
       <form onSubmit={handleSubmit} style={formStyle}>
-        <InterviewFormFields formData={formData} handleChange={handleChange} />
+        <InterviewFormFields
+          formData={formData}
+          handleChange={handleChange}
+          handleDateChange={handleDateChange}
+        />
         <div style={buttonGroupStyle}>
           <button
             type="submit"
