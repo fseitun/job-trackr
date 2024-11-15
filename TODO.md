@@ -1,3 +1,4 @@
+- unify eslint rules
 - Refactor styles to CSS modules or css-in-js?
 - Style for non-mobile
 - Setup React Query

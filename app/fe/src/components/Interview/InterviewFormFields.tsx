@@ -1,5 +1,7 @@
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { CreateInterviewDto, UpdateInterviewDto } from "../../types";
-import { formatDate } from "../../../../utils";
 import {
   formGroupStyle,
   labelStyle,
@@ -12,12 +14,17 @@ interface InterviewFormFieldsProps {
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
+  handleDateChange: (date: Date | null) => void;
 }
 
 export function InterviewFormFields({
   formData,
   handleChange,
+  handleDateChange,
 }: InterviewFormFieldsProps) {
+  const selectedDate = formData.interviewDate
+    ? new Date(formData.interviewDate)
+    : null;
 
   return (
     <>
@@ -45,13 +52,11 @@ export function InterviewFormFields({
       </div>
       <div style={formGroupStyle}>
         <label style={labelStyle}>Interview Date:</label>
-        <input
-          type="date"
-          name="interviewDate"
-          value={formatDate(formData.interviewDate || "")}
-          onChange={handleChange}
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => handleDateChange(date)}
+          dateFormat="dd/MM/yyyy"
           required
-          style={inputStyle}
         />
       </div>
       <div style={formGroupStyle}>

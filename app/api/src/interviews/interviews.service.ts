@@ -36,7 +36,10 @@ export class InterviewsService {
 
     const [newInterview] = await this.dbService.db
       .insert(interviews)
-      .values(createInterviewDto)
+      .values({
+        ...createInterviewDto,
+        interviewDate: new Date(createInterviewDto.interviewDate),
+      })
       .returning();
 
     return newInterview;
@@ -89,6 +92,7 @@ export class InterviewsService {
         .set({
           ...updateInterviewDto,
           updatedAt: new Date(),
+          interviewDate: new Date(updateInterviewDto.interviewDate),
         })
         .where(eq(interviews.id, id))
         .returning();

@@ -22,7 +22,7 @@ export function CreateInterviewForm() {
     jobId: id ?? "",
     interviewerName: "",
     interviewerRole: "",
-    interviewDate: new Date().toISOString(),
+    interviewDate: new Date().toISOString().split("T")[0],
     notes: "",
   });
 

@@ -72,7 +72,7 @@ export default function UpdateJobForm() {
     setError("");
     try {
       if (id) {
-        await client.patch<UpdateJobDto>(`/job/${id}`, formData, Number(id));
+        await client.patch<UpdateJobDto>(`/job/${id}`, formData);
         navigate(`/job/${id}`);
       } else {
         setError("Invalid job ID.");

@@ -23,7 +23,7 @@ export function UpdateInterviewForm() {
     jobId: "",
     interviewerName: "",
     interviewerRole: "",
-    interviewDate: new Date().toISOString(),
+    interviewDate: new Date().toISOString().split("T")[0],
     notes: "",
   });
 
@@ -36,11 +36,14 @@ export function UpdateInterviewForm() {
       client
         .get<CreateInterviewDto>(`/interviews/${id}`)
         .then((interview) => {
+          const formattedDate = interview.interviewDate
+            ? new Date(interview.interviewDate).toISOString().split("T")[0]
+            : "";
           setFormData({
             jobId: interview.jobId,
             interviewerName: interview.interviewerName,
             interviewerRole: interview.interviewerRole,
-            interviewDate: interview.interviewDate,
+            interviewDate: formattedDate,
             notes: interview.notes ?? "",
           });
         })
@@ -64,6 +67,21 @@ export function UpdateInterviewForm() {
     }));
   };
 
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      const formattedDate = date.toISOString().split("T")[0];
+      setFormData((prev) => ({
+        ...prev,
+        interviewDate: formattedDate,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        interviewDate: "",
+      }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -72,8 +90,7 @@ export function UpdateInterviewForm() {
       if (id) {
         await client.patch<UpdateInterviewDto>(
           `/interviews/${id}`,
-          formData,
-          Number(id)
+          formData
         );
         navigate(`/job/${formData.jobId}`);
       } else {
@@ -96,7 +113,11 @@ export function UpdateInterviewForm() {
       <h2 style={headerStyle}>Edit Interview</h2>
       {error && <div style={errorStyle}>{error}</div>}
       <form onSubmit={handleSubmit} style={formStyle}>
-        <InterviewFormFields formData={formData} handleChange={handleChange} />
+        <InterviewFormFields
+          formData={formData}
+          handleChange={handleChange}
+          handleDateChange={handleDateChange}
+        />
         <div style={buttonGroupStyle}>
           <button
             type="submit"

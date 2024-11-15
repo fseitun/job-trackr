@@ -1,8 +1,7 @@
-import { Type } from "class-transformer";
 import {
   IsOptional,
   IsString,
-  IsDate,
+  IsDateString,
   IsNotEmpty,
   IsDefined,
   IsUUID,
@@ -25,11 +24,10 @@ export class CreateInterviewDto {
   @IsString()
   interviewerRole!: string;
 
-  @Type(() => Date)
   @IsDefined()
   @IsNotEmpty()
-  @IsDate()
-  interviewDate!: Date;
+  @IsDateString()
+  interviewDate!: string;
 
   @IsOptional()
   @IsString()
