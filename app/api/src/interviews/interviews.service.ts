@@ -86,7 +86,10 @@ export class InterviewsService {
 
       const [updatedInterview] = await this.dbService.db
         .update(interviews)
-        .set(updateInterviewDto)
+        .set({
+          ...updateInterviewDto,
+          updatedAt: new Date(),
+        })
         .where(eq(interviews.id, id))
         .returning();
 

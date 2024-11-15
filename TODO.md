@@ -5,7 +5,6 @@
 - Setup React Query
 - Evaluate casing.snake_case in drizzle config
 - Change all default exports to named exports
-- Add createdAt and updatedAt in both Interviews and JobProcesses and updatedAt to Users
 - Add vitests
 - Add integration tests
 - Add cypress tests

@@ -39,14 +39,6 @@ export class JobsService {
   async update(id: string, updateJobDto: UpdateJobDto, userId: string) {
     this.logger.log(`Updating job with id: ${id}`);
 
-    const updatedData = {
-      ...updateJobDto,
-      monthlySalary: updateJobDto.monthlySalary,
-      vacationsDays: updateJobDto.vacationDays,
-      holidaysDays: updateJobDto.holidayDays,
-      directHire: updateJobDto.directHire,
-    };
-
     const existingJob = await this.dbService.db
       .select()
       .from(jobs)
@@ -58,7 +50,7 @@ export class JobsService {
 
     const [updatedJob] = await this.dbService.db
       .update(jobs)
-      .set(updatedData)
+      .set({ ...updateJobDto, updatedAt: new Date() })
       .where(and(and(eq(jobs.id, id), eq(jobs.userId, userId))))
       .returning();
 
