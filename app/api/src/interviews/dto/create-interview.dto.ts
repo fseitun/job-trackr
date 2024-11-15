@@ -34,4 +34,7 @@ export class CreateInterviewDto {
   @IsOptional()
   @IsString()
   notes?: string;
+
+  @IsOptional()
+  updatedAt?: Date;
 }

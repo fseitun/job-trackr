@@ -20,7 +20,7 @@ export function UpdateInterviewForm() {
   const { id } = useParams<{ id: string }>();
 
   const [formData, setFormData] = useState<UpdateInterviewDto>({
-    jobId: 0,
+    jobId: "",
     interviewerName: "",
     interviewerRole: "",
     interviewDate: new Date().toISOString(),

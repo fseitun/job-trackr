@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
@@ -11,9 +12,7 @@
     "outDir": "./dist",
     "removeComments": true,
     "rootDir": "./",
-    "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
     "target": "ESNext"
   },
   "exclude": [
