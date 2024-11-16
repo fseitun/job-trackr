@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",
-    "lint": "eslint .",
+    "lint": "yarn eslint .",
     "preview": "vite preview",
     "type-check": "tsc --noEmit"
   },
