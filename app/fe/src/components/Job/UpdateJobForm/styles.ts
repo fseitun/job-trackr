@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { darken } from "polished";
 
 export const Container = styled.div`
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
   background-color: #ffffff;
@@ -14,14 +13,6 @@ export const Header = styled.h2`
   text-align: center;
   margin-bottom: 1.5rem;
   color: #333333;
-`;
-
-export const ErrorMessage = styled.div`
-  text-align: center;
-  padding: 1rem;
-  color: red;
-  font-size: 1rem;
-  margin-bottom: 1rem;
 `;
 
 export const Form = styled.form`
@@ -47,12 +38,7 @@ export const SaveButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${darken(0.1, "#1a73e8")};
-  }
-
-  &:disabled {
-    background-color: #a0c4ff;
-    cursor: not-allowed;
+    background-color: #1669c1;
   }
 `;
 
@@ -68,13 +54,16 @@ export const CancelButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${darken(0.1, "#d93025")};
+    background-color: #b0281f;
   }
+`;
 
-  &:disabled {
-    background-color: #f4a3a3;
-    cursor: not-allowed;
-  }
+export const ErrorMessage = styled.div`
+  text-align: center;
+  padding: 1rem;
+  color: red;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 `;
 
 export const LoadingIndicator = styled.div`

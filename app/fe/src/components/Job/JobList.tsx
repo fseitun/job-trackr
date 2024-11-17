@@ -3,6 +3,78 @@ import { Link } from "react-router-dom";
 import { Job } from "../../types";
 import { client } from "../../api/client";
 import { formatDate } from "../../../../utils";
+import styled from "styled-components";
+
+const Container = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+`;
+
+const Header = styled.h1`
+  text-align: center;
+  margin-bottom: 1.5rem;
+`;
+
+const AddButtonWrapper = styled(Link)`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+`;
+
+const Button = styled.button`
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #1a73e8;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #1669c1;
+  }
+`;
+
+const ViewButton = styled(Button)`
+  background-color: #34a853;
+
+  &:hover {
+    background-color: #2c8e43;
+  }
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+const Row = styled.tr`
+  border-bottom: 1px solid #ddd;
+`;
+
+const Th = styled.th`
+  text-align: left;
+  padding: 0.75rem;
+  background-color: #f2f2f2;
+`;
+
+const Td = styled.td`
+  padding: 0.75rem;
+`;
+
+const Loading = styled.div`
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+`;
+
+const Error = styled.div`
+  text-align: center;
+  padding: 2rem;
+  color: red;
+  font-size: 1.2rem;
+`;
 
 export default function JobList() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -26,11 +98,11 @@ export default function JobList() {
   }, []);
 
   if (loading) {
-    return <div style={styles.loading}>Loading job...</div>;
+    return <Loading>Loading jobs...</Loading>;
   }
 
   if (error) {
-    return <div style={styles.error}>{error}</div>;
+    return <Error>{error}</Error>;
   }
 
   const sortedJobs = [...jobs].sort(
@@ -39,98 +111,41 @@ export default function JobList() {
       new Date(a.lastInteraction).getTime()
   );
   return (
-    <div style={styles.container}>
-      <h1 style={styles.header}>Job Applications</h1>
-      <Link to="/job/add" style={styles.addButton}>
-        <button style={styles.button}>Add Job Application</button>
-      </Link>
+    <Container>
+      <Header>Job Applications</Header>
+      <AddButtonWrapper to="/job/add">
+        <Button>Add Job Application</Button>
+      </AddButtonWrapper>
       {sortedJobs.length === 0 ? (
         <p>No job applications found.</p>
       ) : (
-        <table style={styles.table}>
+        <Table>
           <thead>
             <tr>
-              <th>Hiring Company</th>
-              <th>Recruiting Company</th>
-              <th>Position</th>
-              <th>Last Interaction</th>
-              <th>Actions</th>
+              <Th>Hiring Company</Th>
+              <Th>Recruiting Company</Th>
+              <Th>Position</Th>
+              <Th>Last Interaction</Th>
+              <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
             {sortedJobs.map((job) => (
-              <tr key={job.id} style={styles.row}>
-                <td>{job.hiringCompany}</td>
-                <td>{job.recruitingCompany}</td>
-                <td>{job.position}</td>
-                <td>{job.lastInteraction ? formatDate(job.lastInteraction) : "N/A"}</td>
-                <td>
+              <Row key={job.id}>
+                <Td>{job.hiringCompany}</Td>
+                <Td>{job.recruitingCompany}</Td>
+                <Td>{job.position}</Td>
+                <Td>{job.lastInteraction ? formatDate(job.lastInteraction) : "N/A"}</Td>
+                <Td>
                   <Link to={`/job/${job.id}`}>
-                    <button style={{ ...styles.button, ...styles.viewButton }}>
-                      View Details
-                    </button>
+                    <ViewButton>View Details</ViewButton>
                   </Link>
-                </td>
-              </tr>
+                </Td>
+              </Row>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
-    </div>
+    </Container>
   );
 }
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    maxWidth: "1000px",
-    margin: "0 auto",
-    padding: "2rem",
-  },
-  header: {
-    textAlign: "center",
-    marginBottom: "1.5rem",
-  },
-  addButton: {
-    display: "flex",
-    justifyContent: "flex-end",
-    marginBottom: "1rem",
-  },
-  button: {
-    padding: "0.5rem 1rem",
-    borderRadius: "5px",
-    border: "none",
-    backgroundColor: "#1a73e8",
-    color: "#fff",
-    cursor: "pointer",
-    transition: "background-color 0.3s",
-  },
-  viewButton: {
-    backgroundColor: "#34a853",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-  },
-  row: {
-    borderBottom: "1px solid #ddd",
-  },
-  th: {
-    textAlign: "left",
-    padding: "0.75rem",
-    backgroundColor: "#f2f2f2",
-  },
-  td: {
-    padding: "0.75rem",
-  },
-  loading: {
-    textAlign: "center",
-    padding: "2rem",
-    fontSize: "1.2rem",
-  },
-  error: {
-    textAlign: "center",
-    padding: "2rem",
-    color: "red",
-    fontSize: "1.2rem",
-  },
-};

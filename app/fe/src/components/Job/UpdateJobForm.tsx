@@ -1,8 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { client } from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { UpdateJobDto, Job } from "../../types";
 import { JobFormFields } from "./JobFormFields";
+import {
+  Container,
+  Header,
+  Form,
+  ButtonGroup,
+  SaveButton,
+  CancelButton,
+  ErrorMessage,
+  LoadingIndicator,
+} from "./UpdateJobForm.styles";
 
 export default function UpdateJobForm() {
   const navigate = useNavigate();
@@ -55,7 +65,7 @@ export default function UpdateJobForm() {
   }, [id]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
     const checked = (e.target as HTMLInputElement).checked;
@@ -66,7 +76,7 @@ export default function UpdateJobForm() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
@@ -86,92 +96,28 @@ export default function UpdateJobForm() {
   };
 
   if (isLoading) {
-    return <div style={styles.loading}>Loading job details...</div>;
+    return <LoadingIndicator>Loading job details...</LoadingIndicator>;
   }
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.header}>Edit Job Application</h2>
-      {error && <div style={styles.error}>{error}</div>}
-      <form onSubmit={handleSubmit} style={styles.form}>
+    <Container>
+      <Header>Edit Job Application</Header>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <Form onSubmit={handleSubmit}>
         <JobFormFields formData={formData} handleChange={handleChange} />
-        <div style={styles.buttonGroup}>
-          <button
-            type="submit"
-            style={styles.saveButton}
-            disabled={isSubmitting}
-          >
+        <ButtonGroup>
+          <SaveButton type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Updating..." : "Update"}
-          </button>
-          <button
+          </SaveButton>
+          <CancelButton
             type="button"
             onClick={() => navigate(-1)}
-            style={styles.cancelButton}
             disabled={isSubmitting}
           >
             Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+          </CancelButton>
+        </ButtonGroup>
+      </Form>
+    </Container>
   );
 }
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    maxWidth: "800px",
-    margin: "0 auto",
-    padding: "2rem",
-    backgroundColor: "#ffffff",
-    borderRadius: "8px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  },
-  header: {
-    textAlign: "center",
-    marginBottom: "1.5rem",
-    color: "#333333",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  buttonGroup: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginTop: "1.5rem",
-  },
-  saveButton: {
-    padding: "0.75rem 1.5rem",
-    borderRadius: "5px",
-    border: "none",
-    backgroundColor: "#1a73e8",
-    color: "#ffffff",
-    cursor: "pointer",
-    fontWeight: "600",
-    fontSize: "1rem",
-    transition: "background-color 0.3s",
-  },
-  cancelButton: {
-    padding: "0.75rem 1.5rem",
-    borderRadius: "5px",
-    border: "none",
-    backgroundColor: "#d93025",
-    color: "#ffffff",
-    cursor: "pointer",
-    fontWeight: "600",
-    fontSize: "1rem",
-    transition: "background-color 0.3s",
-  },
-  error: {
-    textAlign: "center",
-    padding: "1rem",
-    color: "red",
-    fontSize: "1rem",
-    marginBottom: "1rem",
-  },
-  loading: {
-    textAlign: "center",
-    padding: "2rem",
-    fontSize: "1.2rem",
-  },
-};

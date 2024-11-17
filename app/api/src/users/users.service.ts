@@ -7,12 +7,12 @@ import { eq } from "drizzle-orm";
 
 @Injectable()
 export class UsersService {
-  constructor(private dbService: DatabaseService) {}
+  constructor(private _dbService: DatabaseService) {}
 
   async create(createUserDto: CreateUserDto) {
     const { email, password } = createUserDto;
 
-    const existingUser = await this.dbService.db
+    const existingUser = await this._dbService.db
       .select()
       .from(users)
       .where(eq(users.email, email));
@@ -24,7 +24,7 @@ export class UsersService {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
-    const [newUser] = await this.dbService.db
+    const [newUser] = await this._dbService.db
       .insert(users)
       .values({
         email,
@@ -36,7 +36,7 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    const user = await this.dbService.db
+    const user = await this._dbService.db
       .select()
       .from(users)
       .where(eq(users.email, email));
@@ -45,7 +45,7 @@ export class UsersService {
   }
 
   async findById(id: string) {
-    const user = await this.dbService.db
+    const user = await this._dbService.db
       .select()
       .from(users)
       .where(eq(users.id, id));

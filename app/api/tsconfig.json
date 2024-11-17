@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
@@ -20,6 +20,7 @@
     "dist"
   ],
   "include": [
-    "src/**/*"
+    "src",
+    "drizzle.config.ts"
   ]
 }

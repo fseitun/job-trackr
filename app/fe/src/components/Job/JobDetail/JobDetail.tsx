@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { client } from "../../api/client";
-import { Job } from "../../types";
-import { InterviewList } from "../Interview/InterviewList";
+import { client } from "../../../api/client";
+import { Job } from "../../../types";
+import { InterviewList } from "../../Interview/InterviewList";
 import {
   Container,
   BackButton,
   SubHeader,
-  AddButtonWrapper,
-  EditButtonWrapper,
+  AddButton,
+  Button,
+  EditButton,
   EditBtn,
   Loading,
   ErrorMessage,
-} from "./JobDetail.styles";
-import { Button, StyledLink } from "../../styles/common.styles";
+} from "./styles";
 
 export default function JobDetail() {
   const { id } = useParams<{ id: string }>();
@@ -62,17 +62,13 @@ export default function JobDetail() {
     <Container>
       <BackButton onClick={() => navigate("/job")}>Back</BackButton>
       <SubHeader>Interviews</SubHeader>
-      <AddButtonWrapper>
-        <StyledLink to={`/job/${id}/add-interview`}>
-          <Button>Add Interview</Button>
-        </StyledLink>
-      </AddButtonWrapper>
-      <EditButtonWrapper>
-        <StyledLink to={`/job/${id}/edit`}>
-          <EditBtn>Edit Job Application</EditBtn>
-        </StyledLink>
-      </EditButtonWrapper>
+      <AddButton to={`/job/${id}/add-interview`}>
+        <Button>Add Interview</Button>
+      </AddButton>
+      <EditButton to={`/job/${id}/edit`}>
+        <EditBtn>Edit Job Application</EditBtn>
+      </EditButton>
       <InterviewList interviews={job.interviews} jobId={job.id} />
     </Container>
   );
-}
+} 

@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { darken } from "polished";
+import { Button } from "../../styles/common.styles"
 
 export const Container = styled.div`
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
   background-color: #ffffff;
@@ -16,14 +17,6 @@ export const Header = styled.h2`
   color: #333333;
 `;
 
-export const ErrorMessage = styled.div`
-  text-align: center;
-  padding: 1rem;
-  color: red;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-`;
-
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -35,16 +28,9 @@ export const ButtonGroup = styled.div`
   margin-top: 1.5rem;
 `;
 
-export const SaveButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  border-radius: 5px;
-  border: none;
+export const SaveButton = styled(Button)`
   background-color: #1a73e8;
   color: #ffffff;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background-color 0.3s;
 
   &:hover {
     background-color: ${darken(0.1, "#1a73e8")};
@@ -56,16 +42,9 @@ export const SaveButton = styled.button`
   }
 `;
 
-export const CancelButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  border-radius: 5px;
-  border: none;
+export const CancelButton = styled(Button)`
   background-color: #d93025;
   color: #ffffff;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background-color 0.3s;
 
   &:hover {
     background-color: ${darken(0.1, "#d93025")};
@@ -75,6 +54,14 @@ export const CancelButton = styled.button`
     background-color: #f4a3a3;
     cursor: not-allowed;
   }
+`;
+
+export const ErrorMessage = styled.div`
+  text-align: center;
+  padding: 1rem;
+  color: red;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 `;
 
 export const LoadingIndicator = styled.div`

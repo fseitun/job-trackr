@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { client } from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { UpdateInterviewDto, CreateInterviewDto } from "../../types";
 import { InterviewFormFields } from "./InterviewFormFields";
-import {
-  containerStyle,
-  headerStyle,
-  formStyle,
-  buttonGroupStyle,
-  buttonStyle,
-  saveButtonStyle,
-  cancelButtonStyle,
-  errorStyle,
-  loadingStyle,
-} from "./UpdateInterviewForm.styles";
 import { useHandleDateChange } from "../hooks/useHandleDateChange";
+import {
+  Container,
+  Header,
+  ErrorMessage,
+  Form,
+  ButtonGroup,
+  SaveButton,
+  CancelButton,
+  LoadingIndicator,
+} from "./UpdateInterviewForm.styles.ts";
 
 export function UpdateInterviewForm() {
   const navigate = useNavigate();
@@ -60,7 +59,7 @@ export function UpdateInterviewForm() {
   }, [id, setFormData]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -69,7 +68,7 @@ export function UpdateInterviewForm() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
@@ -89,37 +88,32 @@ export function UpdateInterviewForm() {
   };
 
   if (isLoading) {
-    return <div style={loadingStyle}>Loading interview details...</div>;
+    return <LoadingIndicator>Loading interview details...</LoadingIndicator>;
   }
 
   return (
-    <div style={containerStyle}>
-      <h2 style={headerStyle}>Edit Interview</h2>
-      {error && <div style={errorStyle}>{error}</div>}
-      <form onSubmit={handleSubmit} style={formStyle}>
+    <Container>
+      <Header>Edit Interview</Header>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <Form onSubmit={handleSubmit}>
         <InterviewFormFields
           formData={formData}
           handleChange={handleChange}
           handleDateChange={handleDateChange}
         />
-        <div style={buttonGroupStyle}>
-          <button
-            type="submit"
-            style={{ ...buttonStyle, ...saveButtonStyle }}
-            disabled={isSubmitting}
-          >
+        <ButtonGroup>
+          <SaveButton type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Updating..." : "Update Interview"}
-          </button>
-          <button
+          </SaveButton>
+          <CancelButton
             type="button"
             onClick={() => navigate(-1)}
-            style={{ ...buttonStyle, ...cancelButtonStyle }}
             disabled={isSubmitting}
           >
             Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+          </CancelButton>
+        </ButtonGroup>
+      </Form>
+    </Container>
   );
 }

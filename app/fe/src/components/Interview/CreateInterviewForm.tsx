@@ -1,37 +1,37 @@
-import { useState } from "react";
+import { FormEvent, ChangeEvent, useState } from "react";
 import { client } from "../../api/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { CreateInterviewDto } from "../../types";
 import { InterviewFormFields } from "./InterviewFormFields";
 import { useHandleDateChange } from "../hooks/useHandleDateChange";
 import {
-  containerStyle,
-  headerStyle,
-  formStyle,
-  buttonGroupStyle,
-  buttonStyle,
-  saveButtonStyle,
-  cancelButtonStyle,
-  errorStyle,
-} from "./CreateInterviewForm.styles";
+  Container,
+  Header,
+  ErrorMessage,
+  Form,
+  ButtonGroup,
+  SaveButton,
+  CancelButton,
+} from "./CreateInterviewForm.styles.ts";
 
 export function CreateInterviewForm() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  const { formData, setFormData, handleDateChange } = useHandleDateChange<CreateInterviewDto>({
-    jobId: id ?? "",
-    interviewerName: "",
-    interviewerRole: "",
-    interviewDate: new Date().toISOString().split("T")[0],
-    notes: "",
-  });
+  const { formData, setFormData, handleDateChange } =
+    useHandleDateChange<CreateInterviewDto>({
+      jobId: id ?? "",
+      interviewerName: "",
+      interviewerRole: "",
+      interviewDate: new Date().toISOString().split("T")[0],
+      notes: "",
+    });
 
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -40,7 +40,7 @@ export function CreateInterviewForm() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
@@ -60,33 +60,28 @@ export function CreateInterviewForm() {
   };
 
   return (
-    <div style={containerStyle}>
-      <h2 style={headerStyle}>Add Interview</h2>
-      {error && <div style={errorStyle}>{error}</div>}
-      <form onSubmit={handleSubmit} style={formStyle}>
+    <Container>
+      <Header>Add Interview</Header>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <Form onSubmit={handleSubmit}>
         <InterviewFormFields
           formData={formData}
           handleChange={handleChange}
           handleDateChange={handleDateChange}
         />
-        <div style={buttonGroupStyle}>
-          <button
-            type="submit"
-            style={{ ...buttonStyle, ...saveButtonStyle }}
-            disabled={isSubmitting}
-          >
+        <ButtonGroup>
+          <SaveButton type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Adding..." : "Add Interview"}
-          </button>
-          <button
+          </SaveButton>
+          <CancelButton
             type="button"
             onClick={() => navigate(-1)}
-            style={{ ...buttonStyle, ...cancelButtonStyle }}
             disabled={isSubmitting}
           >
             Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+          </CancelButton>
+        </ButtonGroup>
+      </Form>
+    </Container>
   );
 }

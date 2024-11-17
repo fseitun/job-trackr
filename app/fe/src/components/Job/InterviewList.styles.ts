@@ -12,10 +12,10 @@ export const Row = styled.tr`
 `;
 
 export const EditButton = styled(Button)`
-  background-color: #ff9800;
+  background-color: #4caf50;
   color: #ffffff;
 
   &:hover {
-    background-color: ${darken(0.1, "#ff9800")};
+    background-color: ${darken(0.1, "#4caf50")};
   }
 `;

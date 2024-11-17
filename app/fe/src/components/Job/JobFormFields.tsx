@@ -1,9 +1,10 @@
+import { ChangeEvent, CSSProperties } from "react";
 import { UpdateJobDto, CreateJobDto } from "../../types";
 
 interface JobFormFieldsProps {
   formData: CreateJobDto | UpdateJobDto;
   handleChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
 }
 
@@ -130,7 +131,7 @@ export function JobFormFields({ formData, handleChange }: JobFormFieldsProps) {
   );
 }
 
-const styles: { [key: string]: React.CSSProperties } = {
+const styles: { [key: string]: CSSProperties } = {
   formGroup: {
     marginBottom: "1rem",
   },

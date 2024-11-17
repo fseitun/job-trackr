@@ -1,24 +1,24 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { LandingPage } from "./components/LandingPage";
-import { CreateInterviewForm } from "./components/Interview/CreateInterviewForm";
-import { UpdateInterviewForm } from "./components/Interview/UpdateInterviewForm";
+import { LandingPage } from "./components/LandingPage/LandingPage.tsx";
+import { CreateInterviewForm } from "./components/Interview/CreateInterviewForm.tsx";
+import { UpdateInterviewForm } from "./components/Interview/UpdateInterviewForm.tsx";
 
 const JobList = lazy(
-  () => import("./components/Job/JobList")
+  () => import("./components/Job/JobList.tsx")
 );
 const JobDetail = lazy(
-  () => import("./components/Job/JobDetail")
+  () => import("./components/Job/JobDetail.tsx")
 );
 const CreateJobForm = lazy(
-  () => import("./components/Job/CreateJobForm")
+  () => import("./components/Job/CreateJobForm.tsx")
 );
 const UpdateJobForm = lazy(
-  () => import("./components/Job/UpdateJobForm")
+  () => import("./components/Job/UpdateJobForm.tsx")
 );
-const Login = lazy(() => import("./components/Auth/Login"));
-const Register = lazy(() => import("./components/Auth/Register"));
-const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
+const Login = lazy(() => import("./components/Auth/Login.tsx"));
+const Register = lazy(() => import("./components/Auth/Register.tsx"));
+const ProtectedRoute = lazy(() => import("./components/ProtectedRoute.tsx"));
 
 export function App() {
   return (
