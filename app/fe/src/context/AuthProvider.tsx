@@ -1,70 +1,72 @@
-import { useState, ReactNode, useEffect } from "react";
-import { AuthContext } from "./AuthContext";
-import { client } from "../api/client";
-import { jwtDecode } from "jwt-decode";
+import { useState, ReactNode, useEffect } from 'react';
+import { AuthContext } from './AuthContext';
+import { client } from '../api/client';
+import { jwtDecode } from 'jwt-decode';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [userId, setUserId] = useState<number>(-1);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [userId, setUserId] = useState<number>(-1);
 
-  const setAuthToken = (token: string) => {
-    localStorage.setItem("authToken", token);
-  };
-
-  const login = async (email: string, password: string) => {
-    try {
-      const token = await client.login(email, password);
-      if (token) {
-        setAuthToken(token);
-        const decoded: { sub: number } = jwtDecode(token);
-        setUserId(decoded.sub);
-        setIsAuthenticated(true);
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-      setIsAuthenticated(false);
+    function setAuthToken(token: string) {
+        localStorage.setItem('authToken', token);
     }
-  };
 
-  const register = async (email: string, password: string) => {
-    try {
-      await client.register(email, password);
-      await login(email, password);
-    } catch (error) {
-      console.error("Registration failed:", error);
+    async function login(email: string, password: string) {
+        try {
+            const token = await client.login(email, password);
+            if (token) {
+                setAuthToken(token);
+                const decoded: { sub: number } = jwtDecode(token);
+                setUserId(decoded.sub);
+                setIsAuthenticated(true);
+            }
+        } catch (error) {
+            console.error('Login failed:', error);
+            setIsAuthenticated(false);
+        }
     }
-  };
 
-  const logout = async () => {
-    try {
-      await client.logout();
-      setIsAuthenticated(false);
-    } catch (error) {
-      console.error("Logout failed:", error);
+    async function register(email: string, password: string) {
+        try {
+            await client.register(email, password);
+            await login(email, password);
+        } catch (error) {
+            console.error('Registration failed:', error);
+        }
     }
-  };
 
-  const validateToken = async () => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      try {
-        await client.validateToken();
-        setIsAuthenticated(true);
-      } catch (error) {
-        console.error("Token validation failed:", error);
-        setIsAuthenticated(false);
-        localStorage.removeItem("authToken");
-      }
+    async function logout() {
+        try {
+            await client.logout();
+            setIsAuthenticated(false);
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
     }
-  };
 
-  useEffect(() => {
-    validateToken();
-  }, []);
+    async function validateToken() {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            try {
+                await client.validateToken();
+                setIsAuthenticated(true);
+            } catch (error) {
+                console.error('Token validation failed:', error);
+                setIsAuthenticated(false);
+                localStorage.removeItem('authToken');
+            }
+        }
+    }
 
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, userId, login, register, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+    useEffect(() => {
+        validateToken();
+    }, []);
+
+    return (
+        <AuthContext.Provider
+            value={{ isAuthenticated, userId, login, register, logout }}
+        >
+            {children}
+        </AuthContext.Provider>
+    );
+}

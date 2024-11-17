@@ -1,15 +1,15 @@
 services:
-  db:
-    image: postgres:17
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: difficult-password
-      POSTGRES_DB: job_trackr
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    db:
+        image: postgres:17
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: difficult-password
+            POSTGRES_DB: job_trackr
+        ports:
+            - '5433:5432'
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
+    postgres_data:

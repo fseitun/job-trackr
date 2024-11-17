@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useHandleDateChange<T extends { interviewDate?: string }>(
-  initialState: T
+    initialState: T,
 ) {
-  const [formData, setFormData] = useState<T>(initialState);
+    const [formData, setFormData] = useState<T>(initialState);
 
-  const handleDateChange = (date: Date | null) => {
-    setFormData((prev) => ({
-      ...prev,
-      interviewDate: date ? date.toISOString().split("T")[0] : "",
-    }));
-  };
+    function handleDateChange(date: Date | null) {
+        setFormData((prev) => ({
+            ...prev,
+            interviewDate: date ? date.toISOString().split('T')[0] : '',
+        }));
+    }
 
-  return { formData, setFormData, handleDateChange };
+    return { formData, setFormData, handleDateChange };
 }

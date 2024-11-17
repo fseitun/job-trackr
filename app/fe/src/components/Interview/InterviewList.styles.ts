@@ -1,21 +1,21 @@
-import styled from "styled-components";
-import { darken } from "polished";
-import { Button } from "../../styles/common.styles";
+import styled from 'styled-components';
+import { darken } from 'polished';
+import { Button } from '../../styles/common.styles';
 
 export const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 `;
 
 export const Row = styled.tr`
-  border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
 `;
 
 export const EditButton = styled(Button)`
-  background-color: #ff9800;
-  color: #ffffff;
+    background-color: #ff9800;
+    color: #ffffff;
 
-  &:hover {
-    background-color: ${darken(0.1, "#ff9800")};
-  }
+    &:hover {
+        background-color: ${darken(0.1, '#ff9800')};
+    }
 `;

@@ -1,13 +1,13 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true,
-    "module": "ESNext",
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "useDefineForClassFields": true
-  },
-  "include": ["src/**/*", "vite.config.ts"]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "moduleResolution": "Bundler",
+        "allowImportingTsExtensions": true,
+        "module": "ESNext",
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "useDefineForClassFields": true
+    },
+    "include": ["src/**/*", "vite.config.ts"]
 }
