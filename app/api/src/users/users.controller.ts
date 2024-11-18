@@ -1,17 +1,17 @@
-import {
-    Controller,
-    Post,
-    Body,
-    UnauthorizedException,
-    Res,
-    Logger,
-} from '@nestjs/common';
-import { UsersService } from './users.service.js';
-import { CreateUserDto } from './dto/create-user.dto.js';
-import { LoginUserDto } from './dto/login-user.dto.js';
 import * as bcrypt from 'bcrypt';
+import {
+    Body,
+    Controller,
+    Logger,
+    Post,
+    Res,
+    UnauthorizedException,
+} from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto.js';
 import { JwtService } from '@nestjs/jwt';
+import { LoginUserDto } from './dto/login-user.dto.js';
 import { Response } from 'express';
+import { UsersService } from './users.service.js';
 import { maxAge } from '../../config.js';
 
 @Controller('users')

@@ -12,9 +12,9 @@ import {
     Header,
     LoadingIndicator,
     SaveButton,
-} from './UpdateJobForm.styles.ts';
+} from './UpdateJobForm.styles';
 
-export default function UpdateJobForm() {
+export function UpdateJobForm() {
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
 

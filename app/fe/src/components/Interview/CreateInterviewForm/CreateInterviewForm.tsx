@@ -1,18 +1,18 @@
-import { FormEvent, ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { client } from '../../../api/client.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CreateInterviewDto } from '../../../types.ts';
 import { InterviewFormFields } from '../InterviewFormFields/InterviewFormFields';
 import { useHandleDateChange } from '../../hooks/useHandleDateChange.ts';
 import {
+    ButtonGroup,
+    CancelButton,
     Container,
-    Header,
     ErrorMessage,
     Form,
-    ButtonGroup,
+    Header,
     SaveButton,
-    CancelButton,
-} from './CreateInterviewForm.styles.ts';
+} from './CreateInterviewForm.styles';
 
 export function CreateInterviewForm() {
     const navigate = useNavigate();

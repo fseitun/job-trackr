@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-import { Button } from '../../../styles/common.styles';
+import { Button } from '../../../styles/Common.styles';
+import { colors } from '../../../styles/theme';
 
 export const Container = styled.div`
     max-width: 600px;
     margin: 0 auto;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: ${colors.black};
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
@@ -13,13 +14,13 @@ export const Container = styled.div`
 export const Header = styled.h2`
     text-align: center;
     margin-bottom: 1.5rem;
-    color: #333333;
+    color: ${colors.gray};
 `;
 
 export const ErrorMessage = styled.div`
     text-align: center;
     padding: 1rem;
-    color: red;
+    color: ${colors.red};
     font-size: 1rem;
     margin-bottom: 1rem;
 `;
@@ -36,14 +37,14 @@ export const ButtonGroup = styled.div`
 `;
 
 export const SaveButton = styled(Button).attrs({
-    variant: 'primary',
+    $variant: 'primary',
 })`
     padding: 0.75rem 1.5rem;
     width: auto;
 `;
 
 export const CancelButton = styled(Button).attrs({
-    variant: 'danger',
+    $variant: 'danger',
 })``;
 
 export const LoadingIndicator = styled.div`

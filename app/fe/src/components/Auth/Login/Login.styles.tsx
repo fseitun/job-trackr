@@ -1,13 +1,16 @@
 import styled from 'styled-components';
-import { Button as CommonButton } from '../../../styles/common.styles';
+import { Button } from '../../../styles/Common.styles';
+import { colors } from '../../../styles/theme';
+
+export { Button };
 
 export const Container = styled.div`
     max-width: 400px;
     margin: 0 auto;
     padding: 2rem;
-    border: 1px solid #ddd;
+    border: 1px solid ${colors.lightGray};
     border-radius: 8px;
-    background-color: #fff;
+    background-color: ${colors.black};
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 50%;
@@ -18,7 +21,7 @@ export const Container = styled.div`
 export const Title = styled.h2`
     text-align: center;
     margin-bottom: 1.5rem;
-    color: #333;
+    color: ${colors.darkGray};
 `;
 
 export const Form = styled.form`
@@ -34,7 +37,7 @@ export const FormGroup = styled.div`
 
 export const Label = styled.label`
     margin-bottom: 0.5rem;
-    color: #555;
+    color: ${colors.gray};
     display: block;
 `;
 
@@ -42,14 +45,12 @@ export const Input = styled.input`
     width: 100%;
     padding: 0.75rem;
     border-radius: 4px;
-    border: 1px solid #ccc;
+    border: 1px solid ${colors.lightGray};
     font-size: 1rem;
 `;
 
-export const Button = styled(CommonButton)``;
-
 export const Error = styled.div`
     margin-bottom: 1rem;
-    color: red;
+    color: ${colors.danger};
     text-align: center;
 `;

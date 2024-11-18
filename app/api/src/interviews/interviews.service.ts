@@ -4,11 +4,11 @@ import {
     Logger,
     NotFoundException,
 } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service.js';
-import { CreateInterviewDto } from './dto/create-interview.dto.js';
-import { UpdateInterviewDto } from './dto/update-interview.dto.js';
+import { and, eq } from 'drizzle-orm';
 import { interviews, jobs } from '../database/schema.js';
-import { eq, and } from 'drizzle-orm';
+import { CreateInterviewDto } from './dto/create-interview.dto.js';
+import { DatabaseService } from '../database/database.service.js';
+import { UpdateInterviewDto } from './dto/update-interview.dto.js';
 
 @Injectable()
 export class InterviewsService {

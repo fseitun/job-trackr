@@ -4,20 +4,20 @@ import { Job } from '../../../types';
 import { client } from '../../../api/client';
 import { formatDate } from '../../../../../utils';
 import {
-    Table,
-    Row,
-    Th,
-    Td,
-    Loading,
-    Error,
-    Header,
     AddButtonWrapper,
     Container,
+    Error,
+    Header,
+    Loading,
+    Row,
+    Table,
+    Td,
+    Th,
     ViewButton,
 } from './JobList.styles';
-import { Button } from '../../../styles/common.styles';
+import { Button } from '../../../styles/Common.styles';
 
-export default function JobList() {
+export function JobList() {
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');

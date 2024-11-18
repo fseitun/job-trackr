@@ -1,14 +1,14 @@
-import { eq, getTableColumns, sql } from 'drizzle-orm';
 import {
+    boolean,
     integer,
-    varchar,
     pgTable,
+    pgView,
     text,
     timestamp,
-    boolean,
-    pgView,
     uuid,
+    varchar,
 } from 'drizzle-orm/pg-core';
+import { eq, getTableColumns, sql } from 'drizzle-orm';
 
 export const users = pgTable('users', {
     id: uuid('id')

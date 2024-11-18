@@ -5,8 +5,8 @@ import { CreateInterviewDto, UpdateInterviewDto } from '../../../types';
 import { ChangeEvent } from 'react';
 import {
     FormGroup,
-    Label,
     Input,
+    Label,
     Textarea,
 } from './InterviewFormFields.styles';
 

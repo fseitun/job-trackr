@@ -1,60 +1,68 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
-  #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-
-  .logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
-  }
-
-  @keyframes logo-spin {
-    from {
-      transform: rotate(0deg);
+export const GlobalStyle = createGlobalStyle`
+    /* Reset CSS */
+    *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
-    to {
-      transform: rotate(360deg);
+
+    /* Global Styles */
+    #root {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: ${({ theme }) => theme.spacing.large};
+        text-align: center;
+        background-color: ${({ theme }) => theme.colors.black};
     }
-  }
 
-  @media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-      animation: logo-spin infinite 20s linear;
+    body {
+        font-family: ${({ theme }) => theme.fontFamily || 'Inter, sans-serif'};
+        line-height: 1.5;
+        font-weight: 400;
+        color: ${({ theme }) => theme.colors.text || '#000'};
+        background-color: ${({ theme }) => theme.colors.background || '#fff'};
+        color-scheme: ${({ theme }) => theme.colorScheme || 'light dark'};
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
     }
-  }
 
-  .card {
-    padding: 2em;
-  }
+    a {
+        font-weight: 500;
+        color: ${({ theme }) => theme.colors.link || '#646cff'};
+        text-decoration: none;
 
-  .read-the-docs {
-    color: #888;
-  }
+        &:hover {
+            color: ${({ theme }) => theme.colors.linkHover || '#535bf2'};
+        }
+    }
 
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    background-color: #242424;
-    color: rgba(255, 255, 255, 0.87);
-    /* Add other global styles as needed */
-  }
+    h1, h2, h3, h4, h5, h6 {
+        color: ${({ theme }) => theme.colors.heading || '#000'};
+    }
+
+    button {
+        border-radius: ${({ theme }) => theme.borderRadius.medium};
+        border: 1px solid transparent;
+        padding: 0.6em 1.2em;
+        font-size: ${({ theme }) => theme.fontSize.medium};
+        font-weight: 500;
+        font-family: inherit;
+        background-color: ${({ theme }) => theme.colors.primary};
+        cursor: pointer;
+        transition: border-color 0.25s, background-color 0.3s;
+
+        &:hover {
+            border-color: ${({ theme }) => theme.colors.hoverBorder || '#646cff'};
+            background-color: ${({ theme }) => theme.colors.primaryHover || '#535bf2'};
+        }
+
+        &:focus,
+        &:focus-visible {
+            outline: 4px auto ${({ theme }) => theme.colors.focusOutline || '-webkit-focus-ring-color'};
+        }
+    }
+
 `;
-
-export default GlobalStyle;

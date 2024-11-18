@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { Button } from '../../../styles/common.styles';
+import { Button } from '../../../styles/Common.styles';
 import { Link } from 'react-router-dom';
-import { colors, borderRadius } from '../../../styles/theme';
+import { borderRadius, colors } from '../../../styles/theme';
 
 export const Container = styled.div`
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: ${colors.black};
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
@@ -16,20 +16,20 @@ export const Container = styled.div`
 export const BackButton = styled(Button)`
     padding: 0.5rem 1rem;
     border-radius: 4px;
-    background-color: #1a73e8;
-    color: #ffffff;
+    background-color: ${colors.primary};
+    color: ${colors.white};
     transition: background-color 0.3s;
     margin-bottom: 1rem;
 
     &:hover {
-        background-color: ${darken(0.1, '#1a73e8')};
+        background-color: ${darken(0.1, colors.primary)};
     }
 `;
 
 export const SubHeader = styled.h2`
     text-align: center;
     margin-bottom: 1rem;
-    color: #333333;
+    color: ${colors.gray};
 `;
 
 export const AddButton = styled.div`
@@ -46,11 +46,11 @@ export const EditButton = styled.div`
 `;
 
 export const EditBtn = styled(Button)`
-    background-color: #2196f3;
-    color: #ffffff;
+    background-color: ${colors.primary};
+    color: ${colors.white};
 
     &:hover {
-        background-color: ${darken(0.1, '#2196f3')};
+        background-color: ${darken(0.1, colors.primary)};
     }
 `;
 
@@ -63,7 +63,7 @@ export const Loading = styled.div`
 export const ErrorMessage = styled.div`
     text-align: center;
     padding: 2rem;
-    color: red;
+    color: ${colors.red};
     font-size: 1.2rem;
 `;
 
@@ -85,7 +85,7 @@ export const ButtonLink = styled(Link)`
     }
 
     &:disabled {
-        background-color: #a0c4ff;
+        background-color: ${colors.lightGray};
         cursor: not-allowed;
     }
 `;

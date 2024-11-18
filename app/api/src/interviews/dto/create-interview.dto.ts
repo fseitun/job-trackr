@@ -1,9 +1,9 @@
 import {
+    IsDateString,
+    IsDefined,
+    IsNotEmpty,
     IsOptional,
     IsString,
-    IsDateString,
-    IsNotEmpty,
-    IsDefined,
     IsUUID,
 } from 'class-validator';
 

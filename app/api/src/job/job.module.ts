@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { JobsService } from './job.service.js';
-import { JobsController } from './job.controller.js';
 import { DatabaseModule } from '../database/database.module.js';
+import { JobsController } from './job.controller.js';
+import { JobsService } from './job.service.js';
+import { Module } from '@nestjs/common';
 
 @Module({
     imports: [DatabaseModule],

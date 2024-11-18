@@ -4,17 +4,17 @@ import { client } from '../../../api/client';
 import { Job } from '../../../types';
 import { InterviewList } from '../../Interview/InterviewList/InterviewList';
 import {
-    Container,
-    BackButton,
-    SubHeader,
     AddButton,
-    EditButton,
-    Loading,
-    ErrorMessage,
+    BackButton,
     ButtonLink,
+    Container,
+    EditButton,
+    ErrorMessage,
+    Loading,
+    SubHeader,
 } from './JobDetail.styles';
 
-export default function JobDetail() {
+export function JobDetail() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const [job, setJob] = useState<Job | null>(null);

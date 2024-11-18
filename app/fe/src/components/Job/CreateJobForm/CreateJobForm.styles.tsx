@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { Button } from '../../../styles/common.styles';
+import { Button } from '../../../styles/Common.styles';
+import { colors } from '../../../styles/theme';
 
 export const Container = styled.div`
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: ${colors.black};
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
@@ -14,7 +15,7 @@ export const Container = styled.div`
 export const Header = styled.h2`
     text-align: center;
     margin-bottom: 1.5rem;
-    color: #333333;
+    color: ${colors.gray};
 `;
 
 export const Form = styled.form`
@@ -29,29 +30,29 @@ export const ButtonGroup = styled.div`
 `;
 
 export const SaveButton = styled(Button)`
-    background-color: #1a73e8;
-    color: #ffffff;
+    background-color: ${colors.primary};
+    color: ${colors.white};
 
     &:hover {
-        background-color: ${darken(0.1, '#1a73e8')};
+        background-color: ${darken(0.1, colors.primary)};
     }
 
     &:disabled {
-        background-color: #a0c4ff;
+        background-color: ${colors.lightGray};
         cursor: not-allowed;
     }
 `;
 
 export const CancelButton = styled(Button)`
-    background-color: #d93025;
-    color: #ffffff;
+    background-color: ${colors.danger};
+    color: ${colors.white};
 
     &:hover {
-        background-color: ${darken(0.1, '#d93025')};
+        background-color: ${darken(0.1, colors.danger)};
     }
 
     &:disabled {
-        background-color: #f4a3a3;
+        background-color: ${colors.disabled};
         cursor: not-allowed;
     }
 `;
@@ -59,7 +60,7 @@ export const CancelButton = styled(Button)`
 export const Error = styled.div`
     text-align: center;
     padding: 1rem;
-    color: red;
+    color: ${colors.red};
     font-size: 1rem;
     margin-bottom: 1rem;
 `;

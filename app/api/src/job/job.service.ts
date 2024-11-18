@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException, Logger } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service.js';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { and, eq, sql } from 'drizzle-orm';
+import { interviews, jobs } from '../database/schema.js';
 import { CreateJobsDto } from './dto/create-job.dto.js';
+import { DatabaseService } from '../database/database.service.js';
 import { UpdateJobDto } from './dto/update-job.dto.js';
-import { jobs, interviews } from '../database/schema.js';
-import { eq, and, sql } from 'drizzle-orm';
 
 @Injectable()
 export class JobsService {

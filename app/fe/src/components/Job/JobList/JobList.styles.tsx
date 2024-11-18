@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Button } from '../../../styles/common.styles';
+import { Button, Row, Table, Td, Th } from '../../../styles/Common.styles';
+import { colors } from '../../../styles/theme';
+
+export { Table, Row, Th, Td };
 
 export const Container = styled.div`
     max-width: 1000px;
@@ -11,6 +14,7 @@ export const Container = styled.div`
 export const Header = styled.h1`
     text-align: center;
     margin-bottom: 1.5rem;
+    color: ${colors.white};
 `;
 
 export const AddButtonWrapper = styled(Link)`
@@ -20,27 +24,8 @@ export const AddButtonWrapper = styled(Link)`
 `;
 
 export const ViewButton = styled(Button).attrs({
-    variant: 'success',
+    $variant: 'success',
 })``;
-
-export const Table = styled.table`
-    width: 100%;
-    border-collapse: collapse;
-`;
-
-export const Row = styled.tr`
-    border-bottom: 1px solid #ddd;
-`;
-
-export const Th = styled.th`
-    text-align: left;
-    padding: 0.75rem;
-    background-color: #f2f2f2;
-`;
-
-export const Td = styled.td`
-    padding: 0.75rem;
-`;
 
 export const Loading = styled.div`
     text-align: center;
@@ -51,6 +36,6 @@ export const Loading = styled.div`
 export const Error = styled.div`
     text-align: center;
     padding: 2rem;
-    color: red;
+    color: ${colors.red};
     font-size: 1.2rem;
 `;

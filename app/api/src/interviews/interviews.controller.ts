@@ -1,20 +1,20 @@
 import {
-    Controller,
-    Get,
-    Post,
     Body,
-    Patch,
-    Param,
+    Controller,
     Delete,
-    UseGuards,
-    Req,
+    Get,
     Logger,
+    Param,
+    Patch,
+    Post,
+    Req,
+    UseGuards,
 } from '@nestjs/common';
-import { InterviewsService } from './interviews.service.js';
 import { CreateInterviewDto } from './dto/create-interview.dto.js';
-import { UpdateInterviewDto } from './dto/update-interview.dto.js';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
 import { CustomRequest } from '../types/custom-request.interface.js';
+import { InterviewsService } from './interviews.service.js';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
+import { UpdateInterviewDto } from './dto/update-interview.dto.js';
 
 @Controller('interviews')
 @UseGuards(JwtAuthGuard)

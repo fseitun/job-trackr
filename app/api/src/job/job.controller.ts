@@ -1,21 +1,21 @@
 import {
-    Controller,
-    Get,
-    Post,
     Body,
-    Patch,
-    Param,
+    Controller,
     Delete,
-    UseGuards,
-    Req,
-    NotFoundException,
+    Get,
     Logger,
+    NotFoundException,
+    Param,
+    Patch,
+    Post,
+    Req,
+    UseGuards,
 } from '@nestjs/common';
-import { JobsService } from './job.service.js';
 import { CreateJobsDto } from './dto/create-job.dto.js';
-import { UpdateJobDto } from './dto/update-job.dto.js';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
 import { CustomRequest } from '../types/custom-request.interface.js';
+import { JobsService } from './job.service.js';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
+import { UpdateJobDto } from './dto/update-job.dto.js';
 
 @Controller('job')
 @UseGuards(JwtAuthGuard)

@@ -4,16 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { CreateJobDto } from '../../../types';
 import { JobFormFields } from '../JobFormFields/JobFormFields';
 import {
-    Container,
-    Header,
-    Form,
     ButtonGroup,
-    SaveButton,
     CancelButton,
+    Container,
     Error,
+    Form,
+    Header,
+    SaveButton,
 } from './CreateJobForm.styles';
 
-export default function CreateJobForm() {
+export function CreateJobForm() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState<CreateJobDto>({

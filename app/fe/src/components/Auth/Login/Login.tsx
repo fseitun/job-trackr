@@ -1,18 +1,18 @@
-import { useState, useContext, FormEvent } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../../../styles/common.styles';
+import { Button } from '../../../styles/Common.styles';
 import {
     Container,
-    Title,
+    Error,
     Form,
     FormGroup,
-    Label,
     Input,
-    Error,
+    Label,
+    Title,
 } from './Login.styles';
 
-export default function Login() {
+export function Login() {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 

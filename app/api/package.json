@@ -6,7 +6,7 @@
     "scripts": {
         "start:dev": "nest start --watch --preserveWatchOutput",
         "build": "nest build",
-        "lint": "yarn eslint .",
+        "lint": "yarn eslint . --fix",
         "type-check": "tsc --noEmit",
         "generate": "drizzle-kit generate",
         "migrate": "drizzle-kit migrate"

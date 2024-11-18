@@ -1,18 +1,18 @@
-import { useState, useContext, FormEvent } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import {
+    Button,
     Container,
-    Title,
+    Error,
     Form,
     FormGroup,
-    Label,
     Input,
-    Button,
-    Error,
+    Label,
+    Title,
 } from './Register.styles';
 
-export default function Register() {
+export function Register() {
     const { register } = useContext(AuthContext);
     const navigate = useNavigate();
 

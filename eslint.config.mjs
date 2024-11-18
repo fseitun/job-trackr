@@ -7,6 +7,7 @@ import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import eslintImport from 'eslint-plugin-import';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -18,6 +19,8 @@ const commonSettings = {
 
 const commonRules = {
     'func-style': ['warn', 'declaration'],
+    'no-duplicate-imports': 'error',
+    'import/no-default-export': 'error',
     'prefer-const': 'warn',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [
@@ -34,6 +37,7 @@ const commonRules = {
 
 export default [
     { ignores: ['**/node_modules', '**/dist'] },
+    eslintImport.flatConfigs.recommended,
 
     eslint.configs.recommended,
 

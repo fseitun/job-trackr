@@ -1,9 +1,9 @@
 import {
-    IsString,
-    IsDateString,
-    IsOptional,
-    IsNumber,
     IsBoolean,
+    IsDateString,
+    IsNumber,
+    IsOptional,
+    IsString,
 } from 'class-validator';
 
 export class CreateJobsDto {
