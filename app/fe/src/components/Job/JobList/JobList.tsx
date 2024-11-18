@@ -10,12 +10,12 @@ import {
     Td,
     Loading,
     Error,
-    Button,
     Header,
     AddButtonWrapper,
     Container,
     ViewButton,
 } from './JobList.styles';
+import { Button } from '../../../styles/common.styles';
 
 export default function JobList() {
     const [jobs, setJobs] = useState<Job[]>([]);

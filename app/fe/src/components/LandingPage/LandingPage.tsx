@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../styles/common.styles';
 import {
     Container,
     Title,
     Description,
     ButtonGroup,
     StyledLink,
-    Button,
 } from './LandingPage.styles';
 
 export function LandingPage() {

@@ -1,6 +1,7 @@
 import { useState, useContext, FormEvent } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../../styles/common.styles';
 import {
     Container,
     Title,
@@ -8,7 +9,6 @@ import {
     FormGroup,
     Label,
     Input,
-    Button,
     Error,
 } from './Login.styles';
 

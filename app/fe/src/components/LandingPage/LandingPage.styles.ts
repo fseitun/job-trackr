@@ -27,27 +27,12 @@ export const Description = styled.p`
     color: #555;
 `;
 
-export const ButtonGroup = styled.div`
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-`;
-
 export const StyledLink = styled(Link)`
     text-decoration: none;
 `;
 
-export const Button = styled.button`
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    border: none;
-    background-color: #1a73e8;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: #1669c1;
-    }
+export const ButtonGroup = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 `;
