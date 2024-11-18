@@ -10,9 +10,9 @@ import {
     Input,
     Button,
     Error,
-} from './styles';
+} from './Register.styles';
 
-export function Register() {
+export default function Register() {
     const { register } = useContext(AuthContext);
     const navigate = useNavigate();
 

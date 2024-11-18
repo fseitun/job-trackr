@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { Button } from '../../styles/common.styles';
+import { Button } from '../../../styles/common.styles';
+import { Link } from 'react-router-dom';
+import { colors, borderRadius } from '../../../styles/theme';
 
 export const Container = styled.div`
     max-width: 800px;
@@ -30,13 +32,13 @@ export const SubHeader = styled.h2`
     color: #333333;
 `;
 
-export const AddButtonWrapper = styled.div`
+export const AddButton = styled.div`
     margin-bottom: 1rem;
     display: flex;
     justify-content: flex-end;
 `;
 
-export const EditButtonWrapper = styled.div`
+export const EditButton = styled.div`
     margin-bottom: 1rem;
     margin-top: 1rem;
     display: flex;
@@ -63,4 +65,27 @@ export const ErrorMessage = styled.div`
     padding: 2rem;
     color: red;
     font-size: 1.2rem;
+`;
+
+export const ButtonLink = styled(Link)`
+    padding: 0.5rem 1rem;
+    border-radius: ${borderRadius};
+    border: none;
+    background-color: ${colors.primary};
+    color: ${colors.white};
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+        background-color: ${darken(0.1, colors.primary)};
+    }
+
+    &:disabled {
+        background-color: #a0c4ff;
+        cursor: not-allowed;
+    }
 `;

@@ -1,5 +1,5 @@
 import { ChangeEvent, CSSProperties } from 'react';
-import { UpdateJobDto, CreateJobDto } from '../../types';
+import { UpdateJobDto, CreateJobDto } from '../../../types';
 
 interface JobFormFieldsProps {
     formData: CreateJobDto | UpdateJobDto;

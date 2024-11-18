@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { Button } from '../../styles/common.styles';
+import { Button } from '../../../styles/common.styles';
 
 export const Container = styled.div`
     max-width: 800px;
@@ -56,16 +56,10 @@ export const CancelButton = styled(Button)`
     }
 `;
 
-export const ErrorMessage = styled.div`
+export const Error = styled.div`
     text-align: center;
     padding: 1rem;
     color: red;
     font-size: 1rem;
     margin-bottom: 1rem;
-`;
-
-export const LoadingIndicator = styled.div`
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.2rem;
 `;

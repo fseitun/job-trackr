@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button as CommonButton } from '../../../styles/common.styles';
 
 export const Container = styled.div`
     max-width: 400px;
@@ -23,10 +24,12 @@ export const Title = styled.h2`
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
+    align-items: center;
 `;
 
 export const FormGroup = styled.div`
     margin-bottom: 1rem;
+    width: 100%;
 `;
 
 export const Label = styled.label`
@@ -43,21 +46,7 @@ export const Input = styled.input`
     font-size: 1rem;
 `;
 
-export const Button = styled.button`
-    padding: 0.75rem;
-    border-radius: 4px;
-    border: none;
-    background-color: #1a73e8;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
-    width: 100%;
-
-    &:hover {
-        background-color: #1669c1;
-    }
-`;
+export const Button = styled(CommonButton)``;
 
 export const Error = styled.div`
     margin-bottom: 1rem;

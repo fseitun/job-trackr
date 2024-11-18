@@ -1,9 +1,9 @@
 import { FormEvent, ChangeEvent, useState } from 'react';
-import { client } from '../../api/client';
+import { client } from '../../../api/client.ts';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CreateInterviewDto } from '../../types';
-import { InterviewFormFields } from './InterviewFormFields';
-import { useHandleDateChange } from '../hooks/useHandleDateChange';
+import { CreateInterviewDto } from '../../../types.ts';
+import { InterviewFormFields } from '../InterviewFormFields/InterviewFormFields';
+import { useHandleDateChange } from '../../hooks/useHandleDateChange.ts';
 import {
     Container,
     Header,
