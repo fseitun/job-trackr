@@ -12,7 +12,7 @@ import { UsersModule } from './users/users.module.js';
         AuthModule,
         UsersModule,
         JwtModule.register({
-            secret: process.env.JWT_SECRET || 'your-secret-key',
+            secret: 'your-secret-key',
             signOptions: { expiresIn: '1h' },
         }),
         ConfigModule.forRoot({
