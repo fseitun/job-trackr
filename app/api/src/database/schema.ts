@@ -1,6 +1,7 @@
 import {
     boolean,
     integer,
+    jsonb,
     pgTable,
     pgView,
     text,
@@ -48,6 +49,26 @@ export const jobs = pgTable('jobs', {
     // techStack: jsonb("tech_stack").default([]), TODO: rethink better way to store tech stack, it will be in the JD.
     directHire: boolean('direct_hire').default(false),
     timeZone: varchar('time_zone', { length: 255 }).default(''),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const userPreferences = pgTable('user_preferences', {
+    userId: uuid('user_id')
+        .references(() => users.id, {
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+        })
+        .notNull(),
+    preferences: jsonb('preferences').default({
+        hiringCompany: true,
+        recruitingCompany: true,
+        position: true,
+        recruiterName: true,
+        monthlySalary: true,
+        vacationDays: true,
+        holidayDays: true,
+    }),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
 });

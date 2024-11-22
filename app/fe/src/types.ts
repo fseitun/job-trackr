@@ -1,5 +1,5 @@
 export interface Job {
-    id: number;
+    id: string;
     hiringCompany: string;
     recruitingCompany: string;
     position: string;
@@ -27,3 +27,7 @@ export interface Interview {
 }
 export type CreateInterviewDto = Omit<Interview, 'id'>;
 export type UpdateInterviewDto = Partial<Interview>;
+
+export interface UserPreferences {
+    columns: Record<keyof Job, boolean>;
+}
