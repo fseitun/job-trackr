@@ -88,10 +88,9 @@ export default [
         },
         rules: {
             ...commonRules,
+            ...pluginReact.configs.recommended.rules,
             'react/react-in-jsx-scope': 'off',
         },
-        // ...pluginconfigs.recommended,
-        // ...pluginReactHooks.configs.recommended,
     },
     eslintConfigPrettier,
 ];

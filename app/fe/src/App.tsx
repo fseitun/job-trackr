@@ -10,10 +10,12 @@ import { UpdateJobForm } from './components/Job/UpdateJobForm/UpdateJobForm.tsx'
 import { Login } from './components/Auth/Login/Login.tsx';
 import { Register } from './components/Auth/Register/Register.tsx';
 import { ProtectedRoute } from './components/ProtectedRoute.tsx';
+import { Header } from './components/Header/Header.tsx';
 
 export function App() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
+            <Header />
             <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />

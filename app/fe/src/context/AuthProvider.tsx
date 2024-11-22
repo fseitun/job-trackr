@@ -2,10 +2,12 @@ import { ReactNode, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { client } from '../api/client';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [userId, setUserId] = useState<number>(-1);
+    const navigate = useNavigate();
 
     function setAuthToken(token: string) {
         localStorage.setItem('authToken', token);
@@ -36,12 +38,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     async function logout() {
-        try {
-            await client.logout();
-            setIsAuthenticated(false);
-        } catch (error) {
-            console.error('Logout failed:', error);
-        }
+        setIsAuthenticated(false);
+        localStorage.removeItem('authToken');
+        navigate('/login');
     }
 
     async function validateToken() {

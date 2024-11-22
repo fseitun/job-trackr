@@ -4,15 +4,12 @@ import {
     Controller,
     Logger,
     Post,
-    Res,
     UnauthorizedException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserDto } from './dto/login-user.dto.js';
-import { Response } from 'express';
 import { UsersService } from './users.service.js';
-import { maxAge } from '../../config.js';
 
 @Controller('users')
 export class UsersController {
@@ -30,10 +27,7 @@ export class UsersController {
     }
 
     @Post('login')
-    async login(
-        @Body() userData: LoginUserDto,
-        @Res({ passthrough: true }) response: Response,
-    ) {
+    async login(@Body() userData: LoginUserDto) {
         const user = await this.usersService.findByEmail(userData.email);
         if (!user) {
             this.logger.error('User not found in request');
@@ -53,13 +47,6 @@ export class UsersController {
         const token = this.jwtService.sign(payload);
 
         this.logger.log('User logged in successfully');
-
-        response.cookie('access_token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge,
-        });
 
         return { token };
     }

@@ -8,13 +8,13 @@ import { GlobalStyle } from './styles/GlobalStyle';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <AuthProvider>
-            <BrowserRouter>
+        <BrowserRouter>
+            <AuthProvider>
                 <ThemeContextProvider>
                     <GlobalStyle />
                     <App />
                 </ThemeContextProvider>
-            </BrowserRouter>
-        </AuthProvider>
+            </AuthProvider>
+        </BrowserRouter>
     </StrictMode>,
 );
