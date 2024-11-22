@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 import { LandingPage } from './components/LandingPage/LandingPage.tsx';
 import { CreateInterviewForm } from './components/Interview/CreateInterviewForm/CreateInterviewForm.tsx';
 import { UpdateInterviewForm } from './components/Interview/UpdateInterviewForm/UpdateInterviewForm.tsx';

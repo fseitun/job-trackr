@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
 
     /* Global Styles */
     #root {
-        max-width: 1280px;
+        max-width: 100%;
         margin: 0 auto;
         padding: ${({ theme }) => theme.spacing.large};
         text-align: center;
@@ -65,4 +65,11 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
+    @media (min-width: 768px) {
+        #root {
+            max-width: 1280px;
+            padding: ${({ theme }) => theme.spacing.large};
+            text-align: center;
+        }
+    }
 `;

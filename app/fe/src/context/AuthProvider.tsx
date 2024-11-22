@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { client } from '../api/client';
 import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);

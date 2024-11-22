@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { client } from '../../../api/client.ts';
 import { Job, UpdateJobDto } from '../../../types.ts';
 import { JobFormFields } from '../JobFormFields/JobFormFields.tsx';

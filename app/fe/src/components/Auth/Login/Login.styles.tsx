@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button } from '../../../styles/Common.styles';
-import { colors } from '../../../styles/theme';
+import { colors, spacing, fontSize } from '../../../styles/theme';
 
 export { Button };
 
@@ -16,12 +16,22 @@ export const Container = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    @media (min-width: 768px) {
+        padding: ${spacing.large};
+        max-width: 500px;
+    }
 `;
 
 export const Title = styled.h2`
     text-align: center;
     margin-bottom: 1.5rem;
     color: ${colors.darkGray};
+    font-size: 1.5rem;
+
+    @media (min-width: 768px) {
+        font-size: ${fontSize.large};
+    }
 `;
 
 export const Form = styled.form`
@@ -39,6 +49,11 @@ export const Label = styled.label`
     margin-bottom: 0.5rem;
     color: ${colors.gray};
     display: block;
+    font-size: 1rem;
+
+    @media (min-width: 768px) {
+        font-size: ${fontSize.medium};
+    }
 `;
 
 export const Input = styled.input`
@@ -47,10 +62,20 @@ export const Input = styled.input`
     border-radius: 4px;
     border: 1px solid ${colors.lightGray};
     font-size: 1rem;
+
+    @media (min-width: 768px) {
+        padding: ${spacing.medium};
+        font-size: ${fontSize.medium};
+    }
 `;
 
 export const Error = styled.div`
     margin-bottom: 1rem;
     color: ${colors.danger};
     text-align: center;
+    font-size: 1rem;
+
+    @media (min-width: 768px) {
+        font-size: ${fontSize.medium};
+    }
 `;

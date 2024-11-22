@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Job } from '../../../types';
 import { client } from '../../../api/client';
 import { formatDate } from '../../../../../utils';

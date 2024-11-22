@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { client } from '../../../api/client';
 import { Job } from '../../../types';
 import { InterviewList } from '../../Interview/InterviewList/InterviewList';

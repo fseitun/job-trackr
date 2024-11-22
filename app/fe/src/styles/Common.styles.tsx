@@ -22,16 +22,31 @@ export const Button = styled.button<{ $variant?: string }>`
         background-color: ${colors.lightGray};
         cursor: not-allowed;
     }
+
+    @media (min-width: 768px) {
+        padding: ${spacing.medium} ${spacing.large};
+        font-size: ${fontSize.large};
+    }
 `;
 
 export const Table = styled.table`
     width: 100%;
     border-collapse: collapse;
+
+    @media (min-width: 768px) {
+        width: 80%;
+    }
 `;
 
 export const Row = styled.tr`
     border-bottom: ${borderRadius.small} solid ${colors.gray};
     background-color: ${colors.darkGray};
+
+    @media (min-width: 768px) {
+        &:nth-child(even) {
+            background-color: ${colors.gray};
+        }
+    }
 `;
 
 export const Th = styled.th`
@@ -39,9 +54,17 @@ export const Th = styled.th`
     padding: ${spacing.small};
     background-color: ${colors.gray};
     color: ${colors.white};
+
+    @media (min-width: 768px) {
+        padding: ${spacing.medium};
+    }
 `;
 
 export const Td = styled.td`
     padding: ${spacing.small};
     color: ${colors.white};
+
+    @media (min-width: 768px) {
+        padding: ${spacing.medium};
+    }
 `;

@@ -2,7 +2,6 @@
 | ------- | ------------------------------------------------------- | ------------ | --------------- | -------------- |
 | Task    | Extract JWT secret to environment variables             | 3            | 5               | 1.67           |
 | Feature | Add column selector to JobList                          | 3            | 5               | 1.67           |
-| Feature | Style for non-mobile                                    | 3            | 5               | 1.67           |
 | Feature | Add integration tests                                   | 5            | 8               | 1.60           |
 | Feature | Add Cypress tests                                       | 8            | 8               | 1.00           |
 | Feature | Add dark mode toggle and persist in LS + DB             | 5            | 5               | 1.00           |
