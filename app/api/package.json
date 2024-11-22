@@ -9,7 +9,8 @@
         "lint": "yarn eslint . --fix",
         "type-check": "tsc --noEmit",
         "generate": "drizzle-kit generate",
-        "migrate": "drizzle-kit migrate"
+        "migrate": "drizzle-kit migrate",
+        "test": "vitest"
     },
     "dependencies": {
         "@nestjs/common": "^10.4.8",
@@ -32,12 +33,14 @@
     "devDependencies": {
         "@eslint/js": "^9.15.0",
         "@nestjs/cli": "^10.4.8",
+        "@nestjs/testing": "^10.4.8",
         "@types/bcrypt": "^5.0.2",
         "@types/express": "^5.0.0",
         "@types/passport": "^1.0.17",
         "@types/passport-jwt": "^4.0.1",
         "@types/pg": "^8.11.10",
         "drizzle-kit": "^0.28.1",
-        "eslint": "^9.15.0"
+        "eslint": "^9.15.0",
+        "vitest": "^2.1.5"
     }
 }
