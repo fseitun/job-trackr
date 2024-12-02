@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import { Button } from '../../styles/Common.styles';
+import { AuthContext } from '@/context/AuthContext';
+import { Button } from '@/styles/Common.styles';
 import { Link } from 'react-router';
 import { HeaderContainer } from './Header.styles';
 

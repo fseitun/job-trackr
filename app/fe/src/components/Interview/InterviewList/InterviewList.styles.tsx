@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Button, Row, Table, Td, Th } from '../../../styles/Common.styles';
-import { colors, fontSize, borderRadius } from '../../../styles/theme';
+import { Button, Row, Table, Td, Th } from '@/styles/Common.styles';
+import { colors, fontSize, borderRadius } from '@/styles/theme';
 
 export { Table, Row, Th, Td };
 

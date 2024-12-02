@@ -1,6 +1,6 @@
 import type { Config } from 'drizzle-kit';
 
-export const config: Config = {
+const config: Config = {
     schema: './src/database/schema.ts',
     out: './drizzle',
     dialect: 'postgresql',
@@ -18,3 +18,5 @@ export const config: Config = {
         ssl: false,
     },
 };
+
+export default config;

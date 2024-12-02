@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { client } from '../../../api/client';
-import { Job } from '../../../types';
-import { InterviewList } from '../../Interview/InterviewList/InterviewList';
+import { client } from '@/api/client';
+import { Job } from '@/types';
+import { InterviewList } from '@/components/Interview/InterviewList/InterviewList';
 import {
     AddButton,
     BackButton,

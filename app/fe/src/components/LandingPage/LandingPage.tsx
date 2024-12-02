@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { Button } from '../../styles/Common.styles';
+import { Button } from '@/styles/Common.styles';
 import {
     ButtonGroup,
     Container,

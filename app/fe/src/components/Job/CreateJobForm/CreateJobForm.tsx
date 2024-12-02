@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { client } from '../../../api/client';
+import { client } from '@/api/client';
 import { useNavigate } from 'react-router';
-import { CreateJobDto } from '../../../types';
+import { CreateJobDto } from '@/types';
 import { JobFormFields } from '../JobFormFields/JobFormFields';
 import {
     ButtonGroup,

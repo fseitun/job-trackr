@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { Job } from '../../../types';
-import { client } from '../../../api/client';
-import { formatDate } from '../../../../../utils';
+import { Job } from '@/types';
+import { client } from '@/api/client';
+import { formatDate } from 'utils';
 import {
     AddButtonWrapper,
     Container,
@@ -15,7 +15,7 @@ import {
     Th,
     ViewButton,
 } from './JobList.styles';
-import { Button } from '../../../styles/Common.styles';
+import { Button } from '@/styles/Common.styles';
 
 export function JobList() {
     const [jobs, setJobs] = useState<Job[]>([]);

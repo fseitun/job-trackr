@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router';
-import { colors, spacing, fontSize } from '../../styles/theme';
+import { colors, spacing, fontSize } from '@/styles/theme';
 
 export const Container = styled.div`
     max-width: 600px;

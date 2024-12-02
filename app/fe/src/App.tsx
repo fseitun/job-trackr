@@ -1,16 +1,16 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
-import { LandingPage } from './components/LandingPage/LandingPage.tsx';
-import { CreateInterviewForm } from './components/Interview/CreateInterviewForm/CreateInterviewForm.tsx';
-import { UpdateInterviewForm } from './components/Interview/UpdateInterviewForm/UpdateInterviewForm.tsx';
-import { JobList } from './components/Job/JobList/JobList.tsx';
-import { JobDetail } from './components/Job/JobDetail/JobDetail.tsx';
-import { CreateJobForm } from './components/Job/CreateJobForm/CreateJobForm.tsx';
-import { UpdateJobForm } from './components/Job/UpdateJobForm/UpdateJobForm.tsx';
-import { Login } from './components/Auth/Login/Login.tsx';
-import { Register } from './components/Auth/Register/Register.tsx';
-import { ProtectedRoute } from './components/ProtectedRoute.tsx';
-import { Header } from './components/Header/Header.tsx';
+import { LandingPage } from '@/components/LandingPage/LandingPage.tsx';
+import { CreateInterviewForm } from '@/components/Interview/CreateInterviewForm/CreateInterviewForm.tsx';
+import { UpdateInterviewForm } from '@/components/Interview/UpdateInterviewForm/UpdateInterviewForm.tsx';
+import { JobList } from '@/components/Job/JobList/JobList.tsx';
+import { JobDetail } from '@/components/Job/JobDetail/JobDetail.tsx';
+import { CreateJobForm } from '@/components/Job/CreateJobForm/CreateJobForm.tsx';
+import { UpdateJobForm } from '@/components/Job/UpdateJobForm/UpdateJobForm.tsx';
+import { Login } from '@/components/Auth/Login/Login.tsx';
+import { Register } from '@/components/Auth/Register/Register.tsx';
+import { ProtectedRoute } from '@/components/ProtectedRoute.tsx';
+import { Header } from '@/components/Header/Header.tsx';
 
 export function App() {
     return (

@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
-import { Interview } from '../../../types';
-import { formatDate } from '../../../../../utils';
+import { Interview } from '@/types';
+import { formatDate } from 'utils';
 import { EditButton, Row, Table } from './InterviewList.styles';
 
 interface InterviewListProps {

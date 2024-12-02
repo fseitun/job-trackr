@@ -1,6 +1,7 @@
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
 import tsEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import pluginReact from 'eslint-plugin-react';
@@ -40,6 +41,7 @@ export default [
     eslintImport.flatConfigs.recommended,
 
     eslint.configs.recommended,
+    tseslint.configs.recommended,
 
     {
         files: ['app/api/**/*.{js,mjs,cjs,ts}'],
