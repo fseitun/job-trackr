@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { client } from '@/api/client.ts';
+import { client } from '@api/client.ts';
 import { useNavigate, useParams } from 'react-router';
-import { CreateInterviewDto } from '@/types.ts';
+import { CreateInterviewDto } from '@types.ts';
 import { InterviewFormFields } from '../InterviewFormFields/InterviewFormFields';
-import { useHandleDateChange } from '@/hooks/useHandleDateChange';
+import { useHandleDateChange } from '@hooks/useHandleDateChange';
 import {
     ButtonGroup,
     CancelButton,
@@ -13,6 +13,7 @@ import {
     Header,
     SaveButton,
 } from './CreateInterviewForm.styles';
+import route from '@route';
 
 export function CreateInterviewForm() {
     const navigate = useNavigate();
@@ -47,7 +48,7 @@ export function CreateInterviewForm() {
         try {
             if (id) {
                 await client.post<CreateInterviewDto>('/interviews', formData);
-                navigate(`/job/${id}`);
+                navigate(route.job);
             } else {
                 throw new Error('Invalid job ID.');
             }

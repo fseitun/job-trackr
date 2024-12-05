@@ -1,5 +1,5 @@
 import { FormEvent, useContext, useState } from 'react';
-import { AuthContext } from '@/context/AuthContext';
+import { AuthContext } from '@context/AuthContext';
 import { useNavigate } from 'react-router';
 import {
     Button,
@@ -11,6 +11,7 @@ import {
     Label,
     Title,
 } from './Register.styles';
+import route from '@route';
 
 export function Register() {
     const { register } = useContext(AuthContext);
@@ -28,7 +29,7 @@ export function Register() {
             return;
         }
         register(email, password)
-            .then(() => navigate('/job'))
+            .then(() => navigate(route.jobList))
             .catch(() => setError('An unexpected error occurred'));
     }
 

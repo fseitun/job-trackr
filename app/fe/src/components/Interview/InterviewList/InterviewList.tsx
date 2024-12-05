@@ -1,7 +1,8 @@
 import { Link } from 'react-router';
-import { Interview } from '@/types';
+import { Interview } from '@types';
 import { formatDate } from 'utils';
 import { EditButton, Row, Table } from './InterviewList.styles';
+import route from '@route';
 
 interface InterviewListProps {
     interviews: Interview[];
@@ -32,7 +33,7 @@ export function InterviewList({ interviews }: InterviewListProps) {
                         <td>{formatDate(interview.interviewDate)}</td>
                         <td>{interview.notes || 'N/A'}</td>
                         <td>
-                            <Link to={`/edit-interview/${interview.id}`}>
+                            <Link to={route.editInterview}>
                                 <EditButton>Edit</EditButton>
                             </Link>
                         </td>

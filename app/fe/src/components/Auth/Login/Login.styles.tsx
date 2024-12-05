@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Button } from '@/styles/Common.styles';
-import { colors, spacing, fontSize } from '@/styles/theme';
+import { Button } from '@styles/Common.styles';
+import { colors, spacing, fontSize } from '@styles/theme';
 
 export { Button };
 

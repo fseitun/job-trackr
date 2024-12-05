@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { client } from '@/api/client';
-import { Job } from '@/types';
-import { InterviewList } from '@/components/Interview/InterviewList/InterviewList';
+import { client } from '@api/client';
+import { Job } from '@types';
+import { InterviewList } from '@components/Interview/InterviewList/InterviewList';
 import {
     AddButton,
     BackButton,
@@ -13,6 +13,7 @@ import {
     Loading,
     SubHeader,
 } from './JobDetail.styles';
+import route from '@route';
 
 export function JobDetail() {
     const { id } = useParams<{ id: string }>();
@@ -59,15 +60,13 @@ export function JobDetail() {
 
     return (
         <Container>
-            <BackButton onClick={() => navigate('/job')}>Back</BackButton>
+            <BackButton onClick={() => navigate('/')}>Back</BackButton>
             <SubHeader>Interviews</SubHeader>
             <AddButton>
-                <ButtonLink to={`/job/${id}/add-interview`}>
-                    Add Interview
-                </ButtonLink>
+                <ButtonLink to={route.addInterview}>Add Interview</ButtonLink>
             </AddButton>
             <EditButton>
-                <ButtonLink to={`/job/${id}/edit`}>
+                <ButtonLink to={route.updateJob}>
                     Edit Job Application
                 </ButtonLink>
             </EditButton>

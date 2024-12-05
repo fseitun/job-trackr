@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router';
-import { Button, Row, Table, Td, Th } from '@/styles/Common.styles';
-import { colors, spacing, fontSize } from '@/styles/theme';
+import { Button, Row, Table, Td, Th } from '@styles/Common.styles';
+import { colors, spacing, fontSize } from '@styles/theme';
 
 export { Table, Row, Th, Td };
 

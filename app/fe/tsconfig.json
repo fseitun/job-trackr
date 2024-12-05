@@ -9,7 +9,7 @@
         "jsx": "react-jsx",
         "useDefineForClassFields": true,
         "paths": {
-            "@/*": ["./src/*"],
+            "@*": ["./src/*"],
             "utils": ["../utils.ts"]
         }
     },
