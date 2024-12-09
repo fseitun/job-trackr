@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { client } from '../../../api/client';
+import { client } from '@api/client';
 import { useNavigate } from 'react-router';
-import { CreateJobDto } from '../../../types';
+import { CreateJobDto } from '@types';
 import { JobFormFields } from '../JobFormFields/JobFormFields';
 import {
     ButtonGroup,
@@ -12,6 +12,7 @@ import {
     Header,
     SaveButton,
 } from './CreateJobForm.styles';
+import route from '@route';
 
 export function CreateJobForm() {
     const navigate = useNavigate();
@@ -53,7 +54,7 @@ export function CreateJobForm() {
         setError('');
         try {
             await client.post<CreateJobDto>('/job', formData);
-            navigate('/job');
+            navigate(route.jobList);
         } catch (err) {
             console.error('Error submitting the form:', err);
             setError('Failed to submit the form.');

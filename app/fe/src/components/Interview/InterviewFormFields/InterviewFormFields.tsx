@@ -1,7 +1,7 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { CreateInterviewDto, UpdateInterviewDto } from '../../../types';
+import { CreateInterviewDto, UpdateInterviewDto } from '@types';
 import { ChangeEvent } from 'react';
 import {
     FormGroup,

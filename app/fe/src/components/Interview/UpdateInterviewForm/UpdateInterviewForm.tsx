@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { client } from '../../../api/client.ts';
+import { client } from '@api/client.ts';
 import { useNavigate, useParams } from 'react-router';
-import { CreateInterviewDto, UpdateInterviewDto } from '../../../types.ts';
+import { CreateInterviewDto, UpdateInterviewDto } from '@types.ts';
 import { InterviewFormFields } from '../InterviewFormFields/InterviewFormFields';
-import { useHandleDateChange } from '../../hooks/useHandleDateChange.ts';
+import { useHandleDateChange } from '@hooks/useHandleDateChange';
 import {
     ButtonGroup,
     CancelButton,
@@ -14,6 +14,7 @@ import {
     LoadingIndicator,
     SaveButton,
 } from './UpdateInterviewForm.styles';
+import route from '@route';
 
 export function UpdateInterviewForm() {
     const navigate = useNavigate();
@@ -81,7 +82,7 @@ export function UpdateInterviewForm() {
                     `/interviews/${id}`,
                     formData,
                 );
-                navigate(`/job/${formData.jobId}`);
+                navigate(route.job);
             } else {
                 setError('Invalid interview ID.');
             }

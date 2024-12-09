@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { client } from '../../../api/client.ts';
-import { Job, UpdateJobDto } from '../../../types.ts';
+import { client } from '@api/client.ts';
+import { Job, UpdateJobDto } from '@types.ts';
 import { JobFormFields } from '../JobFormFields/JobFormFields.tsx';
 import {
     ButtonGroup,
@@ -13,6 +13,7 @@ import {
     LoadingIndicator,
     SaveButton,
 } from './UpdateJobForm.styles';
+import route from '@route/index.ts';
 
 export function UpdateJobForm() {
     const navigate = useNavigate();
@@ -85,7 +86,7 @@ export function UpdateJobForm() {
         try {
             if (id) {
                 await client.patch<UpdateJobDto>(`/job/${id}`, formData);
-                navigate(`/job/${id}`);
+                navigate(route.job);
             } else {
                 setError('Invalid job ID.');
             }

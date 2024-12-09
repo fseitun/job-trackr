@@ -1,7 +1,7 @@
 import { FormEvent, useContext, useState } from 'react';
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '@context/AuthContext';
 import { useNavigate } from 'react-router';
-import { Button } from '../../../styles/Common.styles';
+import { Button } from '@styles/Common.styles';
 import {
     Container,
     Error,
@@ -11,6 +11,7 @@ import {
     Label,
     Title,
 } from './Login.styles';
+import route from '@route';
 
 export function Login() {
     const { login } = useContext(AuthContext);
@@ -24,7 +25,7 @@ export function Login() {
         e.preventDefault();
         try {
             await login(email, password);
-            navigate('/job');
+            navigate(route.jobList);
         } catch {
             setError('An error occurred during login');
         }

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { Button } from '../../../styles/Common.styles';
-import { colors, spacing, fontSize, borderRadius } from '../../../styles/theme';
+import { Button } from '@styles/Common.styles';
+import { colors, spacing, fontSize, borderRadius } from '@styles/theme';
 
 export const Container = styled.div`
     max-width: 800px;

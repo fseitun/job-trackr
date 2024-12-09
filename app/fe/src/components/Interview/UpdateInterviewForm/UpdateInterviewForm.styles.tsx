@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Button } from '../../../styles/Common.styles';
-import { colors } from '../../../styles/theme';
+import { Button } from '@styles/Common.styles';
+import { colors } from '@styles/theme';
 
 export const Container = styled.div`
     max-width: 600px;

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { Button } from '../../../styles/Common.styles';
+import { Button } from '@styles/Common.styles';
 import { Link } from 'react-router';
-import { borderRadius, colors, fontSize, spacing } from '../../../styles/theme';
+import { borderRadius, colors, fontSize, spacing } from '@styles/theme';
 
 export const Container = styled.div`
     max-width: 800px;

@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { Button } from '../../styles/Common.styles';
+import { Button } from '@styles/Common.styles';
 import {
     ButtonGroup,
     Container,
@@ -10,15 +8,6 @@ import {
 } from './LandingPage.styles';
 
 export function LandingPage() {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const authToken = localStorage.getItem('authToken');
-        if (authToken) {
-            navigate('/job');
-        }
-    }, [navigate]);
-
     return (
         <Container>
             <Title>Welcome to Job Trackr</Title>
