@@ -9,7 +9,12 @@
         "lint": "yarn eslint . --fix",
         "type-check": "tsc --noEmit",
         "generate": "drizzle-kit generate",
-        "migrate": "drizzle-kit migrate"
+        "migrate": "drizzle-kit migrate",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
+        "test:ui": "vitest --ui",
+        "test:e2e": "vitest run --config ./test/vitest.config.ts"
     },
     "dependencies": {
         "@nestjs/common": "^10.4.8",
@@ -19,9 +24,11 @@
         "@nestjs/mapped-types": "^2.0.6",
         "@nestjs/passport": "^10.0.3",
         "@nestjs/platform-express": "^10.4.8",
+        "@nestjs/testing": "^10.4.8",
         "bcrypt": "^5.1.1",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.1",
+        "dotenv": "^16.4.1",
         "drizzle-orm": "^0.36.4",
         "passport": "^0.7.0",
         "passport-jwt": "^4.0.1",
@@ -37,7 +44,15 @@
         "@types/passport": "^1.0.17",
         "@types/passport-jwt": "^4.0.1",
         "@types/pg": "^8.11.10",
+        "@types/supertest": "^6.0.2",
+        "@vitest/coverage-v8": "^1.2.2",
+        "@vitest/ui": "^1.2.2",
         "drizzle-kit": "^0.28.1",
-        "eslint": "^9.15.0"
+        "eslint": "^9.15.0",
+        "supertest": "^6.3.4",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "vite-tsconfig-paths": "^4.3.1",
+        "vitest": "^1.2.2"
     }
 }
