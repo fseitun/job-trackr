@@ -17,6 +17,7 @@ Job Trackr is a comprehensive web application designed to assist users in managi
 
 -   **Node.js**: Ensure you have Node.js installed.
 -   **Yarn**: This project uses Yarn as the package manager.
+-   **Docker**: Required for running the PostgreSQL database.
 
 ### Steps
 
@@ -35,7 +36,15 @@ Job Trackr is a comprehensive web application designed to assist users in managi
 
 3. **Environment Variables**:
 
-    - Create a `.env` file in the `app/api` directory with the necessary environment variables for database connection and JWT secret.
+    - Copy the `.env.example` file to `.env`:
+        ```bash
+        cp .env.example .env
+        ```
+    - Update the following variables in your `.env` file:
+        - `JWT_SECRET`: Change this to a secure random string
+        - `JWT_EXPIRES_IN`: Token expiration time in seconds (default: 3600)
+        - `DATABASE_PASSWORD`: Your PostgreSQL password
+        - Other variables can be left as default for local development
 
 4. **Start the Development Server**:
     ```bash
@@ -60,6 +69,28 @@ Job Trackr is a comprehensive web application designed to assist users in managi
 -   `yarn test`: Runs tests for both the frontend and backend.
 -   `yarn lint`: Lints the codebase for both the frontend and backend.
 -   `yarn type-check`: Checks TypeScript types for both the frontend and backend.
+
+## Environment Variables
+
+The application uses the following environment variables:
+
+### JWT Configuration
+
+-   `JWT_SECRET`: Secret key for JWT token generation (required)
+-   `JWT_EXPIRES_IN`: Token expiration time in seconds (default: 3600)
+
+### Database Configuration
+
+-   `DATABASE_HOST`: PostgreSQL host (default: localhost)
+-   `DATABASE_PORT`: PostgreSQL port (default: 5433)
+-   `DATABASE_USER`: PostgreSQL username (default: postgres)
+-   `DATABASE_PASSWORD`: PostgreSQL password (required)
+-   `DATABASE_NAME`: PostgreSQL database name (default: job_trackr)
+
+### API Configuration
+
+-   `API_PORT`: Port for the backend API (default: 3000)
+-   `CORS_ORIGIN`: Frontend URL for CORS configuration (default: http://localhost:5173)
 
 ## License
 
