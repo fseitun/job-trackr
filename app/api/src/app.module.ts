@@ -1,5 +1,5 @@
 import { AuthModule } from './auth/auth.module.js';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module.js';
 import { InterviewsModule } from './interviews/interviews.module.js';
 import { JobsModule } from './job/job.module.js';
@@ -11,9 +11,16 @@ import { UsersModule } from './users/users.module.js';
     imports: [
         AuthModule,
         UsersModule,
-        JwtModule.register({
-            secret: 'your-secret-key',
-            signOptions: { expiresIn: '1h' },
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            useFactory: async (configService: ConfigService) => ({
+                secret: configService.get<string>('JWT_SECRET'),
+                signOptions: {
+                    expiresIn:
+                        configService.get<string>('JWT_EXPIRES_IN') + 's',
+                },
+            }),
+            inject: [ConfigService],
         }),
         ConfigModule.forRoot({
             isGlobal: true,

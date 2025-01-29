@@ -2,14 +2,17 @@ import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module.js';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor.js';
 import { NestFactory } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, {
         logger: ['log', 'error', 'warn', 'debug', 'verbose'],
     });
 
+    const configService = app.get(ConfigService);
+
     app.enableCors({
-        origin: 'http://localhost:5173',
+        origin: configService.get<string>('CORS_ORIGIN'),
         credentials: true,
     });
 
@@ -33,6 +36,8 @@ async function bootstrap() {
 
     app.setGlobalPrefix('api');
 
-    await app.listen(3000);
+    const port = configService.get<number>('API_PORT') ?? 3000;
+    await app.listen(port);
+    console.log(`Application is running on: http://localhost:${port}`);
 }
 bootstrap();
